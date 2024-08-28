@@ -43,6 +43,10 @@ const Navbar: React.FC = () => {
                 <p>Manage Products</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
             </NavLink>
+            <NavLink to='/create-product' className='flex flex-col items-center gap-1'>
+                <p>Create Product</p>
+                <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
+            </NavLink>
 
         </ul>
 

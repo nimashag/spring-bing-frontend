@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Table} from 'flowbite-react';
 import {FaSearch} from "react-icons/fa";
-import Product from "../interfaces/Product.tsx";
+import Product from "../../interfaces/Product.tsx";
 
 const ManageProducts: React.FC = () => {
 
