@@ -29,6 +29,27 @@ const ManageProducts: React.FC = () => {
         product.unit_price.toString().includes(searchQuery)
     );
 
+    // Handle the deletion of a product
+    const handleDelete = (productId: string) => {
+        fetch(`http://localhost:3000/product/${productId}`, {
+            method: 'DELETE',
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message === 'Product Deleted') {
+                    // Remove the deleted product from the state
+                    setProducts(products.filter(product => product._id !== productId));
+                } else {
+                    console.error('Failed to delete the product:', data.message);
+                    // TODO: Handle the error, e.g., display an error message to the user
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting product:', error);
+                // TODO: Handle the error, e.g., display an error message to the user
+            });
+    };
+
     return (
         <div className='px-4 my-12'>
             <div className='flex justify-between items-start mb-8'>
@@ -82,7 +103,10 @@ const ManageProducts: React.FC = () => {
                                     </button>
                                 </Link>
                                 <button
-                                    className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600'>Delete
+                                    className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600'
+                                    onClick={() => handleDelete(product._id)}
+                                >
+                                    Delete
                                 </button>
                             </Table.Cell>
                         </Table.Row>
