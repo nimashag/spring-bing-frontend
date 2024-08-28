@@ -39,6 +39,10 @@ const Navbar: React.FC = () => {
             </NavLink>
 
             {/* TODO: Temporary links for testing. Please remove later */}
+            <NavLink to='/products' className='flex flex-col items-center gap-1'>
+                <p>Products</p>
+                <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
+            </NavLink>
             <NavLink to='/manage-products' className='flex flex-col items-center gap-1'>
                 <p>Manage Products</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
