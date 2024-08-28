@@ -6,6 +6,7 @@ import ManageProducts from './pages/products/ManageProducts'
 import CreateProduct from './pages/products/CreateProduct'
 import UpdateProduct from './pages/products/UpdateProduct'
 import ViewProductsList from './pages/products/ViewProductsList.tsx'
+import ViewProduct from './pages/products/ViewProduct'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
@@ -21,6 +22,7 @@ const App : React.FC = () => {
 
           {/*  Routes for Products Module */}
           <Route path='/products' element={<ViewProductsList />} />
+          <Route path='/product/:id' element={<ViewProduct />} />
           <Route path='/manage-products' element={<ManageProducts />} />
           <Route path='/create-product' element={<CreateProduct />} />
           <Route path='/update-product/:id' element={<UpdateProduct />} />
