@@ -1,21 +1,25 @@
-import { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import './App.css';
-import { Outlet } from 'react-router-dom';
-import NavigationBar from './components/NavigationBar';
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import About from './pages/About'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
-const App: React.FC = () => {
-  const [count, setCount] = useState<number>(0);
-
+const App : React.FC = () => {
   return (
-    <div>
-      <NavigationBar />
-      <div className='min-h-screen'>
-        <Outlet />
-      </div>
+    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+
+      <Navbar />
+
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+        </Routes>
+
+      <Footer />
+
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
