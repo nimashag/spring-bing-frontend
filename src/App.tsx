@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import './App.css'
+import './App.css';
+import { Outlet } from 'react-router-dom';
+import NavigationBar from './components/NavigationBar';
 
-function App() {
+const App: React.FC = () => {
+  const [count, setCount] = useState<number>(0);
 
   return (
-    <p>Lets fucking go</p>
-  )
+    <div>
+      <NavigationBar />
+      <div className='min-h-screen'>
+        <Outlet />
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
