@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Table} from 'flowbite-react';
 import {FaSearch} from "react-icons/fa";
 import Product from "../../interfaces/Product.tsx";
+import { Link } from 'react-router-dom';
 
 const ManageProducts: React.FC = () => {
 
@@ -74,9 +75,12 @@ const ManageProducts: React.FC = () => {
                             <Table.Cell>{product.metadata.map(meta => meta.size).join(', ')}</Table.Cell>
                             <Table.Cell>{product.metadata.map(meta => meta.quantity).reduce((acc, qty) => acc + qty, 0)}</Table.Cell>
                             <Table.Cell>
-                                <button
-                                    className='font-medium text-cyan-600 hover:underline dark:text-cyan-500 mr-5'>Edit
-                                </button>
+                                <Link to={`/update-product/${product._id}`}>
+                                    <button
+                                        className='font-medium text-cyan-600 hover:underline dark:text-cyan-500 mr-5'>
+                                        Edit
+                                    </button>
+                                </Link>
                                 <button
                                     className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600'>Delete
                                 </button>
