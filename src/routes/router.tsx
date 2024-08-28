@@ -6,6 +6,7 @@ import {
 import App from "../App";
 import Home from "../home/Home"
 import ReviewPage from "../reviewforms/ReviewPage"
+import Dashboard from "../components/AdminProductpage/Dashboard";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
                 path: "/reviewscreen",
                 element: <ReviewPage />
             },
+            {
+                path: "/dashboard",
+                element: <Dashboard />
+            },
+
         ]
     }
 ]);
