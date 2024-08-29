@@ -88,7 +88,7 @@ const ViewProduct = () => {
                 </div>
 
                 <div className='md:w-1/2 space-y-6'>
-                    <h2 className='text-4xl text-green-700 font-bold my-5 md:w-4/5 leading-snug'>{product.name}</h2>
+                    <h2 className='text-4xl text-sky-950 font-bold my-5 md:w-4/5 leading-snug'>{product.name}</h2>
                     <hr/>
 
                     <p className='mb-10 text-lg md:w-5/6'><strong>Category: </strong>{productCategory}</p>
@@ -97,7 +97,7 @@ const ViewProduct = () => {
                     <p className='mb-10 text-lg md:w-5/6'><strong>Subcategory: </strong>{productSubcategory}</p>
                     <hr/>
 
-                    <p className='mb-10 text-lg md:w-5/6'>{product.description}</p>
+                    <p className='mb-10 text-lg md:w-5/6'><strong>Description: </strong>{product.description}</p>
                     <hr/>
 
                     <p className='mb-10 text-lg md:w-5/6'><strong>Price: </strong>LKR {product.unit_price}</p>
