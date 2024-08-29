@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Product from "../../interfaces/Product";
 import Category from "../../interfaces/Category";
 import SubCategory from "../../interfaces/SubCategory";
@@ -24,7 +26,6 @@ const ViewProduct = () => {
                 const data = await response.json();
                 setProduct(data.data);
 
-                // Extract initial color and size options
                 const colors = Array.from(new Set(data.data.metadata.map((item: any) => item.color)));
                 const sizes = Array.from(new Set(data.data.metadata.map((item: any) => item.size)));
                 setColorOptions(colors);
@@ -65,7 +66,6 @@ const ViewProduct = () => {
         fetchSubcategories();
     }, [id]);
 
-    // Function to filter size options based on selected color
     const filterSizeOptions = (color: string) => {
         if (product) {
             if (color) {
@@ -74,19 +74,16 @@ const ViewProduct = () => {
                     .map(item => item.size);
                 setSizeOptions(sizes);
 
-                // Retain the current size selection if it's still valid
                 if (!sizes.includes(selectedSize)) {
                     setSelectedSize('');
                 }
             } else {
-                // If color is not selected, reset size options to include all available sizes
                 const allSizes = Array.from(new Set(product.metadata.map((item: any) => item.size)));
                 setSizeOptions(allSizes);
             }
         }
     };
 
-    // Function to filter color options based on selected size
     const filterColorOptions = (size: string) => {
         if (product) {
             if (size) {
@@ -95,12 +92,10 @@ const ViewProduct = () => {
                     .map(item => item.color);
                 setColorOptions(colors);
 
-                // Retain the current color selection if it's still valid
                 if (!colors.includes(selectedColor)) {
                     setSelectedColor('');
                 }
             } else {
-                // If size is not selected, reset color options to include all available colors
                 const allColors = Array.from(new Set(product.metadata.map((item: any) => item.color)));
                 setColorOptions(allColors);
             }
@@ -121,12 +116,10 @@ const ViewProduct = () => {
 
     const handleBuyNow = () => {
         console.log('Buy Now button clicked');
-        // Directly navigate to checkout or perform a buy now action here
     };
 
     const handleAddToCart = () => {
         console.log('Add to Cart button clicked');
-        // Add functionality to add the product to the cart here
     };
 
     if (!product) return <div>Loading...</div>;
@@ -138,7 +131,14 @@ const ViewProduct = () => {
         <div>
             <div className='px-4 lg:px-24 my-20 flex flex-col md:flex-row justify-between items-center gap-12'>
                 <div className='md:w-1/2'>
-                    <img src={product.images_path[0]} alt={product.name} className='rounded md:w-8/12' />
+                    {/* Smaller Carousel Component */}
+                    <Carousel showThumbs={false} autoPlay infiniteLoop className="max-w-md">
+                        {product.images_path.map((image, index) => (
+                            <div key={index}>
+                                <img src={image} alt={`${product.name} - ${index + 1}`} className='rounded max-h-md' />
+                            </div>
+                        ))}
+                    </Carousel>
                 </div>
 
                 <div className='md:w-1/2 space-y-6'>
@@ -157,7 +157,6 @@ const ViewProduct = () => {
                     <p className='mb-10 text-lg md:w-5/6'><strong>Price: </strong>LKR {product.unit_price}</p>
                     <hr />
 
-                    {/* Size Selector */}
                     <div className="mb-4">
                         <label htmlFor="size" className="block text-lg font-medium">Size:</label>
                         <select
@@ -174,7 +173,6 @@ const ViewProduct = () => {
                     </div>
                     <hr />
 
-                    {/* Color Selector */}
                     <div className="mb-4">
                         <label htmlFor="color" className="block text-lg font-medium">Color:</label>
                         <select
@@ -201,8 +199,6 @@ const ViewProduct = () => {
                             onClick={handleAddToCart}>Add to Cart
                         </button>
                     </div>
-
-                    <br />
                 </div>
             </div>
         </div>
