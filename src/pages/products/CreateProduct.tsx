@@ -11,6 +11,7 @@ const CreateProduct: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // State to handle error messages
   const [metadata, setMetadata] = useState([{ color: "", size: "", quantity: 0 }]); // Initialize with one set
 
   useEffect(() => {
@@ -73,16 +74,18 @@ const CreateProduct: React.FC = () => {
 
       if (response.ok) {
         setShowSuccessMessage(true);
+        setErrorMessage(""); // Clear any previous error message
         form.reset();
         setMetadata([{ color: "", size: "", quantity: 0 }]); // Reset metadata to one set
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 5000);
       } else {
-        console.error("Failed to create product");
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || "Failed to create product"); // Show the backend error message
       }
     } catch (error) {
-      console.error("Failed to create product:", error);
+      setErrorMessage("Failed to create product: " + error.message);
     }
   };
 
@@ -252,7 +255,7 @@ const CreateProduct: React.FC = () => {
           </div>
 
           {/* Description */}
-          <div>
+          <div className="w-full">
             <Label
                 htmlFor="description"
                 value="Description"
@@ -263,13 +266,12 @@ const CreateProduct: React.FC = () => {
                 name="description"
                 placeholder="  Enter product description"
                 className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                rows={4}
                 required
             />
           </div>
 
-          {/* Image Paths */}
-          <div>
+          {/* Images Path */}
+          <div className="w-full">
             <Label
                 htmlFor="images_path"
                 value="Images Path (comma-separated)"
@@ -279,31 +281,40 @@ const CreateProduct: React.FC = () => {
                 id="images_path"
                 name="images_path"
                 type="text"
-                placeholder="  Enter image paths"
+                placeholder="  Enter image paths separated by commas"
                 className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                 required
             />
           </div>
 
-          {/* Submit Button */}
-          <Button
-              type="submit"
-              className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md mt-4"
-          >
-            Create Product
-          </Button>
+          {/* Error Message */}
+          {errorMessage && (
+              <div className="text-red-500 font-medium mb-4">
+                {errorMessage}
+              </div>
+          )}
 
           {/* Success Message */}
           {showSuccessMessage && (
-              <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-                <PiCheckCircleBold className="inline-block mr-2" />
+              <div className="text-green-500 font-medium mb-4 flex items-center">
+                <PiCheckCircleBold className="mr-2" />
                 Product created successfully!
               </div>
           )}
+
+          {/* Submit Button */}
+          <Button
+              type="submit"
+              className="mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md"
+          >
+            Add Product
+          </Button>
         </form>
       </div>
   );
 };
 
 export default CreateProduct;
+
+
 

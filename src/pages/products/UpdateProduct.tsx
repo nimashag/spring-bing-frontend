@@ -10,6 +10,7 @@ const UpdateProduct: React.FC = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [metadata, setMetadata] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     // Fetch the product details to populate the form
@@ -42,9 +43,11 @@ const UpdateProduct: React.FC = () => {
   };
 
   const handleRemoveMetadata = (index) => {
-    const updatedMetadata = [...metadata];
-    updatedMetadata.splice(index, 1);
-    setMetadata(updatedMetadata);
+    if (metadata.length > 1) {
+      const updatedMetadata = [...metadata];
+      updatedMetadata.splice(index, 1);
+      setMetadata(updatedMetadata);
+    }
   };
 
   const handleUpdate = (event) => {
@@ -72,11 +75,24 @@ const UpdateProduct: React.FC = () => {
       },
       body: JSON.stringify(updatedProduct),
     })
-        .then((res) => res.json())
-        .then(() => {
-          setShowSuccessMessage(true);
+        .then((res) => {
+          if (res.ok) {
+            setShowSuccessMessage(true);
+            setShowErrorMessage(false);
+          } else {
+            setShowErrorMessage(true);
+            setShowSuccessMessage(false);
+          }
           setTimeout(() => {
             setShowSuccessMessage(false);
+            setShowErrorMessage(false);
+          }, 5000);
+        })
+        .catch(() => {
+          setShowErrorMessage(true);
+          setShowSuccessMessage(false);
+          setTimeout(() => {
+            setShowErrorMessage(false);
           }, 5000);
         });
   };
@@ -186,15 +202,14 @@ const UpdateProduct: React.FC = () => {
                     />
                   </div>
                   <div className="flex items-center">
-                    {index > 0 && (
-                        <Button
-                            type="button"
-                            onClick={() => handleRemoveMetadata(index)}
-                            className="bg-red-50 text-red-500 hover:bg-red-100"
-                        >
-                          Remove
-                        </Button>
-                    )}
+                    <Button
+                        type="button"
+                        onClick={() => handleRemoveMetadata(index)}
+                        className="bg-red-50 text-red-500 hover:bg-red-100"
+                        disabled={metadata.length === 1}
+                    >
+                      Remove
+                    </Button>
                   </div>
                 </div>
             ))}
@@ -283,25 +298,27 @@ const UpdateProduct: React.FC = () => {
                 name="description"
                 defaultValue={product.description}
                 placeholder="Enter product description"
-                className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
                 rows={4}
+                className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
                 required
             />
           </div>
 
-          {/* Success Message */}
+          {/* Success/Error Messages */}
           {showSuccessMessage && (
-              <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-4 rounded-md">
-                <PiCheckCircleBold className="inline-block mr-2" />
+              <div className="mt-4 p-4 text-sm text-green-700 bg-green-100 rounded-lg flex items-center">
+                <PiCheckCircleBold className="mr-2" />
                 Product updated successfully!
               </div>
           )}
+          {showErrorMessage && (
+              <div className="mt-4 p-4 text-sm text-red-700 bg-red-100 rounded-lg">
+                Something went wrong. Please try again.
+              </div>
+          )}
 
-          {/* Submit Button */}
-          <Button
-              type="submit"
-              className="bg-green-500 text-white mt-4 rounded-md hover:bg-green-600"
-          >
+          {/* Update Button */}
+          <Button type="submit" className="w-full bg-green-50 text-green-500">
             Update Product
           </Button>
         </form>
@@ -310,4 +327,6 @@ const UpdateProduct: React.FC = () => {
 };
 
 export default UpdateProduct;
+
+
 
