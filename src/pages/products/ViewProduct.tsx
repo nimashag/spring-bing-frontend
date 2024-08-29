@@ -24,7 +24,7 @@ const ViewProduct = () => {
                 const data = await response.json();
                 setProduct(data.data);
 
-                // Extract color and size options from metadata
+                // Extract initial color and size options
                 const colors = Array.from(new Set(data.data.metadata.map((item: any) => item.color)));
                 const sizes = Array.from(new Set(data.data.metadata.map((item: any) => item.size)));
                 setColorOptions(colors);
@@ -65,6 +65,60 @@ const ViewProduct = () => {
         fetchSubcategories();
     }, [id]);
 
+    // Function to filter size options based on selected color
+    const filterSizeOptions = (color: string) => {
+        if (product) {
+            if (color) {
+                const sizes = product.metadata
+                    .filter(item => item.color === color)
+                    .map(item => item.size);
+                setSizeOptions(sizes);
+
+                // Retain the current size selection if it's still valid
+                if (!sizes.includes(selectedSize)) {
+                    setSelectedSize('');
+                }
+            } else {
+                // If color is not selected, reset size options to include all available sizes
+                const allSizes = Array.from(new Set(product.metadata.map((item: any) => item.size)));
+                setSizeOptions(allSizes);
+            }
+        }
+    };
+
+    // Function to filter color options based on selected size
+    const filterColorOptions = (size: string) => {
+        if (product) {
+            if (size) {
+                const colors = product.metadata
+                    .filter(item => item.size === size)
+                    .map(item => item.color);
+                setColorOptions(colors);
+
+                // Retain the current color selection if it's still valid
+                if (!colors.includes(selectedColor)) {
+                    setSelectedColor('');
+                }
+            } else {
+                // If size is not selected, reset color options to include all available colors
+                const allColors = Array.from(new Set(product.metadata.map((item: any) => item.color)));
+                setColorOptions(allColors);
+            }
+        }
+    };
+
+    const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedColor = e.target.value;
+        setSelectedColor(selectedColor);
+        filterSizeOptions(selectedColor);
+    };
+
+    const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedSize = e.target.value;
+        setSelectedSize(selectedSize);
+        filterColorOptions(selectedSize);
+    };
+
     const handleBuyNow = () => {
         console.log('Buy Now button clicked');
         // Directly navigate to checkout or perform a buy now action here
@@ -89,20 +143,19 @@ const ViewProduct = () => {
 
                 <div className='md:w-1/2 space-y-6'>
                     <h2 className='text-4xl text-sky-950 font-bold my-5 md:w-4/5 leading-snug'>{product.name}</h2>
-                    <hr/>
+                    <hr />
 
                     <p className='mb-10 text-lg md:w-5/6'><strong>Category: </strong>{productCategory}</p>
-                    <hr/>
+                    <hr />
 
                     <p className='mb-10 text-lg md:w-5/6'><strong>Subcategory: </strong>{productSubcategory}</p>
-                    <hr/>
+                    <hr />
 
                     <p className='mb-10 text-lg md:w-5/6'><strong>Description: </strong>{product.description}</p>
-                    <hr/>
+                    <hr />
 
                     <p className='mb-10 text-lg md:w-5/6'><strong>Price: </strong>LKR {product.unit_price}</p>
-
-                    <hr/>
+                    <hr />
 
                     {/* Size Selector */}
                     <div className="mb-4">
@@ -110,7 +163,7 @@ const ViewProduct = () => {
                         <select
                             id="size"
                             value={selectedSize}
-                            onChange={(e) => setSelectedSize(e.target.value)}
+                            onChange={handleSizeChange}
                             className="border border-gray-300 p-2 rounded-md w-full"
                         >
                             <option value="">Select Size</option>
@@ -119,8 +172,7 @@ const ViewProduct = () => {
                             ))}
                         </select>
                     </div>
-
-                    <hr/>
+                    <hr />
 
                     {/* Color Selector */}
                     <div className="mb-4">
@@ -128,7 +180,7 @@ const ViewProduct = () => {
                         <select
                             id="color"
                             value={selectedColor}
-                            onChange={(e) => setSelectedColor(e.target.value)}
+                            onChange={handleColorChange}
                             className="border border-gray-300 p-2 rounded-md w-full"
                         >
                             <option value="">Select Color</option>
@@ -137,8 +189,7 @@ const ViewProduct = () => {
                             ))}
                         </select>
                     </div>
-
-                    <hr/>
+                    <hr />
 
                     <div className="flex gap-4">
                         <button
@@ -151,7 +202,7 @@ const ViewProduct = () => {
                         </button>
                     </div>
 
-                    <br/>
+                    <br />
                 </div>
             </div>
         </div>
