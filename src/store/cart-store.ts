@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import {IProduct,cartItem} from "../interface/IProduct";
- 
+import {cartItem} from "../interfaces/Product";
+import Product from "../interfaces/Product";
 
 interface cartStore {
     cart : cartItem[],
     itemCount : number,
-    addProductToCart : (product: IProduct) => void,
+    addProductToCart : (product: Product) => void,
     removeProductFromCart : (productId: string) => void,
     clearCart : () => void,
 }
@@ -17,7 +17,7 @@ export const useCartStore = create<cartStore>((set) => ({
     addProductToCart: (product) => set((state) => {
 
         const existingItemIndex = state.cart.findIndex(
-            (item) => item.product.id === product.id
+            (item) => item.product._id === product._id
         );
 
         if(existingItemIndex > -1) {
@@ -46,9 +46,9 @@ export const useCartStore = create<cartStore>((set) => ({
     removeProductFromCart: (productId) => {
         set((state) => {
             const existingItemIndex = state.cart.findIndex(
-                (item) => item.product.id === productId
+                (item) => item.product._id === productId
             );
-    
+            
             if (existingItemIndex > -1) {
                 const updatedCart = [...state.cart];
     
