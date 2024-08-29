@@ -8,6 +8,7 @@ import UpdateProduct from './pages/products/UpdateProduct'
 import ViewProductsList from './pages/products/ViewProductsList.tsx'
 import ViewProduct from './pages/products/ViewProduct'
 import AddCategory from './pages/products/AddCategory'
+import AddSubCategory from './pages/products/AddSubCategory'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
@@ -28,6 +29,7 @@ const App : React.FC = () => {
           <Route path='/create-product' element={<CreateProduct />} />
           <Route path='/update-product/:id' element={<UpdateProduct />} />
           <Route path='/add-category' element={<AddCategory />} />
+          <Route path='/add-subcategory' element={<AddSubCategory />} />
 
         </Routes>
 
