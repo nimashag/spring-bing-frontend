@@ -8,13 +8,20 @@ const UpdateProduct: React.FC = () => {
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [metadata, setMetadata] = useState([]);
+  const [imagesPath, setImagesPath] = useState(""); // New state for images_path
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     // Fetch the product details to populate the form
     fetch(`http://localhost:3000/product/${id}`)
       .then((res) => res.json())
-      .then((data) => setProduct(data.data));
+      .then((data) => {
+        setProduct(data.data);
+        setMetadata(data.data.metadata); // Set the existing metadata
+        setImagesPath(data.data.images_path.join(", ")); // Set images_path as comma-separated string
+      });
 
     // Fetch categories and subcategories
     fetch("http://localhost:3000/category")
@@ -26,24 +33,44 @@ const UpdateProduct: React.FC = () => {
       .then((data) => setSubCategories(data.data));
   }, [id]);
 
+  const handleMetadataChange = (index, event) => {
+    const { name, value } = event.target;
+    const updatedMetadata = [...metadata];
+    updatedMetadata[index][name] = value;
+    setMetadata(updatedMetadata);
+  };
+
+  const handleAddMetadata = () => {
+    setMetadata([...metadata, { color: "", size: "", quantity: "" }]);
+  };
+
+  const handleRemoveMetadata = (index) => {
+    if (metadata.length > 1) {
+      const updatedMetadata = [...metadata];
+      updatedMetadata.splice(index, 1);
+      setMetadata(updatedMetadata);
+    }
+  };
+
   const handleUpdate = (event) => {
     event.preventDefault();
     const form = event.target;
 
+    // Split the images_path by comma and trim any whitespace
+    const imagesPathArray = imagesPath.split(",").map((url) => url.trim());
+
     const updatedProduct = {
       name: form.name.value,
       unit_price: parseFloat(form.unit_price.value),
-      metadata: [
-        {
-          color: form.color.value,
-          size: form.size.value,
-          quantity: parseFloat(form.quantity.value),
-        },
-      ],
+      metadata: metadata.map((item) => ({
+        color: item.color,
+        size: item.size,
+        quantity: parseFloat(item.quantity),
+      })),
       description: form.description.value,
       category: [form.category.value],
       sub_category: [form.sub_category.value],
-      images_path: [form.images_path.value],
+      images_path: imagesPathArray, // Use the array of URLs
     };
 
     fetch(`http://localhost:3000/product/${id}`, {
@@ -53,11 +80,24 @@ const UpdateProduct: React.FC = () => {
       },
       body: JSON.stringify(updatedProduct),
     })
-      .then((res) => res.json())
-      .then(() => {
-        setShowSuccessMessage(true);
+      .then((res) => {
+        if (res.ok) {
+          setShowSuccessMessage(true);
+          setShowErrorMessage(false);
+        } else {
+          setShowErrorMessage(true);
+          setShowSuccessMessage(false);
+        }
         setTimeout(() => {
           setShowSuccessMessage(false);
+          setShowErrorMessage(false);
+        }, 5000);
+      })
+      .catch(() => {
+        setShowErrorMessage(true);
+        setShowSuccessMessage(false);
+        setTimeout(() => {
+          setShowErrorMessage(false);
         }, 5000);
       });
   };
@@ -111,60 +151,86 @@ const UpdateProduct: React.FC = () => {
           </div>
         </div>
 
-        {/* Color and Size */}
-        <div className="flex flex-col lg:flex-row gap-6">
-          <div className="w-full">
-            <Label
-              htmlFor="color"
-              value="Color"
-              className="text-gray-700 font-medium mb-2"
-            />
-            <TextInput
-              id="color"
-              name="color"
-              type="text"
-              defaultValue={product.metadata[0].color}
-              placeholder="Enter color"
-              className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
-              required
-            />
-          </div>
-          <div className="w-full">
-            <Label
-              htmlFor="size"
-              value="Size"
-              className="text-gray-700 font-medium mb-2"
-            />
-            <TextInput
-              id="size"
-              name="size"
-              type="text"
-              defaultValue={product.metadata[0].size}
-              placeholder="Enter size"
-              className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
-              required
-            />
+        {/* Dynamic Metadata Fields */}
+        <div className="flex flex-col gap-6">
+          {metadata.map((item, index) => (
+            <div key={index} className="flex flex-col lg:flex-row gap-6">
+              <div className="w-full">
+                <Label
+                  htmlFor={`color-${index}`}
+                  value="Color"
+                  className="text-gray-700 font-medium mb-2"
+                />
+                <TextInput
+                  id={`color-${index}`}
+                  name="color"
+                  type="text"
+                  value={item.color}
+                  onChange={(event) => handleMetadataChange(index, event)}
+                  placeholder="Enter color"
+                  className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+                  required
+                />
+              </div>
+              <div className="w-full">
+                <Label
+                  htmlFor={`size-${index}`}
+                  value="Size"
+                  className="text-gray-700 font-medium mb-2"
+                />
+                <TextInput
+                  id={`size-${index}`}
+                  name="size"
+                  type="text"
+                  value={item.size}
+                  onChange={(event) => handleMetadataChange(index, event)}
+                  placeholder="Enter size"
+                  className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+                  required
+                />
+              </div>
+              <div className="w-full">
+                <Label
+                  htmlFor={`quantity-${index}`}
+                  value="Quantity"
+                  className="text-gray-700 font-medium mb-2"
+                />
+                <TextInput
+                  id={`quantity-${index}`}
+                  name="quantity"
+                  type="number"
+                  value={item.quantity}
+                  onChange={(event) => handleMetadataChange(index, event)}
+                  placeholder="Enter quantity"
+                  className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+                  required
+                />
+              </div>
+              <div className="flex items-center">
+                <Button
+                  type="button"
+                  onClick={() => handleRemoveMetadata(index)}
+                  className="bg-red-50 text-red-500 hover:bg-red-100"
+                  disabled={metadata.length === 1}
+                >
+                  Remove
+                </Button>
+              </div>
+            </div>
+          ))}
+          <div className="flex justify-end">
+            <Button
+              type="button"
+              onClick={handleAddMetadata}
+              className="w-1/4 bg-blue-50 text-blue-500 mt-2 rounded-md hover:bg-blue-100"
+            >
+              Add Metadata
+            </Button>
           </div>
         </div>
 
-        {/* Quantity and Category */}
+        {/* Category and Sub Category */}
         <div className="flex flex-col lg:flex-row gap-6">
-          <div className="w-full">
-            <Label
-              htmlFor="quantity"
-              value="Quantity"
-              className="text-gray-700 font-medium mb-2"
-            />
-            <TextInput
-              id="quantity"
-              name="quantity"
-              type="number"
-              defaultValue={product.metadata[0].quantity}
-              placeholder="Enter quantity"
-              className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
-              required
-            />
-          </div>
           <div className="w-full">
             <Label
               htmlFor="category"
@@ -185,10 +251,6 @@ const UpdateProduct: React.FC = () => {
               ))}
             </Select>
           </div>
-        </div>
-
-        {/* Sub Category and Images Path */}
-        <div className="flex flex-col lg:flex-row gap-6">
           <div className="w-full">
             <Label
               htmlFor="sub_category"
@@ -202,66 +264,74 @@ const UpdateProduct: React.FC = () => {
               className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
               required
             >
-              {subCategories.map((sub) => (
-                <option key={sub._id} value={sub._id}>
-                  {sub.name}
+              {subCategories.map((subCat) => (
+                <option key={subCat._id} value={subCat._id}>
+                  {subCat.name}
                 </option>
               ))}
             </Select>
           </div>
-          <div className="w-full">
-            <Label
-              htmlFor="images_path"
-              value="Image URL"
-              className="text-gray-700 font-medium mb-2"
-            />
-            <TextInput
-              id="images_path"
-              name="images_path"
-              type="text"
-              defaultValue={product.images_path[0]}
-              placeholder="Enter image URL"
-              className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
-              required
-            />
-          </div>
         </div>
 
-        {/* Description */}
-        <div className="w-full">
+        {/* Product Description */}
+        <div>
           <Label
             htmlFor="description"
-            value="Description"
+            value="Product Description"
             className="text-gray-700 font-medium mb-2"
           />
           <Textarea
             id="description"
             name="description"
-            rows={6}
             defaultValue={product.description}
             placeholder="Enter product description"
             className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            rows={5}
+            required
+          />
+        </div>
+
+        {/* Images Path */}
+        <div>
+          <Label
+            htmlFor="images_path"
+            value="Images Path"
+            className="text-gray-700 font-medium mb-2"
+          />
+          <Textarea
+            id="images_path"
+            name="images_path"
+            value={imagesPath}
+            onChange={(e) => setImagesPath(e.target.value)}
+            placeholder="Enter image URLs separated by commas"
+            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            rows={5}
             required
           />
         </div>
 
         {/* Submit Button */}
-        <div className="flex justify-end mt-6">
-          <Button
-            type="submit"
-            className="w-full lg:w-48 bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-          >
-            Update Product
-          </Button>
-        </div>
-      </form>
+        <Button
+          type="submit"
+          className="w-full mt-4 bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-150 ease-in-out"
+        >
+          Update Product
+        </Button>
 
-      {showSuccessMessage && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded-lg flex items-center">
-          <PiCheckCircleBold className="h-6 w-6 mr-2" />
-          <span className="text-lg">Product Updated Successfully!</span>
-        </div>
-      )}
+        {/* Success and Error Messages */}
+        {showSuccessMessage && (
+          <div className="flex items-center mt-4 text-green-500">
+            <PiCheckCircleBold className="mr-2" />
+            Product updated successfully!
+          </div>
+        )}
+        {showErrorMessage && (
+          <div className="flex items-center mt-4 text-red-500">
+            <PiCheckCircleBold className="mr-2" />
+            There was an error updating the product.
+          </div>
+        )}
+      </form>
     </div>
   );
 };
