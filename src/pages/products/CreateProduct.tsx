@@ -277,10 +277,10 @@ const CreateProduct: React.FC = () => {
                 value="Images Path (comma-separated)"
                 className="text-gray-700 font-medium mb-2"
             />
-            <TextInput
+            <Textarea
                 id="images_path"
                 name="images_path"
-                type="text"
+                // type="text"
                 placeholder="  Enter image paths separated by commas"
                 className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                 required
