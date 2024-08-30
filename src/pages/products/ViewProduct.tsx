@@ -132,7 +132,7 @@ const ViewProduct = () => {
             <div className='px-4 lg:px-24 my-20 flex flex-col md:flex-row justify-between items-center gap-12'>
                 <div className='md:w-1/2'>
                     {/* Smaller Carousel Component */}
-                    <Carousel showThumbs={false} autoPlay infiniteLoop className="max-w-md">
+                    <Carousel showThumbs={true} autoPlay infiniteLoop className="max-w-md">
                         {product.images_path.map((image, index) => (
                             <div key={index}>
                                 <img src={image} alt={`${product.name} - ${index + 1}`} className='rounded max-h-md' />

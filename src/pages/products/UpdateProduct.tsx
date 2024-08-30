@@ -53,7 +53,10 @@ const UpdateProduct: React.FC = () => {
   const handleUpdate = (event) => {
     event.preventDefault();
     const form = event.target;
-
+  
+    // Split the images_path by comma and trim any whitespace
+    const imagesPathArray = form.images_path.value.split(',').map((url) => url.trim());
+  
     const updatedProduct = {
       name: form.name.value,
       unit_price: parseFloat(form.unit_price.value),
@@ -65,9 +68,9 @@ const UpdateProduct: React.FC = () => {
       description: form.description.value,
       category: [form.category.value],
       sub_category: [form.sub_category.value],
-      images_path: [form.images_path.value],
+      images_path: imagesPathArray, // Use the array of URLs
     };
-
+  
     fetch(`http://localhost:3000/product/${id}`, {
       method: "PUT",
       headers: {
@@ -75,27 +78,28 @@ const UpdateProduct: React.FC = () => {
       },
       body: JSON.stringify(updatedProduct),
     })
-        .then((res) => {
-          if (res.ok) {
-            setShowSuccessMessage(true);
-            setShowErrorMessage(false);
-          } else {
-            setShowErrorMessage(true);
-            setShowSuccessMessage(false);
-          }
-          setTimeout(() => {
-            setShowSuccessMessage(false);
-            setShowErrorMessage(false);
-          }, 5000);
-        })
-        .catch(() => {
+      .then((res) => {
+        if (res.ok) {
+          setShowSuccessMessage(true);
+          setShowErrorMessage(false);
+        } else {
           setShowErrorMessage(true);
           setShowSuccessMessage(false);
-          setTimeout(() => {
-            setShowErrorMessage(false);
-          }, 5000);
-        });
+        }
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+          setShowErrorMessage(false);
+        }, 5000);
+      })
+      .catch(() => {
+        setShowErrorMessage(true);
+        setShowSuccessMessage(false);
+        setTimeout(() => {
+          setShowErrorMessage(false);
+        }, 5000);
+      });
   };
+  
 
   if (!product) return <div>Loading...</div>;
 
