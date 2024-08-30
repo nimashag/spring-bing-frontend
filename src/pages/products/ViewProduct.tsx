@@ -150,9 +150,7 @@ const ViewProduct = () => {
         updateQuantity(selectedColor, selectedSize);
     };
 
-    const handleBuyNow = () => {
-        console.log('Buy Now button clicked');
-    };
+    
 
 
     if (!product) return <div>Loading...</div>;
@@ -231,13 +229,13 @@ const ViewProduct = () => {
                     <hr />
 
                     <div className="flex gap-4">
-                        <button
+                        {/* <button
                             className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isOutOfStock ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-green-700 text-white hover:bg-green-800 hover:shadow-lg'}`}
                             onClick={handleBuyNow}
                             disabled={isOutOfStock}>Buy Now
-                        </button>
+                        </button> */}
                         <button
-                            className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isOutOfStock ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-green-200 text-green-600 hover:bg-green-300 hover:shadow-lg'}`}
+                            className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isOutOfStock ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-green-700 text-white hover:bg-green-800 hover:shadow-lg'}`}
                             onClick={() => addToCart(product)}
                             disabled={isOutOfStock}>Add to Cart
                         </button>
