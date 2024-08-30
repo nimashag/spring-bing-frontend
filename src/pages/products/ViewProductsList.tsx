@@ -67,9 +67,6 @@ const ViewProductsList: React.FC = () => {
                             <Link to={`/product/${product._id}`}>
                                 <img src={product.images_path[0]} alt={product.name} className='w-full h-90 object-cover object-center hover:opacity-100 hover:scale-105 transition duration-300' />
                             </Link>
-                            <button className='absolute bottom-1 right-1 bg-green-500 text-white font-semibold w-12 h-12 rounded-full shadow-md hover:bg-green-400 hover:shadow-lg transition-all duration-300 flex items-center justify-center'>
-                                <BiCartAdd style={{ fontSize: '2rem', color: '#f1faf6' }} />
-                            </button>
                         </div>
                         <div className="px-6 py-4">
                         <Link to={`/product/${product._id}`}>
