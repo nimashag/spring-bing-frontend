@@ -7,34 +7,50 @@ import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
+import { cartItem } from "../../interfaces/Product";
+
 
 interface ICartProps {}
 
 const Cart: React.FunctionComponent<ICartProps> = (props) => {
+
   const [loading, setLoading] = useState<boolean>(false);
+  const [address, setAddress] = useState<string>("");
+  const navigate = useNavigate();
 
   const {
     cart,
     totalPrice,
     user_id,
+    selectedCartItem,
     removeProductFromCart,
     increaseProductQuantity,
     decreaseProductQuantity,
     calculateTotal,
+    addFromCart,
+    cancelPay,
   } = useCartStore((state) => ({
     user_id: state.user_id,
     cart: state.cart,
     totalPrice: state.totalPrice,
+    selectedCartItem: state.selectedCartItem,
     removeProductFromCart: state.removeProductFromCart,
     increaseProductQuantity: state.increaseProductQuantity,
     decreaseProductQuantity: state.decreaseProductQuantity,
     calculateTotal: state.calculateTotal,
+    addFromCart: state.addFromCart,
+    cancelPay: state.cancelPay,
   }));
 
   useEffect(() => {
     const handleCart = async () => {
       try {
         setLoading(true);
+
+        if (cart.length == 0) {
+          return 0;
+        }
 
         const addedProducts = cart.map((item) => ({
           product_id: item.product._id,
@@ -87,6 +103,41 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
     calculateTotal();
   };
 
+
+  const handleOrder = async () => {
+    try {
+
+      const selectedCartItem = cart.map((item) => ({
+        product_id: item.product._id,
+        quantity: item.quantity,
+        color: item.product.metadata.color,
+        size: item.product.metadata.size
+      }));
+
+      if(selectedCartItem.length == 0) {
+
+        enqueueSnackbar('Select the product you want to buy', { variant:'error' });
+         
+      } else if(address == "") {
+
+        enqueueSnackbar('Enter your address', { variant:'error' });
+
+      }else{
+        await axios.post("http://localhost:3000/order/create-order", {
+          user_id: user_id,
+          orderProducts: selectedCartItem,
+          billing_address: address,
+          order_status: "processing"
+        });
+        navigate('/order/pendingOrder');
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -96,7 +147,8 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
               cart.map((item) => (
                 <tr key={item.product._id} className="h=80 w=60 gap-4">
                   <td className="m">
-                    <div className="p-5 text-center">{item.product.name}</div>
+                    <div className="p-5 text-center">{item.product.name} 
+                    </div>
                   </td>
                   <td>
                     <div className="p-5">
@@ -133,6 +185,9 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
                       <button onClick={() => removeItem(item.product._id)}>
                         <ImCancelCircle className="text-red-600" />
                       </button>
+                      <button className="bg-blue-400 w-16 h-10 m-3" onClick={() => addFromCart(item)}>
+                        Buy
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -153,7 +208,21 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
           </tbody>
         </table>
       </div>
-      {cart.length > 0 && <div>Total Price: ${totalPrice.toFixed(2)}</div>}
+      {(cart.length > 0 || selectedCartItem.length > 0) && (
+        <>
+          <div className="text-2xl">
+          Total Price: <strong>${totalPrice.toFixed(2)}</strong>
+        </div>
+        <div className="m-3">
+          <label>Delivery Address : </label>
+          <input type="text" onChange={(e) => setAddress(e.target.value)} required/>
+        </div>
+         <div className="gap-4">
+          <button className="bg-yellow-400 w-16 h-10 m-3" onClick={handleOrder}>pay</button>
+          <button className="bg-red-600 w-16 h-10 m-3" onClick={cancelPay}>cancel</button>
+         </div>
+        </>
+      )}
     </>
   );
 };

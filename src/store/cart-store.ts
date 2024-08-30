@@ -7,13 +7,16 @@ import Product from "../interfaces/Product";
 interface CartStore {
   user_id: string;
   cart: cartItem[];
+  selectedCartItem : cartItem[];
   itemCount: number;
   totalPrice: number;
   addProductToCart: (product: Product) => void;
   removeProductFromCart: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
   decreaseProductQuantity: (productId: string) => void;
+  addFromCart: (cartItem: cartItem) => void;
   calculateTotal: () => void;
+  cancelPay: () => void;
   clearCart: () => void;
 }
 
@@ -22,6 +25,7 @@ export const useCartStore = create<CartStore>()(
     (set) => ({
       user_id: "66d196a444e126395cbed7d4",
       cart: [],
+      selectedCartItem: [],
       itemCount: 0,
       totalPrice: 0,
 
@@ -41,6 +45,29 @@ export const useCartStore = create<CartStore>()(
             state.itemCount += 1;
           })
         ),
+      
+      addFromCart: (cartItem) => 
+        set(
+          produce((state: CartStore) => {
+            // Add the item to the selectedCartItem array
+            state.selectedCartItem.push(cartItem);
+      
+            // Update the cart state by filtering out the item
+            state.cart = state.cart.filter(
+              (item) => item.product._id !== cartItem.product._id
+            );
+            
+            console.log(state.selectedCartItem); // For debugging
+          })
+        ),
+
+      cancelPay: () => 
+        set(
+          produce((state: CartStore) => {
+            state.cart.push(...state.selectedCartItem);
+            state.selectedCartItem = [];
+          })
+      ),  
 
       removeProductFromCart: (productId) =>
         set(
