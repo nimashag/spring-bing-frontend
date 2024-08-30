@@ -75,71 +75,71 @@ const ManageProducts: React.FC = () => {
 
       {/* Table */}
       <div className="flex justify-center items-center min-h-screen">
-      <Table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        <Table.Head className="bg-sky-700 text-white">
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Number
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Product Name
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Unit Price
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Color
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Size
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Quantity
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            <span>Edit Or Delete</span>
-          </Table.HeadCell>
-        </Table.Head>
+        <Table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <Table.Head className="bg-sky-700 text-white">
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Number
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Product Name
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Unit Price
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Color
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Size
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Quantity
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              <span>Edit Or Delete</span>
+            </Table.HeadCell>
+          </Table.Head>
 
-        {filteredProducts.map((product, index) => (
-          <Table.Body className="divide-y" key={product._id}>
-            <Table.Row className="bg-white hover:bg-gray-100 transition duration-300">
-              <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                {index + 1}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                {product.name}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.unit_price}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.metadata.map((meta) => meta.color).join(", ")}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.metadata.map((meta) => meta.size).join(", ")}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.metadata
-                  .map((meta) => meta.quantity)
-                  .reduce((acc, qty) => acc + qty, 0)}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 flex gap-4">
-                <Link to={`/update-product/${product._id}`}>
-                  <button className="text-cyan-600 font-medium hover:underline">
-                    Edit
+          {filteredProducts.map((product, index) => (
+            <Table.Body className="divide-y" key={product._id}>
+              <Table.Row className="bg-white hover:bg-gray-100 transition duration-300">
+                <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                  {index + 1}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                  {product.name}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {product.unit_price}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {product.metadata.map((meta) => meta.color).join(", ")}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {product.metadata.map((meta) => meta.size).join(", ")}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {product.metadata
+                    .map((meta) => meta.quantity)
+                    .reduce((acc, qty) => acc + qty, 0)}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 flex gap-4">
+                  <Link to={`/update-product/${product._id}`}>
+                    <button className="text-cyan-600 font-medium hover:underline">
+                      Edit
+                    </button>
+                  </Link>
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-1 rounded transition duration-300"
+                    onClick={() => handleDelete(product._id)}
+                  >
+                    Delete
                   </button>
-                </Link>
-                <button
-                  className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-1 rounded transition duration-300"
-                  onClick={() => handleDelete(product._id)}
-                >
-                  Delete
-                </button>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        ))}
-      </Table>
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          ))}
+        </Table>
       </div>
     </div>
   );

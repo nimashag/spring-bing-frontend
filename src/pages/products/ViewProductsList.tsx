@@ -13,9 +13,10 @@ const ViewProductsList: React.FC = () => {
     const [categories, setCategories] = useState<{ [key: string]: string }>({});
     const [searchQuery, setSearchQuery] = useState("");
 
-    const {cart,addProductToCart} = useCartStore((state) => ({
+    const {cart,addProductToCart,calculateTotal} = useCartStore((state) => ({
         addProductToCart: state.addProductToCart,
-        cart: state.cart
+        cart: state.cart,
+        calculateTotal: state.calculateTotal
     }));
 
     useEffect(() => {
@@ -52,6 +53,7 @@ const ViewProductsList: React.FC = () => {
     const addToCart = (product: Product) => {
         enqueueSnackbar('Product added to cart', { variant:'success' });
         addProductToCart(product);
+        calculateTotal();
         console.log(cart);
     }
 

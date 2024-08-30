@@ -12,6 +12,8 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ProductList from './pages/productList'
 import Cart from './pages/cart/Cart.tsx';
+import PendingOrders from './pages/orders/PendingOrders.tsx';
+import ViewOrder from './pages/orders/ViewOrder.tsx';
  
 const App : React.FC = () => {
   return (
@@ -33,6 +35,10 @@ const App : React.FC = () => {
 
           {/*Routes for cart*/}
           <Route path='/cart' element={<Cart/>}/>
+
+          {/*Routes for Orders */}
+          <Route path='/order/pendingOrder' element={<PendingOrders/>}/>
+          <Route path='/order/viewOrder/:id' element={<ViewOrder/>}/>
 
         </Routes>
       <Footer />
