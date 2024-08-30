@@ -15,6 +15,7 @@ const ViewProduct = () => {
     const [selectedSize, setSelectedSize] = useState<string>('');
     const [colorOptions, setColorOptions] = useState<string[]>([]);
     const [sizeOptions, setSizeOptions] = useState<string[]>([]);
+    const [quantity, setQuantity] = useState<number | null>(null); // State for quantity
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -76,10 +77,14 @@ const ViewProduct = () => {
 
                 if (!sizes.includes(selectedSize)) {
                     setSelectedSize('');
+                    setQuantity(null); // Reset quantity when size is cleared
+                } else {
+                    updateQuantity(color, selectedSize); // Update quantity if size is still selected
                 }
             } else {
                 const allSizes = Array.from(new Set(product.metadata.map((item: any) => item.size)));
                 setSizeOptions(allSizes);
+                setQuantity(null); // Reset quantity when color is cleared
             }
         }
     };
@@ -94,11 +99,22 @@ const ViewProduct = () => {
 
                 if (!colors.includes(selectedColor)) {
                     setSelectedColor('');
+                    setQuantity(null); // Reset quantity when color is cleared
+                } else {
+                    updateQuantity(selectedColor, size); // Update quantity if color is still selected
                 }
             } else {
                 const allColors = Array.from(new Set(product.metadata.map((item: any) => item.color)));
                 setColorOptions(allColors);
+                setQuantity(null); // Reset quantity when size is cleared
             }
+        }
+    };
+
+    const updateQuantity = (color: string, size: string) => {
+        if (product) {
+            const matchedMetadata = product.metadata.find(item => item.color === color && item.size === size);
+            setQuantity(matchedMetadata ? matchedMetadata.quantity : null);
         }
     };
 
@@ -106,12 +122,14 @@ const ViewProduct = () => {
         const selectedColor = e.target.value;
         setSelectedColor(selectedColor);
         filterSizeOptions(selectedColor);
+        updateQuantity(selectedColor, selectedSize);
     };
 
     const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedSize = e.target.value;
         setSelectedSize(selectedSize);
         filterColorOptions(selectedSize);
+        updateQuantity(selectedColor, selectedSize);
     };
 
     const handleBuyNow = () => {
@@ -127,11 +145,12 @@ const ViewProduct = () => {
     const productCategory = categories.find(category => category._id === product.category[0])?.name || 'Unknown';
     const productSubcategory = subcategories.find(subcategory => subcategory._id === product.sub_category[0])?.name || 'Unknown';
 
+    const isOutOfStock = quantity === 0;
+
     return (
         <div>
             <div className='px-4 lg:px-24 my-20 flex flex-col md:flex-row justify-between items-center gap-12'>
                 <div className='md:w-1/2'>
-                    {/* Smaller Carousel Component */}
                     <Carousel showThumbs={true} autoPlay infiniteLoop className="max-w-md">
                         {product.images_path.map((image, index) => (
                             <div key={index}>
@@ -187,16 +206,25 @@ const ViewProduct = () => {
                             ))}
                         </select>
                     </div>
+                    
+                    {quantity !== null && (
+                        <>
+                            <hr />
+                            <p className='mb-10 text-lg md:w-5/6'><strong>Available Quantity: </strong>{quantity}</p>
+                        </>
+                    )}
                     <hr />
 
                     <div className="flex gap-4">
                         <button
-                            className='bg-green-700 text-white font-semibold px-6 py-3 rounded-md shadow-md hover:bg-green-800 hover:shadow-lg transition-all duration-300 w-full'
-                            onClick={handleBuyNow}>Buy Now
+                            className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isOutOfStock ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-green-700 text-white hover:bg-green-800 hover:shadow-lg'}`}
+                            onClick={handleBuyNow}
+                            disabled={isOutOfStock}>Buy Now
                         </button>
                         <button
-                            className='bg-green-200 text-green-600 font-semibold px-6 py-3 rounded-md shadow-md hover:bg-green-300 hover:shadow-lg transition-all duration-300 w-full'
-                            onClick={handleAddToCart}>Add to Cart
+                            className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isOutOfStock ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-green-200 text-green-600 hover:bg-green-300 hover:shadow-lg'}`}
+                            onClick={handleAddToCart}
+                            disabled={isOutOfStock}>Add to Cart
                         </button>
                     </div>
                 </div>
@@ -206,3 +234,4 @@ const ViewProduct = () => {
 }
 
 export default ViewProduct;
+
