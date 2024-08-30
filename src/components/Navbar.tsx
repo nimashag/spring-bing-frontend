@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
             </NavLink>
 
-            <NavLink to='/' className='flex flex-col items-center gap-1'>
+            <NavLink to='/newarrivals' className='flex flex-col items-center gap-1'>
                 <p>New Arrivals</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
             </NavLink>
@@ -33,13 +33,17 @@ const Navbar: React.FC = () => {
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
             </NavLink>
 
-            <NavLink to='/' className='flex flex-col items-center gap-1'>
+            <NavLink to='/contactus' className='flex flex-col items-center gap-1'>
                 <p>Contact Us</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
             </NavLink>
 
             <NavLink to='/manage-products' className='flex flex-col items-center gap-1'>
                 <p>Manage Products</p>
+                <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
+            </NavLink>
+            <NavLink to='/manage-faq' className='flex flex-col items-center gap-1'>
+                <p>Manage FAQ</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden'></hr>
             </NavLink>
 

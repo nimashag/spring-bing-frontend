@@ -12,6 +12,14 @@ import AddCategory from './pages/products/AddCategory'
 import AddSubCategory from './pages/products/AddSubCategory'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ContactUs from './pages/ContactUs.tsx'
+import ViewFAQ from './pages/faq/ViewFAQ.tsx'
+import CreateFAQ from './pages/faq/CreateFAQ.tsx'
+import ManageFAQ from './pages/faq/ManageFAQ.tsx'
+import AnswerFAQ from './pages/faq/AnswerFAQ.tsx'
+import NewArrivals from './pages/NewArrivals.tsx'
+import Collections from './pages/Collections.tsx'
+
 import ProductList from './pages/productList'
 import Cart from './pages/cart/Cart.tsx';
 import PendingOrders from './pages/orders/PendingOrders.tsx';
@@ -27,6 +35,9 @@ const App : React.FC = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
+          <Route path='/contactus' element={<ContactUs />} />
+          <Route path='/newarrivals' element={<NewArrivals />} />
+          <Route path='/collections' element={<Collections />} />
 
           {/*  Routes for Products Module */}
           <Route path='/products' element={<ViewProductsList />} />
@@ -43,6 +54,14 @@ const App : React.FC = () => {
           {/*Routes for Orders */}
           <Route path='/order/pendingOrder' element={<PendingOrders/>}/>
           <Route path='/order/viewOrder/:id' element={<ViewOrder/>}/>
+
+          {/*  Routes for Faq Module */}
+          <Route path='/faqs' element={<ViewFAQ />} />
+          <Route path='/create-faq' element={<CreateFAQ />} />
+          <Route path='/manage-faq' element={<ManageFAQ />} />
+          <Route path='/answer-faq/:id' element={<AnswerFAQ />} />
+
+
 
         </Routes>
       <Footer />
