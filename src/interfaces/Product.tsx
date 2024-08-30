@@ -18,3 +18,8 @@ interface Product {
 }
 
 export default Product;
+
+export interface cartItem {
+    product: Product;
+    quantity: number;
+}

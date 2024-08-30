@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { SnackbarProvider } from "notistack";
 import Home from './pages/Home'
 import About from './pages/About'
 import ManageProducts from './pages/products/ManageProducts'
@@ -7,6 +8,8 @@ import CreateProduct from './pages/products/CreateProduct'
 import UpdateProduct from './pages/products/UpdateProduct'
 import ViewProductsList from './pages/products/ViewProductsList.tsx'
 import ViewProduct from './pages/products/ViewProduct'
+import AddCategory from './pages/products/AddCategory'
+import AddSubCategory from './pages/products/AddSubCategory'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ContactUs from './pages/ContactUs.tsx'
@@ -17,8 +20,14 @@ import AnswerFAQ from './pages/faq/AnswerFAQ.tsx'
 import NewArrivals from './pages/NewArrivals.tsx'
 import Collections from './pages/Collections.tsx'
 
+import ProductList from './pages/productList'
+import Cart from './pages/cart/Cart.tsx';
+import PendingOrders from './pages/orders/PendingOrders.tsx';
+import ViewOrder from './pages/orders/ViewOrder.tsx';
+ 
 const App : React.FC = () => {
   return (
+    <SnackbarProvider>
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
 
       <Navbar />
@@ -36,6 +45,15 @@ const App : React.FC = () => {
           <Route path='/manage-products' element={<ManageProducts />} />
           <Route path='/create-product' element={<CreateProduct />} />
           <Route path='/update-product/:id' element={<UpdateProduct />} />
+          <Route path='/add-category' element={<AddCategory />} />
+          <Route path='/add-subcategory' element={<AddSubCategory />} />
+
+          {/*Routes for cart*/}
+          <Route path='/cart' element={<Cart/>}/>
+
+          {/*Routes for Orders */}
+          <Route path='/order/pendingOrder' element={<PendingOrders/>}/>
+          <Route path='/order/viewOrder/:id' element={<ViewOrder/>}/>
 
           {/*  Routes for Faq Module */}
           <Route path='/faqs' element={<ViewFAQ />} />
@@ -46,10 +64,10 @@ const App : React.FC = () => {
 
 
         </Routes>
-
       <Footer />
 
     </div>
+    </SnackbarProvider>
   )
 }
 

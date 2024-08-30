@@ -51,6 +51,21 @@ const ManageProducts: React.FC = () => {
       });
   };
 
+  // Function to get unique values from an array
+  const getUniqueValues = (array: string[]) => [...new Set(array.filter(Boolean))];
+
+  // Function to get unique colors from metadata
+  const getUniqueColors = (metadata) => {
+    const colors = metadata.map((meta) => meta.color);
+    return getUniqueValues(colors);
+  };
+
+  // Function to get unique sizes from metadata
+  const getUniqueSizes = (metadata) => {
+    const sizes = metadata.map((meta) => meta.size);
+    return getUniqueValues(sizes);
+  };
+
   return (
     <div className="px-4 my-12">
       <div className="flex justify-between items-start">
@@ -71,75 +86,101 @@ const ManageProducts: React.FC = () => {
         </div>
       </div>
 
+      <div className="flex justify-center">
+        {/* Button Group */}
+        <div className="flex gap-4">
+          <Link to="/create-product">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Add Product
+            </button>
+          </Link>
+          <Link to="/add-category">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Add Category
+            </button>
+          </Link>
+          <Link to="/add-subcategory">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Add Subcategory
+            </button>
+          </Link>
+          <Link to="/generate-report">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Generate Report
+            </button>
+          </Link>
+        </div>
+      </div>
+
       <br />
 
       {/* Table */}
-      <div className="flex justify-center items-center min-h-screen">
-      <Table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        <Table.Head className="bg-sky-700 text-white">
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Number
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Product Name
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Unit Price
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Color
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Size
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            Quantity
-          </Table.HeadCell>
-          <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-            <span>Edit Or Delete</span>
-          </Table.HeadCell>
-        </Table.Head>
+      <div className="flex justify-center min-h-screen">
+        <Table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <Table.Head className="bg-sky-700 text-white">
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Number
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Product Name
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Unit Price
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Color
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Size
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              Quantity
+            </Table.HeadCell>
+            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
+              <span>Edit Or Delete</span>
+            </Table.HeadCell>
+          </Table.Head>
 
-        {filteredProducts.map((product, index) => (
-          <Table.Body className="divide-y" key={product._id}>
-            <Table.Row className="bg-white hover:bg-gray-100 transition duration-300">
-              <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                {index + 1}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                {product.name}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.unit_price}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.metadata.map((meta) => meta.color).join(", ")}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.metadata.map((meta) => meta.size).join(", ")}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 text-gray-700">
-                {product.metadata
-                  .map((meta) => meta.quantity)
-                  .reduce((acc, qty) => acc + qty, 0)}
-              </Table.Cell>
-              <Table.Cell className="px-6 py-4 flex gap-4">
-                <Link to={`/update-product/${product._id}`}>
-                  <button className="text-cyan-600 font-medium hover:underline">
-                    Edit
+          {filteredProducts.map((product, index) => (
+            <Table.Body className="divide-y" key={product._id}>
+              <Table.Row className="bg-white hover:bg-gray-100 transition duration-300">
+                <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                  {index + 1}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                  {product.name}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {product.unit_price}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {getUniqueColors(product.metadata).join(", ")}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {getUniqueSizes(product.metadata).join(", ")}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 text-gray-700">
+                  {product.metadata
+                    .map((meta) => meta.quantity)
+                    .reduce((acc, qty) => acc + qty, 0)}
+                </Table.Cell>
+                <Table.Cell className="px-6 py-4 flex gap-4">
+                  <Link to={`/update-product/${product._id}`}>
+                    <button className="text-cyan-600 font-medium hover:underline">
+                      Edit
+                    </button>
+                  </Link>
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-1 rounded transition duration-300"
+                    onClick={() => handleDelete(product._id)}
+                  >
+                    Delete
                   </button>
-                </Link>
-                <button
-                  className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-1 rounded transition duration-300"
-                  onClick={() => handleDelete(product._id)}
-                >
-                  Delete
-                </button>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        ))}
-      </Table>
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          ))}
+        </Table>
       </div>
     </div>
   );
