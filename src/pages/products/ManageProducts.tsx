@@ -51,6 +51,21 @@ const ManageProducts: React.FC = () => {
       });
   };
 
+  // Function to get unique values from an array
+  const getUniqueValues = (array: string[]) => [...new Set(array.filter(Boolean))];
+
+  // Function to get unique colors from metadata
+  const getUniqueColors = (metadata) => {
+    const colors = metadata.map((meta) => meta.color);
+    return getUniqueValues(colors);
+  };
+
+  // Function to get unique sizes from metadata
+  const getUniqueSizes = (metadata) => {
+    const sizes = metadata.map((meta) => meta.size);
+    return getUniqueValues(sizes);
+  };
+
   return (
     <div className="px-4 my-12">
       <div className="flex justify-between items-start">
@@ -71,10 +86,36 @@ const ManageProducts: React.FC = () => {
         </div>
       </div>
 
+      <div className="flex justify-center">
+        {/* Button Group */}
+        <div className="flex gap-4">
+          <Link to="/create-product">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Add Product
+            </button>
+          </Link>
+          <Link to="/add-category">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Add Category
+            </button>
+          </Link>
+          <Link to="/add-subcategory">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Add Subcategory
+            </button>
+          </Link>
+          <Link to="/generate-report">
+            <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
+              Generate Report
+            </button>
+          </Link>
+        </div>
+      </div>
+
       <br />
 
       {/* Table */}
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center min-h-screen">
         <Table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
           <Table.Head className="bg-sky-700 text-white">
             <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
@@ -113,10 +154,10 @@ const ManageProducts: React.FC = () => {
                   {product.unit_price}
                 </Table.Cell>
                 <Table.Cell className="px-6 py-4 text-gray-700">
-                  {product.metadata.map((meta) => meta.color).join(", ")}
+                  {getUniqueColors(product.metadata).join(", ")}
                 </Table.Cell>
                 <Table.Cell className="px-6 py-4 text-gray-700">
-                  {product.metadata.map((meta) => meta.size).join(", ")}
+                  {getUniqueSizes(product.metadata).join(", ")}
                 </Table.Cell>
                 <Table.Cell className="px-6 py-4 text-gray-700">
                   {product.metadata

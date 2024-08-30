@@ -2,22 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Card } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
-import { BiCartAdd } from "react-icons/bi";
 import Product from "../../interfaces/Product";
 import Category from "../../interfaces/Category";
 import { useCartStore } from '../../store/cart-store';
-import { enqueueSnackbar } from "notistack";
+
 
 const ViewProductsList: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<{ [key: string]: string }>({});
     const [searchQuery, setSearchQuery] = useState("");
-
-    const {cart,addProductToCart,calculateTotal} = useCartStore((state) => ({
-        addProductToCart: state.addProductToCart,
-        cart: state.cart,
-        calculateTotal: state.calculateTotal
-    }));
 
     useEffect(() => {
         fetch("http://localhost:3000/product")
@@ -49,13 +42,6 @@ const ViewProductsList: React.FC = () => {
         )
     );
 
-    // add to cart method 
-    const addToCart = (product: Product) => {
-        enqueueSnackbar('Product added to cart', { variant:'success' });
-        addProductToCart(product);
-        calculateTotal();
-        console.log(cart);
-    }
 
     return (
         <div className='mt-28 px-4 lg:px-24'>
@@ -83,9 +69,6 @@ const ViewProductsList: React.FC = () => {
                             <Link to={`/product/${product._id}`}>
                                 <img src={product.images_path[0]} alt={product.name} className='w-full h-90 object-cover object-center hover:opacity-100 hover:scale-105 transition duration-300' />
                             </Link>
-                            <button className='absolute bottom-1 right-1 bg-green-500 text-white font-semibold w-12 h-12 rounded-full shadow-md hover:bg-green-400 hover:shadow-lg transition-all duration-300 flex items-center justify-center' onClick={() => addToCart(product)}>
-                                <BiCartAdd style={{ fontSize: '2rem', color: '#f1faf6' }} />
-                            </button>
                         </div>
                         <div className="px-6 py-4">
                         <Link to={`/product/${product._id}`}>
