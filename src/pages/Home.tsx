@@ -9,11 +9,14 @@ import Banner from './banner/Banner'
 import Trending from '../components/CurrentTrending'
 
 const Home : React.FC = () => {
+  const token = localStorage.getItem("token");
   return (
     <div>
       <Hero />
       <Trending />
-      <Recomendation />
+      { token && (
+        <Recomendation />
+      )}
       <ShopByCategory />
       <Banner />
       <Complaints />

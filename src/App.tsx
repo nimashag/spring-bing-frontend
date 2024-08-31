@@ -25,7 +25,7 @@ import ViewOrder from './pages/orders/ViewOrder';
 import ProfilePage from './auth/ProfilePage';
 import AdminCreateAccount from './auth/AdminCreateAccount';
 import AdminLogin from './auth/AdminLogin';
-import Dashboard from './auth/Dashboard';
+import AdminDashboard from './auth/Dashboard';
 
 const App: React.FC = () => {
   return (
@@ -64,7 +64,7 @@ const App: React.FC = () => {
           <Route path='/profile' element={<ProfilePage />} />
           <Route path='/admin-create-account' element={<AdminCreateAccount />} />
           <Route path='/admin-login' element={<AdminLogin />} />
-          <Route path='/admin/dashboard' element={<Dashboard />} />
+          <Route path='/admin/dashboard' element={<AdminDashboard />} />
         </Routes>
         <Footer />
       </div>
