@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CurrentTrending  : React.FC = () => {
+const Trending  : React.FC = () => {
   return (
-    <div>CurrentTrending</div>
+    <div>Trending</div>
   )
 }
 
-export default CurrentTrending 
+export default Trending 
