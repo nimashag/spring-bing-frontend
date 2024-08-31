@@ -6,6 +6,7 @@ import CurrentTrending from '../components/CurrentTrending'
 import Recomendation from '../components/Recomendation'
 import Complaints from '../components/Complaints'
 import ShopByCategory from '../components/ShopByCategory'
+import Banner from './banner/Banner'
 
 const Home : React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const Home : React.FC = () => {
       <CurrentTrending />
       <Recomendation />
       <ShopByCategory />
+      <Banner />
       <Complaints />
       <OurPolicy />
       <NewsLetter />
