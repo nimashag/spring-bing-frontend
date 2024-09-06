@@ -78,10 +78,12 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
               <td className="py-3 px-4 text-sm font-medium text-gray-900">{order.total_price}</td>
               <td className="py-3 px-4 text-sm font-medium text-gray-900">
                 <div className="flex gap-3">
-                  <button className="text-cyan-600 font-medium hover:underline">Edit</button>
-                  <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded transition duration-300">
+                  <Link to={`/order/updateOrder/${order._id}`}>
+                    <button className="text-cyan-600 font-medium hover:underline">Edit</button>
+                  </Link>
+                  {/* <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded transition duration-300">
                     Delete
-                  </button>
+                  </button> */}
                 </div>
               </td>
             </tr>

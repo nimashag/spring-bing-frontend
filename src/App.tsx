@@ -24,6 +24,7 @@ import ProductList from './pages/productList'
 import Cart from './pages/cart/Cart.tsx';
 import PendingOrders from './pages/orders/PendingOrders.tsx';
 import ViewOrder from './pages/orders/ViewOrder.tsx';
+import UpdateOrder from './pages/orders/updateOrder.tsx';
  
 const App : React.FC = () => {
   return (
@@ -54,6 +55,7 @@ const App : React.FC = () => {
           {/*Routes for Orders */}
           <Route path='/order/pendingOrder' element={<PendingOrders/>}/>
           <Route path='/order/viewOrder/:id' element={<ViewOrder/>}/>
+          <Route path='/order/updateOrder/:id' element={<UpdateOrder/>}/>
 
           {/*  Routes for Faq Module */}
           <Route path='/faqs' element={<ViewFAQ />} />
