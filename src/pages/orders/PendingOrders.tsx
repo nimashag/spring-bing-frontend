@@ -3,8 +3,6 @@ import { useCartStore } from "../../store/cart-store";
 import { useState, useEffect } from "react";
 import { Order } from "../../interfaces/Order";
 import axios from "axios";
-import { Table } from "flowbite-react";
-import { format } from "date-fns";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 
