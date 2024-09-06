@@ -47,21 +47,22 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
     const handleCart = async () => {
       try {
         setLoading(true);
+        /*console.log("Selected Items : ",selectedCartItem);*/
 
         if (cart.length < 0) {
           return 0;
         }
-
+        /*console.log(cart);*/
         const addedProducts = cart.map((item) => ({
           product_id: item.product._id,
           quantity: item.quantity,
+          color: item.color,
+          size: item.size,
         }));
-
+        console.log(addedProducts);
         const checkCart = await axios.get(
           `http://localhost:3000/cart/get-cart/${user_id}`
         );
-
-        console.log(checkCart.data);
 
         if (checkCart.data.user_id == user_id) {
           await axios.put(`http://localhost:3000/cart/update-cart/${user_id}`, {
@@ -84,6 +85,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
 
     if (user_id) {
       handleCart();
+      console.log("Selected Item : ",selectedCartItem);
     }
   }, [user_id, cart]);
 
@@ -93,13 +95,14 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
     calculateTotal();
   };
 
-  const removeQuantity = (productId: string) => {
-    decreaseProductQuantity(productId);
+  const removeQuantity = (item: cartItem) => {
+    decreaseProductQuantity(item);
     calculateTotal();
   };
 
-  const increaseQuantity = (productId: string) => {
-    increaseProductQuantity(productId);
+  const increaseQuantity = (item: cartItem) => {
+    //console.log(item)
+    increaseProductQuantity(item);
     calculateTotal();
   };
 
@@ -107,12 +110,12 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
   const handleOrder = async () => {
     try {
 
-      const selectedCartItem = cart.map((item) => ({
+      /*const selectedCartItem = cart.map((item) => ({
         product_id: item.product._id,
         quantity: item.quantity,
-        /* color: item.product.metadata.color,
-        size: item.product.metadata.size */
-      }));
+        color: item.color,
+        size: item.size
+      }));*/
 
       if(selectedCartItem.length == 0) {
 
@@ -144,11 +147,15 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
     <table className="w-full max-w-4xl bg-white shadow-md rounded-lg overflow-hidden">
       <tbody>
         {cart.length > 0 ? (
-          cart.map((item) => (
-            <tr key={item.product._id} className="border-b">
+          cart.map((item, index) => (
+            <tr key={index + 1} className="border-b">
               <td className="p-5">
                 <div className="text-center font-medium text-gray-700">
                   {item.product.name}
+                  <div className="border-2 border-black mt-2">
+                    {item.color} -  {item.size}
+
+                  </div>
                 </div>
               </td>
               <td className="p-5">
@@ -164,13 +171,13 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
                 </span>
                 <div className="flex justify-center items-center gap-4">
                   <button
-                    onClick={() => increaseQuantity(item.product._id)}
+                    onClick={() => increaseQuantity(item)}
                     className="text-2xl text-green-500 hover:text-green-700"
                   >
                     <CiCirclePlus />
                   </button>
                   <button
-                    onClick={() => removeQuantity(item.product._id)}
+                    onClick={() => removeQuantity(item)}
                     className="text-2xl text-red-500 hover:text-red-700"
                   >
                     <CiCircleMinus />
