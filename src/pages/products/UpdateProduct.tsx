@@ -13,6 +13,9 @@ const UpdateProduct: React.FC = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
+  // Validation error states
+  const [errors, setErrors] = useState<any>({});
+
   useEffect(() => {
     // Fetch the product details to populate the form
     fetch(`http://localhost:3000/product/${id}`)
@@ -52,6 +55,52 @@ const UpdateProduct: React.FC = () => {
     }
   };
 
+  const validateForm = (updatedProduct) => {
+    const newErrors: any = {};
+
+    // Product Name Validation
+    if (!updatedProduct.name || updatedProduct.name.length < 3) {
+      newErrors.name = "Product name must be at least 3 characters long.";
+    }
+
+    // Unit Price Validation
+    if (isNaN(updatedProduct.unit_price) || updatedProduct.unit_price <= 0) {
+      newErrors.unit_price = "Unit price must be a positive number.";
+    }
+
+    // Metadata Validation (Color, Size, Quantity)
+    updatedProduct.metadata.forEach((item, index) => {
+      if (!item.color) {
+        newErrors[`color-${index}`] = "Color cannot be empty.";
+      }
+      if (!item.size) {
+        newErrors[`size-${index}`] = "Size cannot be empty.";
+      }
+      if (isNaN(item.quantity) || item.quantity <= 0) {
+        newErrors[`quantity-${index}`] = "Quantity must be a positive number.";
+      }
+    });
+
+    // Category and Subcategory Validation
+    if (!updatedProduct.category || !updatedProduct.category.length) {
+      newErrors.category = "Category is required.";
+    }
+    if (!updatedProduct.sub_category || !updatedProduct.sub_category.length) {
+      newErrors.sub_category = "Subcategory is required.";
+    }
+
+    // Images Path Validation
+    const urlRegex = /^(https?:\/\/[^\s$.?#].[^\s]*)$/;
+    updatedProduct.images_path.forEach((url, index) => {
+      if (!urlRegex.test(url)) {
+        newErrors[`images_path`] = "Each URL must be a valid web address.";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleUpdate = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -72,6 +121,10 @@ const UpdateProduct: React.FC = () => {
       sub_category: [form.sub_category.value],
       images_path: imagesPathArray, // Use the array of URLs
     };
+
+    if (!validateForm(updatedProduct)) {
+      return;
+    }
 
     fetch(`http://localhost:3000/product/${id}`, {
       method: "PUT",
@@ -131,6 +184,9 @@ const UpdateProduct: React.FC = () => {
               className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
               required
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
           </div>
           <div className="w-full">
             <Label
@@ -142,12 +198,14 @@ const UpdateProduct: React.FC = () => {
               id="unit_price"
               name="unit_price"
               type="number"
-              step="0.01"
               defaultValue={product.unit_price}
               placeholder="Enter unit price"
               className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
               required
             />
+            {errors.unit_price && (
+              <p className="text-red-500 text-sm mt-1">{errors.unit_price}</p>
+            )}
           </div>
         </div>
 
@@ -171,6 +229,11 @@ const UpdateProduct: React.FC = () => {
                   className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
                   required
                 />
+                {errors[`color-${index}`] && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors[`color-${index}`]}
+                  </p>
+                )}
               </div>
               <div className="w-full">
                 <Label
@@ -188,6 +251,11 @@ const UpdateProduct: React.FC = () => {
                   className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
                   required
                 />
+                {errors[`size-${index}`] && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors[`size-${index}`]}
+                  </p>
+                )}
               </div>
               <div className="w-full">
                 <Label
@@ -205,6 +273,11 @@ const UpdateProduct: React.FC = () => {
                   className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
                   required
                 />
+                {errors[`quantity-${index}`] && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors[`quantity-${index}`]}
+                  </p>
+                )}
               </div>
               <div className="flex items-center">
                 <Button
@@ -250,6 +323,9 @@ const UpdateProduct: React.FC = () => {
                 </option>
               ))}
             </Select>
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">{errors.category}</p>
+            )}
           </div>
           <div className="w-full">
             <Label
@@ -270,6 +346,11 @@ const UpdateProduct: React.FC = () => {
                 </option>
               ))}
             </Select>
+            {errors.sub_category && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.sub_category}
+              </p>
+            )}
           </div>
         </div>
 
@@ -308,6 +389,9 @@ const UpdateProduct: React.FC = () => {
             rows={5}
             required
           />
+          {errors.images_path && (
+            <p className="text-red-500 text-sm mt-1">{errors.images_path}</p>
+          )}
         </div>
 
         {/* Submit Button */}
