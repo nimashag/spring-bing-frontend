@@ -13,6 +13,12 @@ const CreateProduct: React.FC = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // State to handle error messages
   const [metadata, setMetadata] = useState([{ color: "", size: "", quantity: 0 }]); // Initialize with one set
+  const [validationErrors, setValidationErrors] = useState({
+    name: "",
+    unitPrice: "",
+    metadata: [{ color: "", size: "", quantity: "" }],
+    imagesPath: "",
+  });
 
   useEffect(() => {
     // Fetch categories
@@ -36,10 +42,18 @@ const CreateProduct: React.FC = () => {
 
   const handleAddMetadata = () => {
     setMetadata([...metadata, { color: "", size: "", quantity: 0 }]);
+    setValidationErrors({
+      ...validationErrors,
+      metadata: [...validationErrors.metadata, { color: "", size: "", quantity: "" }],
+    });
   };
 
   const handleRemoveMetadata = (index: number) => {
     setMetadata(metadata.filter((_, i) => i !== index));
+    setValidationErrors({
+      ...validationErrors,
+      metadata: validationErrors.metadata.filter((_, i) => i !== index),
+    });
   };
 
   const handleMetadataChange = (index: number, field: string, value: string | number) => {
@@ -47,11 +61,63 @@ const CreateProduct: React.FC = () => {
         i === index ? { ...item, [field]: value } : item
     );
     setMetadata(newMetadata);
+
+    const newErrors = validationErrors.metadata.map((item, i) =>
+      i === index ? { ...item, [field]: "" } : item
+    );
+    setValidationErrors({ ...validationErrors, metadata: newErrors });
+  };
+
+  const validateForm = (form) => {
+    let valid = true;
+    let errors = {
+      name: "",
+      unitPrice: "",
+      metadata: metadata.map(() => ({ color: "", size: "", quantity: "" })),
+      imagesPath: "",
+    };
+
+    if (form.product_name.value.length < 3) {
+      errors.name = "Product name must be at least 3 characters long.";
+      valid = false;
+    }
+
+    if (isNaN(form.unit_price.value) || parseFloat(form.unit_price.value) <= 0) {
+      errors.unitPrice = "Unit price must be a positive number.";
+      valid = false;
+    }
+
+    metadata.forEach((item, index) => {
+      if (item.color.trim() === "") {
+        errors.metadata[index].color = "Color is required.";
+        valid = false;
+      }
+      if (item.size.trim() === "") {
+        errors.metadata[index].size = "Size is required.";
+        valid = false;
+      }
+      if (isNaN(item.quantity) || item.quantity <= 0) {
+        errors.metadata[index].quantity = "Quantity must be a positive number.";
+        valid = false;
+      }
+    });
+
+    if (form.images_path.value.trim() === "") {
+      errors.imagesPath = "At least one image path is required.";
+      valid = false;
+    }
+
+    setValidationErrors(errors);
+    return valid;
   };
 
   const handleProductSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
+
+    if (!validateForm(form)) {
+      return;
+    }
 
     const product = {
       name: form.product_name.value,
@@ -113,8 +179,11 @@ const CreateProduct: React.FC = () => {
                   type="text"
                   placeholder="  Enter product name"
                   className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                  required
+                  // required
               />
+              {validationErrors.name && (
+              <p className="text-red-500 text-sm">{validationErrors.name}</p>
+              )}
             </div>
             <div className="w-full">
               <Label
@@ -128,8 +197,11 @@ const CreateProduct: React.FC = () => {
                   type="number"
                   placeholder="  Enter unit price"
                   className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                  required
+                  // required
               />
+              {validationErrors.unitPrice && (
+              <p className="text-red-500 text-sm">{validationErrors.unitPrice}</p>
+              )}
             </div>
           </div>
 
@@ -150,8 +222,11 @@ const CreateProduct: React.FC = () => {
                       className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                       value={item.color}
                       onChange={(e) => handleMetadataChange(index, "color", e.target.value)}
-                      required
+                      // required
                   />
+                  {validationErrors.metadata[index]?.color && (
+                    <p className="text-red-500 text-sm">{validationErrors.metadata[index].color}</p>
+                   )}
                 </div>
                 <div className="w-full">
                   <Label
@@ -167,8 +242,11 @@ const CreateProduct: React.FC = () => {
                       className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                       value={item.size}
                       onChange={(e) => handleMetadataChange(index, "size", e.target.value)}
-                      required
+                      // required
                   />
+                  {validationErrors.metadata[index]?.size && (
+                    <p className="text-red-500 text-sm">{validationErrors.metadata[index].size}</p>
+                  )}
                 </div>
                 <div className="w-full">
                   <Label
@@ -184,8 +262,11 @@ const CreateProduct: React.FC = () => {
                       className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                       value={item.quantity}
                       onChange={(e) => handleMetadataChange(index, "quantity", parseInt(e.target.value))}
-                      required
+                      // required
                   />
+                  {validationErrors.metadata[index]?.quantity && (
+                    <p className="text-red-500 text-sm">{validationErrors.metadata[index].quantity}</p>
+                  )}
                 </div>
 
                 {/* + and - buttons for adding/removing metadata sets */}
@@ -280,11 +361,13 @@ const CreateProduct: React.FC = () => {
             <Textarea
                 id="images_path"
                 name="images_path"
-                // type="text"
                 placeholder="  Enter image paths separated by commas"
                 className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                required
+                // required
             />
+            {validationErrors.imagesPath && (
+              <p className="text-red-500 text-sm">{validationErrors.imagesPath}</p>
+            )}
           </div>
 
           {/* Error Message */}
@@ -315,6 +398,5 @@ const CreateProduct: React.FC = () => {
 };
 
 export default CreateProduct;
-
 
 

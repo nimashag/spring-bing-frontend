@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "flowbite-react";
 import { FaSearch } from "react-icons/fa";
 import Product from "../../interfaces/Product.tsx";
 import { Link } from "react-router-dom";
@@ -52,7 +51,9 @@ const ManageProducts: React.FC = () => {
   };
 
   // Function to get unique values from an array
-  const getUniqueValues = (array: string[]) => [...new Set(array.filter(Boolean))];
+  const getUniqueValues = (array: string[]) => [
+    ...new Set(array.filter(Boolean)),
+  ];
 
   // Function to get unique colors from metadata
   const getUniqueColors = (metadata) => {
@@ -116,55 +117,41 @@ const ManageProducts: React.FC = () => {
 
       {/* Table */}
       <div className="flex justify-center min-h-screen">
-        <Table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
-          <Table.Head className="bg-sky-700 text-white">
-            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-              Number
-            </Table.HeadCell>
-            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-              Product Name
-            </Table.HeadCell>
-            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-              Unit Price
-            </Table.HeadCell>
-            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-              Color
-            </Table.HeadCell>
-            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-              Size
-            </Table.HeadCell>
-            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-              Quantity
-            </Table.HeadCell>
-            <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-              <span>Edit Or Delete</span>
-            </Table.HeadCell>
-          </Table.Head>
+        <table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <thead className="bg-sky-700 text-white">
+            <tr>
+              <th className="px-6 py-4 text-left text-sm font-semibold">Number</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">Product Name</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">Unit Price</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">Color</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">Size</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">Quantity</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">Edit Or Delete</th>
+            </tr>
+          </thead>
 
-          {filteredProducts.map((product, index) => (
-            <Table.Body className="divide-y" key={product._id}>
-              <Table.Row className="bg-white hover:bg-gray-100 transition duration-300">
-                <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+          <tbody>
+            {filteredProducts.map((product, index) => (
+              <tr className="bg-white hover:bg-gray-100 transition duration-300 align-top" key={product._id}>
+                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 text-center align-top">
                   {index + 1}
-                </Table.Cell>
-                <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 align-top">
                   {product.name}
-                </Table.Cell>
-                <Table.Cell className="px-6 py-4 text-gray-700">
-                  {product.unit_price}
-                </Table.Cell>
-                <Table.Cell className="px-6 py-4 text-gray-700">
+                </td>
+                <td className="px-6 py-4 text-gray-700 align-top">{product.unit_price}</td>
+                <td className="px-6 py-4 text-gray-700 align-top">
                   {getUniqueColors(product.metadata).join(", ")}
-                </Table.Cell>
-                <Table.Cell className="px-6 py-4 text-gray-700">
+                </td>
+                <td className="px-6 py-4 text-gray-700 align-top">
                   {getUniqueSizes(product.metadata).join(", ")}
-                </Table.Cell>
-                <Table.Cell className="px-6 py-4 text-gray-700">
+                </td>
+                <td className="px-6 py-4 text-gray-700 text-center align-top">
                   {product.metadata
                     .map((meta) => meta.quantity)
                     .reduce((acc, qty) => acc + qty, 0)}
-                </Table.Cell>
-                <Table.Cell className="px-6 py-4 flex gap-4">
+                </td>
+                <td className="px-6 py-4 flex gap-4 justify-center items-center align-top">
                   <Link to={`/update-product/${product._id}`}>
                     <button className="text-cyan-600 font-medium hover:underline">
                       Edit
@@ -176,11 +163,11 @@ const ManageProducts: React.FC = () => {
                   >
                     Delete
                   </button>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          ))}
-        </Table>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
