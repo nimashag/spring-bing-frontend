@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {dummyProducts} from '../Data/productData';
 import { useCartStore } from '../store/cart-store';
 
 interface IProductListProps {
