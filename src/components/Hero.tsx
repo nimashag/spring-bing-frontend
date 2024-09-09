@@ -10,12 +10,18 @@ const Hero : React.FC = () => {
             <div className='text-[#414141]'>
                 <div className='flex items-center gap-2'>
                     <p className='w-8 md:w-11 h-[2px] bg-[#414141]'></p>
-                    <p className='font-medium text-sm md:text-base'>Add A Topic</p>
+                    <p className='font-medium text-sm md:text-base'>Check Out Our Latest Arrivals</p>
                 </div>
                 <h1 className='prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed'>New Arrivals</h1>
                 <div className='flex items-center gap-2'>
                     <p className='font-semibold text-sm md:text-base'>Explore</p>
                     <p className='w-8 md:w-11 h-[1px] bg-[#414141]'></p>
+                </div>
+                <div className='mt-4'>
+                    <br/>
+                    <button className='px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors'>
+                        Shop Now
+                    </button>
                 </div>
             </div>
         </div>

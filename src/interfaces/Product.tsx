@@ -22,4 +22,6 @@ export default Product;
 export interface cartItem {
     product: Product;
     quantity: number;
+    color: string;
+    size: string;
 }

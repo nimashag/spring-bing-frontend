@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Product from "../../interfaces/Product";
+import Product, {cartItem} from "../../interfaces/Product";
 import Category from "../../interfaces/Category";
 import SubCategory from "../../interfaces/SubCategory";
 import { useCartStore } from '../../store/cart-store';
@@ -78,11 +78,21 @@ const ViewProduct = () => {
 
 
     // add to cart method 
-    const addToCart = (product: Product) => {
+    const addToCart = () => {
+        const cart_item: cartItem = {
+            product : product,
+            quantity : 1,
+            color : selectedColor,
+            size : selectedSize,
+
+        }
         enqueueSnackbar('Product added to cart', { variant:'success' });
-        addProductToCart(product);
+        addProductToCart(cart_item);
         calculateTotal();
-        console.log(cart);
+        /*console.log(cart)*/
+        setTimeout(() => {
+            console.log(useCartStore.getState().cart);  // assuming Zustand's useStore
+        }, 0);
     }
 
     const filterSizeOptions = (color: string) => {

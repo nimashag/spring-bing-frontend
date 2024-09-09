@@ -3,8 +3,6 @@ import { useCartStore } from "../../store/cart-store";
 import { useState, useEffect } from "react";
 import { Order } from "../../interfaces/Order";
 import axios from "axios";
-import { Table } from "flowbite-react";
-import { format } from "date-fns";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 
@@ -18,12 +16,7 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
     user_id: state.user_id,
   }));
 
-  const clearPersistedState = () => {
-    useCartStore.persist.clearStorage();
-  };
-
   useEffect(() => {
-    clearPersistedState();
     const getPendingOrders = async () => {
       try {
         setLoading(true);
@@ -31,12 +24,11 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
         const response = await axios.get(
           `http://localhost:3000/order/get-pending-order/${user_id}`
         );
-        console.log(response);
-        if (!response) {
-          console.log(response);
-        }
 
-        setPendingOrders(response.data);
+        console.log(response);
+        if (response && response.data) {
+          setPendingOrders(response.data);
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -44,7 +36,9 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
       }
     };
 
-    getPendingOrders();
+    if (user_id) {
+      getPendingOrders();
+    }
   }, [user_id]);
 
   return (
@@ -55,60 +49,47 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
         </div>
       </div>
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : (
-        <div className="flex justify-center items-center">
-          <Table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
-            <Table.Head className="bg-sky-700 text-white">
-              <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-                Number
-              </Table.HeadCell>
-
-              <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-                Order
-              </Table.HeadCell>
-
-              <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-                Actions
-              </Table.HeadCell>
-
-              <Table.HeadCell className="px-6 py-4 text-left text-sm font-semibold">
-                Actions
-              </Table.HeadCell>
-            </Table.Head>
-
-            {pendingOrders.map((order, index) => (
-              <Table.Body className="divide-y" key={order._id}>
-                <Table.Row className="bg-white hover:bg-gray-100 transition duration-300">
-                  <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    {index + 1}
-                  </Table.Cell>
-
-                  <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    <Link to={`/order/viewOrder/${order._id}`}>
-                    {order._id}
-                    </Link>
-                  </Table.Cell>
-
-                  <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    {format(new Date(order.purchase_date), "yyyy-mm-dd")}
-                  </Table.Cell>
-
-                  <Table.Cell className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    <div className="flex gap-3">
-                        <button className="text-cyan-600 font-medium hover:underline">
-                        Edit
-                        </button>
-                        <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-1 rounded transition duration-300">
-                        Delete
-                        </button>
-                    </div>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            ))}
-          </Table>
-        </div>
+        <div className="overflow-x-auto">
+      <table className="min-w-full bg-white rounded-lg shadow-md">
+        <thead className="bg-sky-700 text-white">
+          <tr>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Number</th>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Order ID</th>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Total Amount</th>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pendingOrders.map((order, index) => (
+            <tr
+              key={order._id}
+              className="border-b border-gray-200 hover:bg-gray-100 transition duration-150"
+            >
+              <td className="py-3 px-4 text-sm font-medium text-gray-900">{index + 1}</td>
+              <td className="py-3 px-4 text-sm font-medium text-gray-900">
+                <Link to={`/order/viewOrder/${order._id}`}>
+                {order._id}
+                </Link>
+                </td>
+              <td className="py-3 px-4 text-sm font-medium text-gray-900">{order.total_price}</td>
+              <td className="py-3 px-4 text-sm font-medium text-gray-900">
+                <div className="flex gap-3">
+                  <Link to={`/order/updateOrder/${order._id}`}>
+                    <button className="text-cyan-600 font-medium hover:underline">Edit</button>
+                  </Link>
+                  {/* <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded transition duration-300">
+                    Delete
+                  </button> */}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+        
       )}
     </div>
   );
