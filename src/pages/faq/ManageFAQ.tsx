@@ -88,7 +88,7 @@ const ManageFAQ: React.FC = () => {
 
         {/* Table */}
         <div className="flex justify-center items-center min-h-screen">
-          <table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <table className="w-full table-auto bg-white shadow-lg rounded-lg overflow-hidden">
             <thead className="bg-sky-700 text-white">
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-semibold">
@@ -131,7 +131,8 @@ const ManageFAQ: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 flex gap-4">
                     <Link to={`/answer-faq/${faq._id}`}>
-                      <button className="text-cyan-600 font-medium hover:underline">
+                      <button 
+                      className="bg-green-700 hover:bg-green-800 text-white font-semibold px-4 py-1 rounded transition duration-300">
                         Answer
                       </button>
                     </Link>

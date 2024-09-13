@@ -8,6 +8,7 @@ import ShopByCategory from '../components/ShopByCategory'
 import Banner from './banner/Banner'
 import Trending from '../components/CurrentTrending'
 
+
 const Home : React.FC = () => {
   const token = localStorage.getItem("token");
   return (

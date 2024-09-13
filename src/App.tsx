@@ -28,7 +28,13 @@ import AdminLogin from './auth/AdminLogin';
 import AdminDashboard from './auth/Dashboard';
 //import ProductList from './pages/productList'
 import UpdateOrder from './pages/orders/UpdateOrder';
- 
+import ViewReview from './pages/reviews/ViewReview';
+import CreateReview from './pages/reviews/CreateReview';
+import ManageReviews from './pages/reviews/ManageReviews';
+import EditReview from './pages/reviews/EditReview';
+import StatReviews from './pages/reviews/StatReviews';
+
+
 const App: React.FC = () => {
   return (
     <SnackbarProvider>
@@ -68,6 +74,16 @@ const App: React.FC = () => {
           <Route path='/admin-create-account' element={<AdminCreateAccount />} />
           <Route path='/admin-login' element={<AdminLogin />} />
           <Route path='/admin/dashboard' element={<AdminDashboard />} />
+
+          {/* Routes for Reviews Module */}
+          <Route path='/reviews' element={<ViewReview />} />
+          <Route path='/create-review' element={<CreateReview />} />
+          <Route path='/manage-reviews' element={<ManageReviews />} />
+          <Route path='/edit-review/:id' element={<EditReview />} />
+          <Route path='/stat-review' element={<StatReviews />} />
+          
+          
+
         </Routes>
         <Footer />
       </div>

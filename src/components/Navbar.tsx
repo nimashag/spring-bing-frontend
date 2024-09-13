@@ -64,6 +64,17 @@ const Navbar: React.FC = () => {
           <p>Manage FAQ</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
+
+        <NavLink to="/manage-reviews" className="flex flex-col items-center gap-1">
+          <p>Manage Reviews</p>
+          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+        </NavLink>
+
+        <NavLink to="/stat-review" className="flex flex-col items-center gap-1">
+          <p>Stat Reviews</p>
+          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+        </NavLink>
+
       </ul>
 
       <div className="flex items-center gap-6">
