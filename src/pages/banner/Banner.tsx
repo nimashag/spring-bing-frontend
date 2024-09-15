@@ -2,6 +2,7 @@ import React from 'react'
 
 import BannerCard from './BannerCard'
 import Title from '../../components/Title'
+import { Link } from 'react-router-dom'
 
 const Banner :React.FC= () => {
   return (
@@ -20,7 +21,9 @@ const Banner :React.FC= () => {
                 <div>
 
                     {/* Add Link Here! */}
+                    <Link to="/reviews" className='mt-5 block'>
                         <button className='bg-black px-6 py-2 text-white font-medium hover:bg-black transition-all ease-in duration-200'>Browse Reviews</button>
+                    </Link>
                     
                     
                 </div>
