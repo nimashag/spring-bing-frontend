@@ -39,8 +39,18 @@ export const useCartStore = create<CartStore>()(
               console.log(cart_item)
             if (existingProductIndex > -1) {
 
+                const matchingMeta = cart_item.product.metadata.find(
+                    (meta) => meta.color === cart_item.color && meta.size === cart_item.size
+                )
+
+                if(matchingMeta && matchingMeta.quantity > state.cart[existingProductIndex].quantity){
+                    console.log(state.cart)
                     state.cart[existingProductIndex].quantity += 1;
-                    console.log(cart)
+                    state.itemCount += 1;
+                }
+
+                /*state.cart[existingProductIndex].quantity += 1;
+                    console.log(cart)*/
 
             } else {
               state.cart.push(cart_item);
@@ -98,13 +108,30 @@ export const useCartStore = create<CartStore>()(
         set(
           produce((state: CartStore) => {
             const existingItemIndex = state.cart.findIndex(
-              (item) => item.product._id === cart_item.product._id && item.color == cart_item.color && item.size == cart_item.size
+              (item) =>
+                        item.product._id === cart_item.product._id
+                        && item.color == cart_item.color
+                        && item.size == cart_item.size
             );
 
+
             if (existingItemIndex > -1) {
-                console.log(state.cart)
-              state.cart[existingItemIndex].quantity += 1;
-              state.itemCount += 1;
+
+                const matchingMeta = cart_item.product.metadata.find(
+                    (meta) => meta.color === cart_item.color && meta.size === cart_item.size
+                )
+
+                if(matchingMeta && matchingMeta.quantity > state.cart[existingItemIndex].quantity){
+                    console.log(state.cart)
+                    state.cart[existingItemIndex].quantity += 1;
+                    state.itemCount += 1;
+                }
+
+                /*if(matchingMeta && matchingMeta.quantity > state.cart[existingItemIndex].quantity){
+                    console.log(state.cart)
+                    state.cart[existingItemIndex].quantity += 1;
+                    state.itemCount += 1;
+                }*/
             }
           })
         ),
@@ -118,8 +145,14 @@ export const useCartStore = create<CartStore>()(
 
                 if (existingItemIndex > -1) {
                     console.log(state.cart)
-                    state.cart[existingItemIndex].quantity -= 1;
-                    state.itemCount -= 1;
+                    if(state.cart[existingItemIndex].quantity > 1){
+                        state.cart[existingItemIndex].quantity -= 1;
+                        state.itemCount -= 1;
+                    }
+                    else{
+                        state.cart.splice(existingItemIndex, 1);
+                        state.itemCount -= 1;
+                    }
                 }
             })
         ),

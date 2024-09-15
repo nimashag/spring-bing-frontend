@@ -106,6 +106,10 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
     calculateTotal();
   };
 
+  const removeItemFromCart = (item_id: string) => {
+    removeItem(item_id)
+    calculateTotal()
+  };
 
   const handleOrder = async () => {
     try {
@@ -187,7 +191,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
               <td className="p-5">
                 <div className="flex justify-center items-center gap-3">
                   <button
-                    onClick={() => removeItem(item.product._id)}
+                    onClick={() => removeItemFromCart(item.product._id)}
                     className="text-2xl text-red-600 hover:text-red-800"
                   >
                     <ImCancelCircle />

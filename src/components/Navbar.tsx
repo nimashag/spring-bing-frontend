@@ -93,7 +93,9 @@ const Navbar: React.FC = () => {
                   <Link to='profile'>
                   <p className="cursor-pointer hover:text-black">My Profile</p>
                   </Link>
+                  <Link to='/order/pendingOrder'>
                   <p className="cursor-pointer hover:text-black">My Orders</p>
+                  </Link>
                   <p className="cursor-pointer hover:text-black">Logout</p>
                 </div>
               )}
