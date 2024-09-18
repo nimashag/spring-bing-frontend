@@ -33,6 +33,7 @@ import CreateReview from './pages/reviews/CreateReview';
 import ManageReviews from './pages/reviews/ManageReviews';
 import EditReview from './pages/reviews/EditReview';
 import StatReviews from './pages/reviews/StatReviews';
+import FinanceReport from "./components/charts/orderCharts/FinanceReport.tsx";
 
 
 const App: React.FC = () => {
@@ -63,6 +64,8 @@ const App: React.FC = () => {
           <Route path='/order/pendingOrder' element={<PendingOrders/>}/>
           <Route path='/order/viewOrder/:id' element={<ViewOrder/>}/>
           <Route path='/order/updateOrder/:id' element={<UpdateOrder/>}/>
+          <Route path='/order/FinanceReport/' element={<FinanceReport/>}/>
+
 
           {/* Routes for FAQ Module */}
           <Route path='/faqs' element={<ViewFAQ />} />

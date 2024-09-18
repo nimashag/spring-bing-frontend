@@ -16,3 +16,7 @@ export interface NegativeGrowthProduct {
     sales_growth: number;
     predicted_growth: number;
 }
+
+export type orderChartData = {
+    [key: string]: number;
+}

@@ -19,6 +19,7 @@ interface CartStore {
   calculateTotal: () => void;
   cancelPay: () => void;
   clearCart: () => void;
+  clearSelectedCartItem: () => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -77,7 +78,7 @@ export const useCartStore = create<CartStore>()(
               (item) => item.product._id !== cart_item.product._id || item.color !== cart_item.color || item.size !== cart_item.size
             );
             
-            console.log(state.selectedCartItem); // For debugging
+            //console.log(state.selectedCartItem); // For debugging
 
           })
         ),
@@ -174,6 +175,14 @@ export const useCartStore = create<CartStore>()(
             state.totalPrice = 0;
           })
         ),
+
+      clearSelectedCartItem: () =>
+          set(
+              produce((state: CartStore) => {
+                  state.selectedCartItem = [];
+              })
+          ),
+
     }),
     {
       name: "cart-storage",

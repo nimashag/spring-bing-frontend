@@ -30,6 +30,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
     calculateTotal,
     addFromCart,
     cancelPay,
+    clearSelectedCart,
   } = useCartStore((state) => ({
     user_id: state.user_id,
     cart: state.cart,
@@ -41,6 +42,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
     calculateTotal: state.calculateTotal,
     addFromCart: state.addFromCart,
     cancelPay: state.cancelPay,
+    clearSelectedCart: state.clearSelectedCartItem
   }));
 
   useEffect(() => {
@@ -114,14 +116,14 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
   const handleOrder = async () => {
     try {
 
-      /*const selectedCartItem = cart.map((item) => ({
+      const added = selectedCartItem.map((item) => ({
         product_id: item.product._id,
         quantity: item.quantity,
         color: item.color,
         size: item.size
-      }));*/
+      }));
 
-      if(selectedCartItem.length == 0) {
+      if(added.length == 0) {
 
         enqueueSnackbar('Select the product you want to buy', { variant:'error' });
          
@@ -132,11 +134,16 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
       }else{
         await axios.post("http://localhost:3000/order/create-order", {
           user_id: user_id,
-          orderProducts: selectedCartItem,
+          orderProducts: added,
           billing_address: address,
           order_status: "processing"
         });
+        added.map((item) => {
+          removeItemFromCart(item.product_id)
+        })
+        clearSelectedCart();
         navigate('/order/pendingOrder');
+        console.log(added)
       }
 
     } catch (error) {
