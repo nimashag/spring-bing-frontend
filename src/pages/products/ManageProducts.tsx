@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const ManageProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<{ [key: string]: string }>({});
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -15,6 +16,21 @@ const ManageProducts: React.FC = () => {
         console.error("Error fetching products:", error);
         // TODO: Handle error, e.g., display an error message to the user
       });
+
+    // Fetch categories and map them by their IDs
+    fetch("http://localhost:3000/category")
+      .then((res) => res.json())
+      .then((data) => {
+        const categoryMap = data.data.reduce(
+          (acc: { [key: string]: string }, category: Category) => {
+            acc[category._id] = category.name;
+            return acc;
+          },
+          {}
+        );
+        setCategories(categoryMap);
+      })
+      .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
   // Filter products based on search query
@@ -117,41 +133,66 @@ const ManageProducts: React.FC = () => {
 
       {/* Table */}
       <div className="flex justify-center min-h-screen">
-        <table className="w-full lg:w-[1180px] table-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <table className="w-full  table-auto bg-white shadow-lg rounded-lg overflow-hidden">
           <thead className="bg-sky-700 text-white">
             <tr>
-              <th className="px-6 py-4 text-left text-sm font-semibold">Number</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold">Product Name</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold">Unit Price</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold">Color</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold">Size</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold">Quantity</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold">Edit Or Delete</th>
+              <th className="px-4 py-4 text-left text-sm font-semibold">
+                Number
+              </th>
+              <th className="px-10 py-4 text-left text-sm font-semibold">
+                Product Name
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">
+                Category
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">
+                Unit Price
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">
+                Color
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">
+                Size
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">
+                Quantity
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold">
+                Edit Or Delete
+              </th>
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="divide-y">
             {filteredProducts.map((product, index) => (
-              <tr className="bg-white hover:bg-gray-100 transition duration-300 align-top" key={product._id}>
+              <tr
+                className="bg-white hover:bg-gray-100 transition duration-300 align-top"
+                key={product._id}
+              >
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 text-center align-top">
                   {index + 1}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 align-top">
                   {product.name}
                 </td>
-                <td className="px-6 py-4 text-gray-700 align-top">{product.unit_price}</td>
+                <td className="px-6 py-4 text-gray-700 align-top">
+                  {categories[product.category[0]] || "Unknown"}
+                </td>
+                <td className="px-6 py-4 text-gray-700 align-top">
+                  {product.unit_price}
+                </td>
                 <td className="px-6 py-4 text-gray-700 align-top">
                   {getUniqueColors(product.metadata).join(", ")}
                 </td>
                 <td className="px-6 py-4 text-gray-700 align-top">
                   {getUniqueSizes(product.metadata).join(", ")}
                 </td>
-                <td className="px-6 py-4 text-gray-700 text-center align-top">
+                <td className="px-6 py-4 text-gray-700  align-top">
                   {product.metadata
                     .map((meta) => meta.quantity)
                     .reduce((acc, qty) => acc + qty, 0)}
                 </td>
-                <td className="px-6 py-4 flex gap-4 justify-center items-center align-top">
+                <td className="px-6 py-4 flex gap-4 items-center align-top">
                   <Link to={`/update-product/${product._id}`}>
                     <button className="text-cyan-600 font-medium hover:underline">
                       Edit
