@@ -1,5 +1,4 @@
 import React from 'react'
-
 import dressimg from '../assets/dressimg.png';
 import skirtimg from '../assets/skirtimg.png';
 import topimg from '../assets/topimg2.png';
