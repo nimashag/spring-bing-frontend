@@ -1,5 +1,5 @@
 .banner .swiper {
-    width: 380px;
+    width: 500px;
     height: 320px;
   }
   
@@ -15,9 +15,6 @@
   
   .banner .swiper-slide:nth-child(1n) {
       background-image: url('src/assets/banner/img2.jpg');
-      background-size: cover; /* Cover the entire area of the slide */
-      background-position: center; /* Center the background image */
-      background-repeat: no-repeat; /* Prevent the image from repeating */
   }
   
   .banner .swiper-slide:nth-child(2n) {
