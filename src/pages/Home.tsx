@@ -7,6 +7,7 @@ import Complaints from '../components/Complaints'
 import ShopByCategory from '../components/ShopByCategory'
 import Banner from './banner/Banner'
 import Trending from '../components/CurrentTrending'
+import SocialMedia from '../components/SocialMedia'
 
 
 const Home : React.FC = () => {
@@ -22,6 +23,7 @@ const Home : React.FC = () => {
       <Banner />
       <Complaints />
       <OurPolicy />
+      <SocialMedia />
       <NewsLetter />
     </div>
   )
