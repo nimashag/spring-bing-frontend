@@ -7,6 +7,7 @@ const ManageProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{ [key: string]: string }>({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
     fetch("http://localhost:3000/product")
@@ -36,13 +37,15 @@ const ManageProducts: React.FC = () => {
   // Filter products based on search query
   const filteredProducts = products.filter(
     (product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.metadata.some(
-        (meta) =>
-          meta.color.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          meta.size.toLowerCase().includes(searchQuery.toLowerCase())
-      ) ||
-      product.unit_price.toString().includes(searchQuery)
+      (selectedCategory === "" ||
+        product.category.includes(selectedCategory)) &&
+      (product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.metadata.some(
+          (meta) =>
+            meta.color.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            meta.size.toLowerCase().includes(searchQuery.toLowerCase())
+        ) ||
+        product.unit_price.toString().includes(searchQuery))
   );
 
   // Handle the deletion of a product
@@ -88,17 +91,35 @@ const ManageProducts: React.FC = () => {
       <div className="flex justify-between items-start">
         <h2 className="text-3xl font-bold">Manage Your Products</h2>
 
-        {/* Search bar */}
-        <div className="relative w-96 mb-4">
-          <input
-            type="text"
-            placeholder="Search Products"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300"
-          />
-          <div className="absolute top-0 left-0 mt-2.5 ml-4 text-gray-500">
-            <FaSearch size="20px" />
+        <div className="flex justify-between mb-4">
+          {/* Search bar on the left side */}
+          <div className="relative w-93 mr-3">
+            <input
+              type="text"
+              placeholder="Search Products"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300"
+            />
+            <div className="absolute top-0 left-0 mt-2.5 ml-4 text-gray-500">
+              <FaSearch size="20px" />
+            </div>
+          </div>
+
+          {/* Category filter dropdown on the right side */}
+          <div className="relative w-48">
+            <select
+              className="w-full h-10 pl-3 pr-10 rounded-full shadow-sm border border-gray-300"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="">All Categories</option>
+              {Object.keys(categories).map((categoryId) => (
+                <option key={categoryId} value={categoryId}>
+                  {categories[categoryId]}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
@@ -121,9 +142,9 @@ const ManageProducts: React.FC = () => {
               Add Subcategory
             </button>
           </Link>
-          <Link to="/generate-report">
+          <Link to="/stat-orders">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
-              Generate Report
+              Summary Report
             </button>
           </Link>
         </div>

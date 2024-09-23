@@ -10,6 +10,7 @@ const ViewProductsList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{ [key: string]: string }>({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
     fetch("http://localhost:3000/product")
@@ -35,32 +36,53 @@ const ViewProductsList: React.FC = () => {
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
+  // Filter products based on search query
   const filteredProducts = products.filter(
     (product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.unit_price.toString().includes(searchQuery) ||
-      product.metadata.some(
-        (meta) =>
-          meta.color.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          meta.size.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      (selectedCategory === "" ||
+        product.category.includes(selectedCategory)) &&
+      (product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.metadata.some(
+          (meta) =>
+            meta.color.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            meta.size.toLowerCase().includes(searchQuery.toLowerCase())
+        ) ||
+        product.unit_price.toString().includes(searchQuery))
   );
 
   return (
     <div className="mt-28 px-4 lg:px-24">
       <div className="flex justify-between items-start mb-8">
         <h2 className="text-5xl font-bold">Our Products</h2>
-        <div className="flex flex-col items-end">
-          <div className="relative w-96">
+        <div className="flex justify-between mb-4">
+          {/* Search bar on the left side */}
+          <div className="relative w-93 mr-3">
             <input
               type="text"
               placeholder="Search Products"
+              value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300"
             />
             <div className="absolute top-0 left-0 mt-2.5 ml-4 text-gray-500">
               <FaSearch size="20px" />
             </div>
+          </div>
+
+          {/* Category filter dropdown on the right side */}
+          <div className="relative w-48">
+            <select
+              className="w-full h-10 pl-3 pr-10 rounded-full shadow-sm border border-gray-300"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="">All Categories</option>
+              {Object.keys(categories).map((categoryId) => (
+                <option key={categoryId} value={categoryId}>
+                  {categories[categoryId]}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
