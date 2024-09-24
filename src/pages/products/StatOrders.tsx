@@ -88,7 +88,7 @@ const StatOrders: React.FC = () => {
 
   // Function to reset the calendar filter
   const resetCalendarFilter = () => {
-    setSelectedDate(null); // Reset to show all reviews
+    setSelectedDate(null); // Reset to show all orders
   };
 
   //Calculate summary statistics for the orders
@@ -127,17 +127,13 @@ const StatOrders: React.FC = () => {
     | "delivered";
 
   const orderStatusCounts: Record<OrderStatus, number> = {
-    "pre-confirmed": 0,
-    confirmed: 0,
-    processing: 0,
-    packing: 0,
-    "on-delivery": 0,
-    delivered: 0,
+    "pre-confirmed": preconfirmedOrders,
+    confirmed: confirmedOrders,
+    processing: processingOrders,
+    packing: packingOrders,
+    "on-delivery": ondeliveryOrders,
+    delivered: deliveredOrders,
   };
-
-  orders.forEach((order) => {
-    orderStatusCounts[order.order_status as OrderStatus] += 1;
-  });
 
   const pieData = {
     labels: Object.keys(orderStatusCounts),
