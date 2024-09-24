@@ -21,6 +21,10 @@ import romperimg from '../assets/romperimg.png'
 import shortsimg from '../assets/shorts1.jpg'
 import bodysuitimg from '../assets/bodysuit1.jpg'
 import camisimg from '../assets/camis1.jpg'
+import teesimg from '../assets/tees.jpg'
+import sweaterimg from '../assets/sweaters1.jpg'
+import blouseimg from '../assets/blouse.jpg'
+
 
 const ShopBy :React.FC= () => {
   return (
@@ -118,6 +122,33 @@ const ShopBy :React.FC= () => {
               <img src={camisimg} alt="" style={{ width: '100%' }} />
               <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
                 <p>C A M I S</p>
+              </div>
+          </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div className='cursor-pointer' style={{ width: '250px' }}>
+              <img src={teesimg} alt="" style={{ width: '100%' }} />
+              <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
+                <p>T E E S</p>
+              </div>
+          </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div className='cursor-pointer' style={{ width: '250px' }}>
+              <img src={sweaterimg} alt="" style={{ width: '100%' }} />
+              <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
+                <p>S W E A T E R S</p>
+              </div>
+          </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div className='cursor-pointer' style={{ width: '250px' }}>
+              <img src={blouseimg} alt="" style={{ width: '100%' }} />
+              <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
+                <p>B L O U S E S</p>
               </div>
           </div>
         </SwiperSlide>

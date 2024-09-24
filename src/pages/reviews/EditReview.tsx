@@ -69,7 +69,7 @@ const EditReview: React.FC = () => {
   }
 
   const handleCancel = () => {
-    navigate('/manage-reviews'); // Redirect to manage-reviews on cancel
+    navigate('/admin/manage-reviews'); // Redirect to manage-reviews on cancel
   };
 
   if (!review) return <div>Loading...</div>;

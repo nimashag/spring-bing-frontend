@@ -20,7 +20,7 @@ const Banner :React.FC= () => {
                  have to say, and don’t forget to share your own experience!</p>
                 <div>
 
-                    {/* Add Link Here! */}
+                    
                     <Link to="/reviews" className='mt-5 block'>
                         <button className='bg-black px-6 py-2 text-white font-medium hover:bg-black transition-all ease-in duration-200'>Browse Reviews</button>
                     </Link>

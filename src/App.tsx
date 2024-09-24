@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -36,12 +36,19 @@ import ManageReviews from "./pages/reviews/ManageReviews";
 import EditReview from "./pages/reviews/EditReview";
 import StatReviews from "./pages/reviews/StatReviews";
 import FinanceReport from "./components/charts/orderCharts/FinanceReport.tsx";
+import DashboardLayout from "./dashboard/DashboardLayout.tsx";
 
 const App: React.FC = () => {
+
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <SnackbarProvider>
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-        <Navbar />
+
+      {!isAdminRoute && <Navbar />}
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -72,8 +79,8 @@ const App: React.FC = () => {
           {/* Routes for FAQ Module */}
           <Route path="/faqs" element={<ViewFAQ />} />
           <Route path="/create-faq" element={<CreateFAQ />} />
-          <Route path="/manage-faq" element={<ManageFAQ />} />
-          <Route path="/answer-faq/:id" element={<AnswerFAQ />} />
+          <Route path="/admin/manage-faq" element={<ManageFAQ />} />
+          <Route path="/admin/answer-faq/:id" element={<AnswerFAQ />} />
 
           <Route path="/profile" element={<ProfilePage />} />
           <Route
@@ -86,11 +93,17 @@ const App: React.FC = () => {
           {/* Routes for Reviews Module */}
           <Route path="/reviews" element={<ViewReview />} />
           <Route path="/create-review" element={<CreateReview />} />
-          <Route path="/manage-reviews" element={<ManageReviews />} />
-          <Route path="/edit-review/:id" element={<EditReview />} />
-          <Route path="/stat-review" element={<StatReviews />} />
+          <Route path="/admin/manage-reviews" element={<ManageReviews />} />
+          <Route path="/admin/edit-review/:id" element={<EditReview />} />
+          <Route path="/admin/stat-review" element={<StatReviews />} />
+
+          {/* Admin Routes */}
+          <Route path='/admin/dash' element={<DashboardLayout />} />
+
         </Routes>
-        <Footer />
+        
+        {!isAdminRoute && <Footer />}
+
       </div>
     </SnackbarProvider>
   );
