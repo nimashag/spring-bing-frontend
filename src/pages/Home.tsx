@@ -8,7 +8,6 @@ import Banner from './banner/Banner'
 import Trending from '../components/CurrentTrending'
 import SocialMedia from '../components/SocialMedia'
 import ShopBy from '../components/ShopBy'
-import Homepics from './animations/Homepics'
 
 
 const Home : React.FC = () => {
@@ -26,7 +25,6 @@ const Home : React.FC = () => {
       <OurPolicy />
       <SocialMedia />
       <NewsLetter />
-      <Homepics />
     </div>
   )
 }
