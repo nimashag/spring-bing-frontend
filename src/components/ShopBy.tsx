@@ -49,7 +49,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
             <img src={dressimg} alt="" style={{ width: '100%' }} />
             <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-              <p>D R E S S E S</p>
+              <p className='prata-regular'>D R E S S E S</p>
             </div>
           </div>
         </SwiperSlide>
@@ -58,7 +58,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
             <img src={topimg} alt="" style={{ width: '100%' }} />
             <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-              <p>T O P S</p>
+              <p className='prata-regular'>T O P S</p>
             </div>
           </div>
         </SwiperSlide>
@@ -67,7 +67,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
             <img src={pantsimg} alt="" style={{ width: '100%' }} />
             <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-              <p>P A N T S</p>
+              <p className='prata-regular'>P A N T S</p>
             </div>
           </div>
         </SwiperSlide>
@@ -76,7 +76,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
             <img src={skirtimg} alt="" style={{ width: '100%' }} />
             <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-              <p>S K I R T S</p>
+              <p className='prata-regular'>S K I R T S</p>
             </div>
           </div>
         </SwiperSlide>
@@ -85,7 +85,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
             <img src={jumpsuiteimg} alt="" style={{ width: '100%' }} />
             <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-              <p>J U M P S U I T E S</p>
+              <p className='prata-regular'>J U M P S U I T E S</p>
             </div>
           </div>
         </SwiperSlide>
@@ -94,7 +94,7 @@ const ShopBy :React.FC= () => {
         <div className='cursor-pointer' style={{ width: '250px' }}>
             <img src={romperimg} alt="" style={{ width: '100%' }} />
             <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-              <p>R O M P E R S</p>
+              <p className='prata-regular'>R O M P E R S</p>
             </div>
           </div>
         </SwiperSlide>
@@ -103,7 +103,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
               <img src={shortsimg} alt="" style={{ width: '100%' }} />
               <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-                <p>S H O R T S</p>
+                <p className='prata-regular'>S H O R T S</p>
               </div>
           </div>
         </SwiperSlide>
@@ -112,7 +112,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
               <img src={bodysuitimg} alt="" style={{ width: '100%' }} />
               <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-                <p>B O D Y S U I T S</p>
+                <p className='prata-regular'>B O D Y S U I T S</p>
               </div>
           </div>
         </SwiperSlide>
@@ -121,7 +121,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
               <img src={camisimg} alt="" style={{ width: '100%' }} />
               <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-                <p>C A M I S</p>
+                <p className='prata-regular'>C A M I S</p>
               </div>
           </div>
         </SwiperSlide>
@@ -130,7 +130,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
               <img src={teesimg} alt="" style={{ width: '100%' }} />
               <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-                <p>T E E S</p>
+                <p className='prata-regular'>T E E S</p>
               </div>
           </div>
         </SwiperSlide>
@@ -139,7 +139,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
               <img src={sweaterimg} alt="" style={{ width: '100%' }} />
               <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-                <p>S W E A T E R S</p>
+                <p className='prata-regular'>S W E A T E R S</p>
               </div>
           </div>
         </SwiperSlide>
@@ -148,7 +148,7 @@ const ShopBy :React.FC= () => {
           <div className='cursor-pointer' style={{ width: '250px' }}>
               <img src={blouseimg} alt="" style={{ width: '100%' }} />
               <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px' }}>
-                <p>B L O U S E S</p>
+                <p className='prata-regular'>B L O U S E S</p>
               </div>
           </div>
         </SwiperSlide>

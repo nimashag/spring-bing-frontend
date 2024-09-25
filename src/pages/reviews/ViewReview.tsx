@@ -63,7 +63,7 @@ const ViewReview: React.FC = () => {
     return (
         <div className='mt-28 px-4 lg:px-24'>
             <div className='flex justify-between items-start mb-8'>
-                <h2 className='text-5xl font-bold'>What People Think About Us!</h2>
+                <h2 className='text-4xl font-bold'>What People Think About Us!</h2>
                 <div className='flex items-center gap-3'>
                     <div>
                     <select

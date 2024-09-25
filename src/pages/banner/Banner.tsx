@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom'
 const Banner :React.FC= () => {
   return (
     <div className='px-4 lg:px-24 bg-white flex items-center'>
-        <div className='flex w-full flex-col md:flex-row justify-between items-center gap-12 py-40'>
+        <div className='flex w-full flex-col md:flex-row justify-between items-center gap-12 '>
 
             {/* left side */}
-            <div className='md:w-1/2 space-y-8 h-full'>
+            <div className='md:w-1/2 space-y-8 h-full py-40'>
                 
                 <h2 className='text-4xl font-bold leading-snug text-black'>What Our Customers Said About Us!</h2>
                 <Title text1={'CUSTOMER'} text2={' REVIEWS'}/>
