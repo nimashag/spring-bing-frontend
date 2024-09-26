@@ -213,6 +213,7 @@ const Homepics: React.FC = () => {
                     </div>
                 ))}
             </div>
+            <br />
         </div>
     );
 };
