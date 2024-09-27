@@ -254,7 +254,7 @@ const StatReviews: React.FC = () => {
       </div>
 
       {/* Reviews Table */}
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center">
           <table className="w-full table-auto bg-white shadow-lg rounded-lg overflow-hidden">
             <thead className="bg-sky-700 text-white">
               <tr>
