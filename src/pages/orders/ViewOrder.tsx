@@ -67,6 +67,7 @@ const ViewOrder: React.FunctionComponent = () => {
               </thead>
               <tbody>
                 {order?.orderProducts.map((item) => (
+                
                   <tr key={item.product_id._id} className="hover:bg-gray-50">
                     <td className="py-3 px-4 border-b border-gray-200">
                       <div className="flex items-center space-x-4">
