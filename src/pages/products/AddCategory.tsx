@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { PiCheckCircleBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
+
+import '../../dashboard/DashboardLayout.css'
 
 const AddCategory: React.FC = () => {
     const [name, setName] = useState("");
@@ -36,12 +39,53 @@ const AddCategory: React.FC = () => {
     };
 
     return (
+        <div className="flex h-screen ">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav className="nav">
+          <ul>
+            <li>
+              <Link to="/admin/dash">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-products">Manage Products</Link>
+            </li>
+            <li>
+              <Link to="/admin/stat-products">Stock Summary</Link>
+            </li>
+            <li>
+              <Link to="">Orders</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-reviews">Manage Reviews</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-faq">Manage FAQs</Link>
+            </li>
+            <li>
+              <Link to="">Finance Report</Link>
+            </li>
+            <li>
+              <Link to="">Profile</Link>
+            </li>
+            <li>
+              <Link to="">Logout</Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 p-8 ">
         <div className="px-4 my-12">
             <form
                 onSubmit={handleCategorySubmit}
                 className="flex flex-col gap-6 p-8 bg-white shadow-md rounded-lg max-w-3xl mx-auto"
             >
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                <h2 className="text-4xl font-semibold text-gray-800 mb-4">
                     Add Category
                 </h2>
 
@@ -50,7 +94,7 @@ const AddCategory: React.FC = () => {
                     <Label
                         htmlFor="category_name"
                         value="Category Name"
-                        className="text-gray-700 font-medium mb-2"
+                        className="text-gray-700 font-medium text-l mb-2"
                     />
                     <TextInput
                         id="category_name"
@@ -69,7 +113,7 @@ const AddCategory: React.FC = () => {
                     <Label
                         htmlFor="description"
                         value="Description"
-                        className="text-gray-700 font-medium mb-2"
+                        className="text-gray-700 font-medium text-l mb-2"
                     />
                     <Textarea
                         id="description"
@@ -99,6 +143,8 @@ const AddCategory: React.FC = () => {
                     </div>
                 )}
             </form>
+        </div>
+        </main>
         </div>
     );
 };

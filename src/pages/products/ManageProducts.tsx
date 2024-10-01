@@ -3,11 +3,17 @@ import { FaSearch } from "react-icons/fa";
 import Product from "../../interfaces/Product.tsx";
 import { Link } from "react-router-dom";
 
+import '../../dashboard/DashboardLayout.css'
+
 const ManageProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{ [key: string]: string }>({});
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Set the number of items per page
 
   useEffect(() => {
     fetch("http://localhost:3000/product")
@@ -48,6 +54,15 @@ const ManageProducts: React.FC = () => {
         product.unit_price.toString().includes(searchQuery))
   );
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
   // Handle the deletion of a product
   const handleDelete = (productId: string) => {
     fetch(`http://localhost:3000/product/${productId}`, {
@@ -86,9 +101,63 @@ const ManageProducts: React.FC = () => {
     return getUniqueValues(sizes);
   };
 
+  // Pagination controls
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
+    <div className="flex h-screen ">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav className="nav">
+          <ul>
+            <li>
+              <Link to="/admin/dash">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-products">Manage Products</Link>
+            </li>
+            <li>
+              <Link to="/admin/stat-products">Stock Summary</Link>
+            </li>
+            <li>
+              <Link to="">Orders</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-reviews">Manage Reviews</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-faq">Manage FAQs</Link>
+            </li>
+            <li>
+              <Link to="">Finance Report</Link>
+            </li>
+            <li>
+              <Link to="">Profile</Link>
+            </li>
+            <li>
+              <Link to="">Logout</Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="main-content">
     <div className="px-4 my-12">
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start ">
         <h2 className="text-3xl font-bold">Manage Your Products</h2>
 
         <div className="flex justify-between mb-4">
@@ -127,26 +196,26 @@ const ManageProducts: React.FC = () => {
       <div className="flex justify-center">
         {/* Button Group */}
         <div className="flex gap-4">
-          <Link to="/create-product">
+          <Link to="/admin/create-product">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Add Product
             </button>
           </Link>
-          <Link to="/add-category">
+          <Link to="/admin/add-category">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Add Category
             </button>
           </Link>
-          <Link to="/add-subcategory">
+          <Link to="/admin/add-subcategory">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Add Subcategory
             </button>
           </Link>
-          <Link to="/stat-orders">
+          {/* <Link to="/stat-orders">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Summary Report
             </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
 
@@ -185,13 +254,13 @@ const ManageProducts: React.FC = () => {
           </thead>
 
           <tbody className="divide-y">
-            {filteredProducts.map((product, index) => (
+            {currentProducts.map((product, index) => (
               <tr
                 className="bg-white hover:bg-gray-100 transition duration-300 align-top"
                 key={product._id}
               >
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 text-center align-top">
-                  {index + 1}
+                  {index + 1 + indexOfFirstProduct}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 align-top">
                   {product.name}
@@ -214,7 +283,7 @@ const ManageProducts: React.FC = () => {
                     .reduce((acc, qty) => acc + qty, 0)}
                 </td>
                 <td className="px-6 py-4 flex gap-4 items-center align-top">
-                  <Link to={`/update-product/${product._id}`}>
+                  <Link to={`/admin/update-product/${product._id}`}>
                     <button className="text-cyan-600 font-medium hover:underline">
                       Edit
                     </button>
@@ -231,7 +300,37 @@ const ManageProducts: React.FC = () => {
           </tbody>
         </table>
       </div>
+      {/* Pagination Controls */}
+      <div className="flex justify-end mt-4 pb-24">
+        <button
+          
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Previous
+        </button>
+        <span className="text-gray-700 mx-2 mt-2">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Next
+        </button>
+      </div>
     </div>
+    </main>
+    
+    </div>
+
   );
 };
 

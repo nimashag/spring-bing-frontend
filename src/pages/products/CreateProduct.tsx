@@ -4,6 +4,9 @@ import { PiCheckCircleBold } from "react-icons/pi";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"; // Import icons for + and - buttons
 import Category from "../../interfaces/Category.tsx";
 import SubCategory from "../../interfaces/SubCategory.tsx";
+import { Link } from "react-router-dom";
+
+import '../../dashboard/DashboardLayout.css'
 
 const CreateProduct: React.FC = () => {
   const [categories, setCategories] = useState([]);
@@ -156,12 +159,53 @@ const CreateProduct: React.FC = () => {
   };
 
   return (
+    <div className="flex h-screen ">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav className="nav">
+          <ul>
+            <li>
+              <Link to="/admin/dash">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-products">Manage Products</Link>
+            </li>
+            <li>
+              <Link to="/admin/stat-products">Stock Summary</Link>
+            </li>
+            <li>
+              <Link to="">Orders</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-reviews">Manage Reviews</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-faq">Manage FAQs</Link>
+            </li>
+            <li>
+              <Link to="">Finance Report</Link>
+            </li>
+            <li>
+              <Link to="">Profile</Link>
+            </li>
+            <li>
+              <Link to="">Logout</Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 p-8 ">
       <div className="px-4 my-12">
         <form
             onSubmit={handleProductSubmit}
-            className="flex flex-col gap-6 p-8 bg-white shadow-md rounded-lg max-w-3xl mx-auto"
+            className="flex flex-col gap-6 p-8 bg-white shadow-md rounded-lg max-w-6xl mx-auto"
         >
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-4xl font-semibold text-gray-800 mb-4">
             Add Product
           </h2>
 
@@ -171,14 +215,14 @@ const CreateProduct: React.FC = () => {
               <Label
                   htmlFor="product_name"
                   value="Product Name"
-                  className="text-gray-700 font-medium mb-2"
+                  className="text-gray-700 font-medium text-l mb-2"
               />
               <TextInput
                   id="product_name"
                   name="product_name"
                   type="text"
                   placeholder="  Enter product name"
-                  className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="mt-1 block w-full  border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
                   // required
               />
               {validationErrors.name && (
@@ -189,7 +233,7 @@ const CreateProduct: React.FC = () => {
               <Label
                   htmlFor="unit_price"
                   value="Unit Price"
-                  className="text-gray-700 font-medium mb-2"
+                  className="text-gray-700 font-medium text-l mb-2"
               />
               <TextInput
                   id="unit_price"
@@ -212,7 +256,7 @@ const CreateProduct: React.FC = () => {
                   <Label
                       htmlFor={`color_${index}`}
                       value="Color"
-                      className="text-gray-700 font-medium mb-2"
+                      className="text-gray-700 font-medium text-l mb-2"
                   />
                   <TextInput
                       id={`color_${index}`}
@@ -232,7 +276,7 @@ const CreateProduct: React.FC = () => {
                   <Label
                       htmlFor={`size_${index}`}
                       value="Size"
-                      className="text-gray-700 font-medium mb-2"
+                      className="text-gray-700 font-medium text-l mb-2"
                   />
                   <TextInput
                       id={`size_${index}`}
@@ -252,7 +296,7 @@ const CreateProduct: React.FC = () => {
                   <Label
                       htmlFor={`quantity_${index}`}
                       value="Quantity"
-                      className="text-gray-700 font-medium mb-2"
+                      className="text-gray-700 font-medium text-l mb-2"
                   />
                   <TextInput
                       id={`quantity_${index}`}
@@ -297,7 +341,7 @@ const CreateProduct: React.FC = () => {
               <Label
                   htmlFor="category"
                   value="Category"
-                  className="text-gray-700 font-medium mb-2"
+                  className="text-gray-700 font-medium text-l mb-2"
               />
               <Select
                   id="category"
@@ -317,7 +361,7 @@ const CreateProduct: React.FC = () => {
               <Label
                   htmlFor="sub_category"
                   value="Sub Category"
-                  className="text-gray-700 font-medium mb-2"
+                  className="text-gray-700 font-medium text-l mb-2"
               />
               <Select
                   id="sub_category"
@@ -340,7 +384,7 @@ const CreateProduct: React.FC = () => {
             <Label
                 htmlFor="description"
                 value="Description"
-                className="text-gray-700 font-medium mb-2"
+                className="text-gray-700 font-medium text-l mb-2"
             />
             <Textarea
                 id="description"
@@ -356,7 +400,7 @@ const CreateProduct: React.FC = () => {
             <Label
                 htmlFor="images_path"
                 value="Images Path (comma-separated)"
-                className="text-gray-700 font-medium mb-2"
+                className="text-gray-700 font-medium text-l mb-2"
             />
             <Textarea
                 id="images_path"
@@ -393,6 +437,8 @@ const CreateProduct: React.FC = () => {
             Add Product
           </Button>
         </form>
+      </div>
+      </main>
       </div>
   );
 };

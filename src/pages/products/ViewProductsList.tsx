@@ -12,6 +12,10 @@ const ViewProductsList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+   // Pagination states
+   const [currentPage, setCurrentPage] = useState(1);
+   const itemsPerPage = 10; // Set how many items to show per page
+
   useEffect(() => {
     fetch("http://localhost:3000/product")
       .then((res) => res.json())
@@ -49,6 +53,28 @@ const ViewProductsList: React.FC = () => {
         ) ||
         product.unit_price.toString().includes(searchQuery))
   );
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+  // Calculate displayed products for current page
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Handle pagination
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
 
   return (
     <div className="mt-28 px-4 lg:px-24">
@@ -88,7 +114,7 @@ const ViewProductsList: React.FC = () => {
       </div>
 
       <div className="grid gap-5 my-12 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
-        {filteredProducts.map((product) => (
+        {currentProducts.map((product) => (
           <Card
             key={product._id}
             className="h-90 relative transition-shadow duration-300 ease-in-out hover:shadow-xl"
@@ -120,6 +146,32 @@ const ViewProductsList: React.FC = () => {
             </div>
           </Card>
         ))}
+      </div>
+      {/* Pagination Controls */}
+      <div className="flex justify-end mt-4">
+        <button
+          
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Previous
+        </button>
+        <span className="text-gray-700 mx-2 mt-2">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

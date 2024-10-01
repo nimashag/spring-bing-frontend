@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+import '../../dashboard/DashboardLayout.css'
+
 interface Order {
   _id: string;
   orderProducts: {
@@ -205,24 +207,66 @@ const StatOrders: React.FC = () => {
   };
 
   return (
+    <div className="flex h-screen ">
+    {/* Sidebar */}
+    <aside className="sidebar">
+      <div className="logo">
+        <h2>Admin Dashboard</h2>
+      </div>
+      <nav className="nav">
+        <ul>
+          <li>
+            <Link to="/admin/dash">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/admin/manage-products">Manage Products</Link>
+          </li>
+          <li>
+            <Link to="/admin/stat-products">Stock Summary</Link>
+          </li>
+          <li>
+            <Link to="">Orders</Link>
+          </li>
+          <li>
+            <Link to="/admin/manage-reviews">Manage Reviews</Link>
+          </li>
+          <li>
+            <Link to="/admin/manage-faq">Manage FAQs</Link>
+          </li>
+          <li>
+            <Link to="">Finance Report</Link>
+          </li>
+          <li>
+            <Link to="">Profile</Link>
+          </li>
+          <li>
+            <Link to="">Logout</Link>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    {/* Main Content */}
+    <main className="main-content">
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-center mb-4">
         {/* Button Group */}
         <div className="flex gap-4">
-          <Link to="/stat-orders">
-            <button
-              type="button"
-              className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
-            >
-              Order Summary
-            </button>
-          </Link>
-          <Link to="/stat-products">
+          
+          <Link to="/admin/stat-products">
             <button
               type="button"
               className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
             >
               Stock Summary
+            </button>
+          </Link>
+          <Link to="/admin/stat-orders">
+            <button
+              type="button"
+              className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
+            >
+              Order Summary
             </button>
           </Link>
         </div>
@@ -352,11 +396,13 @@ const StatOrders: React.FC = () => {
 
       {/* Sales Trends Line Chart */}
       <div className="bg-white shadow rounded-lg p-6" id="sales-trends">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        <h2 className="text-4xl font-semibold text-gray-800 mb-4">
           Sales Trends
         </h2>
         <Line data={salesTrendsData} />
       </div>
+    </div>
+    </main>
     </div>
   );
 };

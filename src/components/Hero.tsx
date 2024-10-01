@@ -1,5 +1,6 @@
 import React from 'react'
 import welcomeImg from '../assets/welcomeImg.png'
+import { Link } from "react-router-dom";
 
 const Hero : React.FC = () => {
   return (
@@ -19,9 +20,11 @@ const Hero : React.FC = () => {
                 </div>
                 <div className='mt-4'>
                     <br/>
+                    <Link to="/products">
                     <button className='px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors'>
                         Shop Now
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
