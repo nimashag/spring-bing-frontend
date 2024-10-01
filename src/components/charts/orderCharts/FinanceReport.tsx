@@ -1,12 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {orderChartData} from "../../../types/types.ts";
 import axios from "axios";
 import {Bar,Line} from 'react-chartjs-2'
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import { Chart, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+
 
 Chart.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
 
 const FinanceReport: React.FC = () => {
+
+  const [selectedYear,setSelectedYear] = useState<number>(2024);
 
   const [chartData, setChartData] = useState<orderChartData>({
     january: 0,
@@ -38,11 +43,14 @@ const FinanceReport: React.FC = () => {
     december: 0,
   });
 
+
+  const printRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const getOrders = async () => {
       try {
 
-        const year = 2024 // temp
+        const year = selectedYear // temp
 
         const response = await axios.get(`http://localhost:3000/order/get-orders-on-year`, {params: {year}});
 
@@ -182,7 +190,37 @@ const FinanceReport: React.FC = () => {
 
     getOrders();
 
-  },[]);
+  },[selectedYear]);
+
+  const handlePrintPDF = async () => {
+    const element = printRef.current;
+
+    if (element) {
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL('image/png');
+
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      let position = 0;
+
+      // Add the image to the PDF and handle multiple pages
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save("report.pdf");
+    }
+  };
 
   const getMaxMonthlyIncome = () => {
     const incomeValues = Object.values(MonthlyIncome);
@@ -276,7 +314,22 @@ const FinanceReport: React.FC = () => {
 
 
   return(
-      <>
+    <>
+
+      <div>
+        <select 
+          className="border border-black p-2"
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+        > 
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+        </select>
+      </div>
+
+      <div ref={printRef}>
         <div className="p-4 mt-5">
           <Bar data={orderData} options={barChartOptions} />
         </div>
@@ -306,7 +359,14 @@ const FinanceReport: React.FC = () => {
           august income : {MonthlyIncome.august}<br/>*/}
 
         </div>
-      </>
+      </div>
+      <button
+      className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg"
+      onClick={handlePrintPDF}
+    >
+      Download PDF
+    </button>
+    </>
   )
 
 };

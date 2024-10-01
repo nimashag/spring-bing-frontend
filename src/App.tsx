@@ -37,6 +37,8 @@ import EditReview from "./pages/reviews/EditReview";
 import StatReviews from "./pages/reviews/StatReviews";
 import FinanceReport from "./components/charts/orderCharts/FinanceReport.tsx";
 import DashboardLayout from "./dashboard/DashboardLayout.tsx";
+import OrderHistory from "./pages/orders/OrderHistory.tsx";
+import Orders from "./pages/orders/Orders.tsx";
 
 const App: React.FC = () => {
 
@@ -71,7 +73,11 @@ const App: React.FC = () => {
           <Route path="/cart" element={<Cart />} />
 
           {/*Routes for Orders */}
+
+          {/* pagination included here */}
+          <Route path="/order/orders" element={<Orders />} />
           <Route path="/order/pendingOrder" element={<PendingOrders />} />
+          <Route path="/order/orderHistory" element={<OrderHistory />} />
           <Route path="/order/viewOrder/:id" element={<ViewOrder />} />
           <Route path="/order/updateOrder/:id" element={<UpdateOrder />} />
           <Route path="/order/FinanceReport/" element={<FinanceReport />} />

@@ -5,12 +5,14 @@ import { Order } from "../../interfaces/Order";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface IPendingOrdersProps {}
 
 const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [pendingOrders, setPendingOrders] = useState<Order[]>([]);
+  const navigate = useNavigate();
 
   const { user_id } = useCartStore((state) => ({
     user_id: state.user_id,
@@ -46,6 +48,12 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
       <div>
         <div className="flex justify-center items-center">
           <h1 className="text-3xl font-bold mb-4">Your Orders</h1>
+        </div>
+        <div className="flex justify-end items-end p-5">
+          <button className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors"
+            onClick={() => navigate('/order/orderHistory')}>
+            Order History
+          </button>
         </div>
       </div>
       {loading ? (
