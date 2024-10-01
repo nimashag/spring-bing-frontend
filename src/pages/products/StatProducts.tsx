@@ -12,6 +12,10 @@ const StatProducts: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10; // Number of products to display per page
+
   // Get the current date
   const currentDate = new Date().toLocaleDateString();
 
@@ -39,7 +43,7 @@ const StatProducts: React.FC = () => {
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
-  // Filter products based on search query
+  // Filter products based on search query and selected category
   const filteredProducts = products.filter(
     (product) =>
       (selectedCategory === "" ||
@@ -53,12 +57,34 @@ const StatProducts: React.FC = () => {
         product.unit_price.toString().includes(searchQuery))
   );
 
+  // Pagination logic
+  const indexOfLastProduct = currentPage * pageSize;
+  const indexOfFirstProduct = indexOfLastProduct - pageSize;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(filteredProducts.length / pageSize);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   // Function to trigger CSV download
   const handleDownloadCSV = () => {
     const csvRows = [];
 
     // Add empty columns and centered title for CSV
-    const title = [`,,Stock Information as at ${currentDate},,`]; // Adding empty columns to center
+    const title = [`,,Stock Information as at ${currentDate},,`];
     const headers = [
       "Product Name",
       "Category",
@@ -130,23 +156,23 @@ const StatProducts: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Button Group */}
       <div className="flex justify-center mb-4">
-        {/* Button Group */}
         <div className="flex gap-4">
+        <Link to="/stat-products">
+            <button
+              type="button"
+              className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
+            >
+              Stock Summary
+            </button>
+          </Link>
           <Link to="/stat-orders">
             <button
               type="button"
               className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
             >
               Order Summary
-            </button>
-          </Link>
-          <Link to="/stat-products">
-            <button
-              type="button"
-              className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
-            >
-              Stock Summary
             </button>
           </Link>
         </div>
@@ -158,7 +184,7 @@ const StatProducts: React.FC = () => {
           Stock Information
         </h2>
         <div className="flex justify-between mb-4">
-          {/* Align Search bar, Category filter, and Download buttons */}
+          {/* Search bar, Category filter, and Download buttons */}
           <div className="flex gap-4">
             {/* Search bar */}
             <div className="relative w-72">
@@ -166,7 +192,10 @@ const StatProducts: React.FC = () => {
                 type="text"
                 placeholder="Search Products"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1); // Reset to first page on search
+                }}
                 className="h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300"
               />
               <div className="absolute top-0 left-0 mt-2.5 ml-4 text-gray-500">
@@ -179,7 +208,10 @@ const StatProducts: React.FC = () => {
               <select
                 className="w-full h-10 pl-3 pr-10 rounded-full shadow-sm border border-gray-300"
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  setCurrentPage(1); // Reset to first page on category change
+                }}
               >
                 <option value="">All Categories</option>
                 {Object.keys(categories).map((categoryId) => (
@@ -195,18 +227,19 @@ const StatProducts: React.FC = () => {
           <div className="flex gap-4">
             <button
               onClick={handleDownloadCSV}
-              className="text-gray-900 bg-gradient-to-r from-green-200 to-green-400 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-green-100 dark:focus:ring-green-500 font-medium rounded-lg px-6 py-2 text-center"
+              className="text-gray-900 bg-gradient-to-r from-green-200 to-green-400 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg px-6 py-2 text-center"
             >
               Download CSV
             </button>
             <button
               onClick={handleDownloadPDF}
-              className="text-gray-900 bg-gradient-to-r from-blue-200 to-blue-400 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-100 dark:focus:ring-blue-500 font-medium rounded-lg px-6 py-2 text-center"
+              className="text-gray-900 bg-gradient-to-r from-blue-200 to-blue-400 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg px-6 py-2 text-center"
             >
               Download PDF
             </button>
           </div>
         </div>
+
         <div id="stock-table" className="bg-white shadow rounded-lg mt-8 p-6">
           <table className="min-w-full bg-white border border-gray-200">
             <thead>
@@ -217,13 +250,11 @@ const StatProducts: React.FC = () => {
                 <th className="py-2 px-4 bg-gray-100 border-b">Color</th>
                 <th className="py-2 px-4 bg-gray-100 border-b">Size</th>
                 <th className="py-2 px-4 bg-gray-100 border-b">Quantity</th>
-                <th className="py-2 px-4 bg-gray-100 border-b">
-                  Available Status
-                </th>
+                <th className="py-2 px-4 bg-gray-100 border-b">Available Status</th>
               </tr>
             </thead>
             <tbody>
-              {filteredProducts.map((product) =>
+              {currentProducts.map((product) =>
                 product.metadata.map((meta, metaIndex) => {
                   const isAvailable =
                     meta.quantity > 0 ? "Available" : "Not Available";
@@ -256,6 +287,31 @@ const StatProducts: React.FC = () => {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            Previous
+          </button>
+          <span className="text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>

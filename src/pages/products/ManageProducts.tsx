@@ -9,6 +9,10 @@ const ManageProducts: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Set the number of items per page
+
   useEffect(() => {
     fetch("http://localhost:3000/product")
       .then((res) => res.json())
@@ -48,6 +52,15 @@ const ManageProducts: React.FC = () => {
         product.unit_price.toString().includes(searchQuery))
   );
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
   // Handle the deletion of a product
   const handleDelete = (productId: string) => {
     fetch(`http://localhost:3000/product/${productId}`, {
@@ -84,6 +97,19 @@ const ManageProducts: React.FC = () => {
   const getUniqueSizes = (metadata) => {
     const sizes = metadata.map((meta) => meta.size);
     return getUniqueValues(sizes);
+  };
+
+  // Pagination controls
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
@@ -142,11 +168,11 @@ const ManageProducts: React.FC = () => {
               Add Subcategory
             </button>
           </Link>
-          <Link to="/stat-orders">
+          {/* <Link to="/stat-orders">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Summary Report
             </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
 
@@ -185,13 +211,13 @@ const ManageProducts: React.FC = () => {
           </thead>
 
           <tbody className="divide-y">
-            {filteredProducts.map((product, index) => (
+            {currentProducts.map((product, index) => (
               <tr
                 className="bg-white hover:bg-gray-100 transition duration-300 align-top"
                 key={product._id}
               >
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 text-center align-top">
-                  {index + 1}
+                  {index + 1 + indexOfFirstProduct}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 align-top">
                   {product.name}
@@ -230,6 +256,32 @@ const ManageProducts: React.FC = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      {/* Pagination Controls */}
+      <div className="flex justify-end mt-4">
+        <button
+          
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Previous
+        </button>
+        <span className="text-gray-700 mx-2 mt-2">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
+            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

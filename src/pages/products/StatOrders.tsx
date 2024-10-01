@@ -209,20 +209,21 @@ const StatOrders: React.FC = () => {
       <div className="flex justify-center mb-4">
         {/* Button Group */}
         <div className="flex gap-4">
-          <Link to="/stat-orders">
-            <button
-              type="button"
-              className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
-            >
-              Order Summary
-            </button>
-          </Link>
+          
           <Link to="/stat-products">
             <button
               type="button"
               className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
             >
               Stock Summary
+            </button>
+          </Link>
+          <Link to="/stat-orders">
+            <button
+              type="button"
+              className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
+            >
+              Order Summary
             </button>
           </Link>
         </div>
