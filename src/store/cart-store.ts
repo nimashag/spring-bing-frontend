@@ -25,7 +25,7 @@ interface CartStore {
 export const useCartStore = create<CartStore>()(
   persist(
     (set) => ({
-      user_id: "66d196a444e126395cbed7d4",
+      user_id: "66f69ac2dd07888082ea1d4c",
       cart: [],
       selectedCartItem: [],
       itemCount: 0,
