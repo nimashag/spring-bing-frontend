@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
+import '../../dashboard/DashboardLayout.css'
+
 const StatProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{ [key: string]: string }>({});
@@ -155,11 +157,52 @@ const StatProducts: React.FC = () => {
   };
 
   return (
+    <div className="flex h-screen ">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav className="nav">
+          <ul>
+            <li>
+              <Link to="/admin/dash">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-products">Manage Products</Link>
+            </li>
+            <li>
+              <Link to="/admin/stat-products">Stock Summary</Link>
+            </li>
+            <li>
+              <Link to="">Orders</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-reviews">Manage Reviews</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-faq">Manage FAQs</Link>
+            </li>
+            <li>
+              <Link to="">Finance Report</Link>
+            </li>
+            <li>
+              <Link to="">Profile</Link>
+            </li>
+            <li>
+              <Link to="">Logout</Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="main-content">
     <div className="container mx-auto px-4 py-8">
       {/* Button Group */}
       <div className="flex justify-center mb-4">
         <div className="flex gap-4">
-        <Link to="/stat-products">
+        <Link to="/admin/stat-products">
             <button
               type="button"
               className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
@@ -167,7 +210,7 @@ const StatProducts: React.FC = () => {
               Stock Summary
             </button>
           </Link>
-          <Link to="/stat-orders">
+          <Link to="/admin/stat-orders">
             <button
               type="button"
               className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg  px-20 py-5 text-center me-2 mb-2"
@@ -314,6 +357,8 @@ const StatProducts: React.FC = () => {
           </button>
         </div>
       </div>
+    </div>
+    </main>
     </div>
   );
 };

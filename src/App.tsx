@@ -59,13 +59,13 @@ const App: React.FC = () => {
           {/* Routes for Products Module */}
           <Route path="/products" element={<ViewProductsList />} />
           <Route path="/product/:id" element={<ViewProduct />} />
-          <Route path="/manage-products" element={<ManageProducts />} />
-          <Route path="/create-product" element={<CreateProduct />} />
-          <Route path="/update-product/:id" element={<UpdateProduct />} />
-          <Route path="/add-category" element={<AddCategory />} />
-          <Route path="/add-subcategory" element={<AddSubCategory />} />
-          <Route path="/stat-orders" element={<StatOrders />} />
-          <Route path="/stat-products" element={<StatProducts />} />
+          <Route path="/admin/manage-products" element={<ManageProducts />} />
+          <Route path="/admin/create-product" element={<CreateProduct />} />
+          <Route path="/admin/update-product/:id" element={<UpdateProduct />} />
+          <Route path="/admin/add-category" element={<AddCategory />} />
+          <Route path="/admin/add-subcategory" element={<AddSubCategory />} />
+          <Route path="/admin/stat-orders" element={<StatOrders />} />
+          <Route path="/admin/stat-products" element={<StatProducts />} />
 
           {/* Routes for Cart */}
           <Route path="/cart" element={<Cart />} />

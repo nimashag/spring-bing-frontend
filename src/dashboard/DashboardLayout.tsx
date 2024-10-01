@@ -29,7 +29,7 @@ const DashboardLayout: React.FC = ({}) => {
             </li>
             <hr />
             <li>
-              <Link to="/manage-products">
+              <Link to="/admin/manage-products">
                 <MdProductionQuantityLimits /> Manage Products
               </Link>
             </li>
@@ -39,7 +39,7 @@ const DashboardLayout: React.FC = ({}) => {
               </Link>
             </li>
             <li>
-              <Link to="/stat-products">
+              <Link to="/admin//stat-products">
                 <AiTwotoneFund /> Product Statistics
               </Link>
             </li>
@@ -124,44 +124,31 @@ const DashboardLayout: React.FC = ({}) => {
           </div>
         </section>
 
+        <hr className="my-5" />
+
         {/* dewani KAAALLA */}
         <h2 className='text-xl font-bold leading-snug text-black mt-5'>Products Dashboard</h2>
           <div className='flex w-full md:flex-row  items-center gap-5'>
               {/* left side */}
               <div className='md:w-3/4'>
                 <section className="dashboard-overview">
-                    {/* <div className="stat-card">
-                      <h3 className='text-xl font-semibold text-gray-700 text-left'>Add a product</h3>
-                      <p className='text-left'>Upload new products to the catalog.</p>
-                      <button className='bg-blue-800 text-white font-semibold px-5 py-2 rounded hover:bg-black  transition-all duration-300'>
-                        <AiOutlineForm />
-                      </button>
-                    </div> */}
 
                     <div className="stat-card">
                       <h3 className='text-xl font-semibold text-black'>Manage Products</h3>
-                      <img src={manageproduct} className=" h-72"/>
+                      <img src={manageproduct} className=" h-64"/>
                       <p className='mt-2 '>Upload new products to the catalog and View items, update or remove products.</p>
-                      <Link to="/manage-products">
+                      <Link to="/admin/manage-products">
                       <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-400  transition-all duration-300'>
                       Check Products
                       </button>
                       </Link>
                     </div>
 
-                    {/* <div className="stat-card">
-                      <h3 className='text-xl font-semibold text-gray-700 text-left'>Product Statistics</h3>
-                      <p className='text-left'>Access key insights and data on product performance.</p>
-                      <button className='bg-blue-800 text-white font-semibold px-5 py-2 rounded hover:bg-black transition-all duration-300'>
-                      <AiTwotoneFund />
-                      </button>
-                    </div> */}
-
                     <div className="stat-card ">
                       <h3 className='text-xl font-semibold text-black'>Product Reports</h3>
                       <img src={productreport} />
                       <p className='mt-2'>Generate insights on stock levels and order performance, optimizing product availability and sales strategies.</p>
-                      <Link to="/stat-products">
+                      <Link to="/admin/stat-products">
                       <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-400  transition-all duration-300'>
                       Check Reports
                       </button>
@@ -181,6 +168,7 @@ const DashboardLayout: React.FC = ({}) => {
               </div>
           </div>
 
+          <hr className="my-5" />
 
           {/* thunweni KAAALLA */}
           <div className='flex w-full md:flex-row  items-center gap-5'>
@@ -216,6 +204,7 @@ const DashboardLayout: React.FC = ({}) => {
 
                 </section>
 
+                <hr className="my-5" />
 
                 {/* 4weni KAAALLA */}
                 <h2 className='text-xl font-bold leading-snug text-black mt-5'>Order Status Dashboard</h2>

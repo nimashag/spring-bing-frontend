@@ -45,6 +45,7 @@ body, html {
 
 .main-content {
   flex: 1;
+  margin-left: 100px;
   padding: 20px;
   background-color: #ffffff;
 }
@@ -116,7 +117,7 @@ body, html {
   background-color: #fff;
   padding: 22px;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 2px 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -126,6 +127,47 @@ body, html {
   padding: 63px;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+  width: 240px; 
+  height: 100vh; /* Full height */
+  background-color: #000000; /* Example background color */
+  position: fixed; /* Fix the sidebar in place */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  padding: 20px; /* Add padding if necessary */
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Optional shadow */
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px; /* Add some space below the logo */
+}
+
+.nav {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+}
+
+.nav ul {
+  padding-left: 0; /* Remove padding from ul */
+}
+
+.nav li {
+  margin: 15px 0; /* Add margin between items */
+}
+
+.nav a {
+  text-decoration: none; /* Remove underline */
+  color: #333; /* Example text color */
+  transition: color 0.2s; /* Transition effect on hover */
+}
+
+.nav a:hover {
+  color: #007bff; /* Change color on hover */
 }
 
 

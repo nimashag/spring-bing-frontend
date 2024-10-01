@@ -87,7 +87,10 @@ const ManageReviews: React.FC = () => {
               <Link to="/admin/dash">Dashboard</Link>
             </li>
             <li>
-              <Link to="">Manage Products</Link>
+              <Link to="/admin/manage-products">Manage Products</Link>
+            </li>
+            <li>
+              <Link to="/admin/stat-products">Stock Summary</Link>
             </li>
             <li>
               <Link to="">Orders</Link>

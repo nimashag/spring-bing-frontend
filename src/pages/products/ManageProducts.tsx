@@ -3,6 +3,8 @@ import { FaSearch } from "react-icons/fa";
 import Product from "../../interfaces/Product.tsx";
 import { Link } from "react-router-dom";
 
+import '../../dashboard/DashboardLayout.css'
+
 const ManageProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<{ [key: string]: string }>({});
@@ -113,8 +115,49 @@ const ManageProducts: React.FC = () => {
   };
 
   return (
+    <div className="flex h-screen ">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav className="nav">
+          <ul>
+            <li>
+              <Link to="/admin/dash">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-products">Manage Products</Link>
+            </li>
+            <li>
+              <Link to="/admin/stat-products">Stock Summary</Link>
+            </li>
+            <li>
+              <Link to="">Orders</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-reviews">Manage Reviews</Link>
+            </li>
+            <li>
+              <Link to="/admin/manage-faq">Manage FAQs</Link>
+            </li>
+            <li>
+              <Link to="">Finance Report</Link>
+            </li>
+            <li>
+              <Link to="">Profile</Link>
+            </li>
+            <li>
+              <Link to="">Logout</Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="main-content">
     <div className="px-4 my-12">
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start ">
         <h2 className="text-3xl font-bold">Manage Your Products</h2>
 
         <div className="flex justify-between mb-4">
@@ -153,17 +196,17 @@ const ManageProducts: React.FC = () => {
       <div className="flex justify-center">
         {/* Button Group */}
         <div className="flex gap-4">
-          <Link to="/create-product">
+          <Link to="/admin/create-product">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Add Product
             </button>
           </Link>
-          <Link to="/add-category">
+          <Link to="/admin/add-category">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Add Category
             </button>
           </Link>
-          <Link to="/add-subcategory">
+          <Link to="/admin/add-subcategory">
             <button className="bg-blue-100 hover:bg-blue-200 text-blue-500 font-semibold px-4 py-2 rounded transition duration-300">
               Add Subcategory
             </button>
@@ -240,7 +283,7 @@ const ManageProducts: React.FC = () => {
                     .reduce((acc, qty) => acc + qty, 0)}
                 </td>
                 <td className="px-6 py-4 flex gap-4 items-center align-top">
-                  <Link to={`/update-product/${product._id}`}>
+                  <Link to={`/admin/update-product/${product._id}`}>
                     <button className="text-cyan-600 font-medium hover:underline">
                       Edit
                     </button>
@@ -258,7 +301,7 @@ const ManageProducts: React.FC = () => {
         </table>
       </div>
       {/* Pagination Controls */}
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-4 pb-24">
         <button
           
           onClick={handlePreviousPage}
@@ -284,6 +327,10 @@ const ManageProducts: React.FC = () => {
         </button>
       </div>
     </div>
+    </main>
+    
+    </div>
+
   );
 };
 
