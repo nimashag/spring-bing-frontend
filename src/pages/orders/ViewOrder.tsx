@@ -61,6 +61,12 @@ const ViewOrder: React.FunctionComponent = () => {
                     Item
                   </th>
                   <th className="py-2 px-4 border-b border-gray-200 text-left font-medium text-gray-700">
+                    Color
+                  </th>
+                  <th className="py-2 px-4 border-b border-gray-200 text-left font-medium text-gray-700">
+                    Size
+                  </th>
+                  <th className="py-2 px-4 border-b border-gray-200 text-left font-medium text-gray-700">
                     Quantity
                   </th>
                   <th className="py-2 px-4 border-b border-gray-200 text-left font-medium text-gray-700">
@@ -71,7 +77,7 @@ const ViewOrder: React.FunctionComponent = () => {
               <tbody>
                 {order?.orderProducts.map((item) => (
                   <tr key={item.product_id._id} className="hover:bg-gray-50">
-                    <td className="py-3 px-4 border-b border-gray-200">
+                    <td className="py-3 border-b border-gray-200">
                       <div className="flex items-center space-x-4">
                         <div className="relative overflow-visible w-12 h-12">
                           <img
@@ -84,10 +90,19 @@ const ViewOrder: React.FunctionComponent = () => {
                       </div>
                     </td>
                     <td className="py-3 px-4 border-b border-gray-200">
+                      {item.color}
+                    </td>
+                    <td className="py-3 px-4 border-b border-gray-200">
+                      {item.size}
+                    </td>
+                    <td className="py-3 px-4 border-b border-gray-200">
                       {item.quantity}
                     </td>
                     <td className="py-3 px-4 border-b border-gray-200">
-                      Rs. {item.product_id.unit_price * item.quantity}
+                      {currencyFormatter.format(
+                        item.product_id.unit_price * item.quantity,
+                        { code: "USD" }
+                      )}
                     </td>
                   </tr>
                 ))}
