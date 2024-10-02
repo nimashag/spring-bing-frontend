@@ -161,7 +161,7 @@ const ViewProduct = () => {
     };
 
     
-
+    const isAddToCartDisabled = !selectedSize || !selectedColor || quantity === 0;
 
     if (!product) return <div>Loading...</div>;
 
@@ -245,9 +245,9 @@ const ViewProduct = () => {
                             disabled={isOutOfStock}>Buy Now
                         </button> */}
                         <button
-                            className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isOutOfStock ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-green-700 text-white hover:bg-green-800 hover:shadow-lg'}`}
+                            className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isAddToCartDisabled ? 'bg-green-200 text-gray-600 cursor-not-allowed' : 'bg-green-700 text-white hover:bg-green-800 hover:shadow-lg'}`}
                             onClick={() => addToCart(product)}
-                            disabled={isOutOfStock}>Add to Cart
+                            disabled={isAddToCartDisabled}>Add to Cart
                         </button>
                     </div>
                 </div>
