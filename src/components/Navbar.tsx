@@ -6,6 +6,7 @@ import usericon from "../assets/user_icon.png";
 import carticon from "../assets/carticon.png";
 import SignupForm from "../auth/Signupform";
 import Loginform from "../auth/Loginform";
+import logoicon2 from '../assets/logoimg1.png';
 
 const Navbar: React.FC = () => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
@@ -27,7 +28,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="flex items-center justify-between py-5 font-medium">
-      <img src={logoicon} className="w-28" alt="Logo" />
+      <img src={logoicon2} className="w-24" alt="Logo" />
 
       <ul className="hidden sm:flex gap-20 text-sm text-gray-700">
         <NavLink to="/" className="flex flex-col items-center gap-1">

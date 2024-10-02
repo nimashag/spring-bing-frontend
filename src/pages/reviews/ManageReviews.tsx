@@ -205,7 +205,7 @@ const ManageReviews: React.FC = () => {
 
             {/* Pagination Controls */}
             <div className="flex justify-between items-center mt-8">
-              <div className="flex-grow text-center">
+              <div className="">
                 Page {currentPage} of {totalPages}
               </div>
               <div className="flex gap-4">
