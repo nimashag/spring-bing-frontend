@@ -133,7 +133,7 @@ const ViewProductsList: React.FC = () => {
                 <h5 className="text-xl font-bold tracking-tight text-gray-900 mb-2">
                   {product.name}
                 </h5>
-                <p className="text-sm text-gray-500 font-semibold">
+                <p className="text-lg text-gray-500 font-semibold">
                   <p>
                     <strong>Category: </strong>
                     {categories[product.category[0]] || "Unknown"}

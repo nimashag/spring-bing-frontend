@@ -5,6 +5,7 @@ import "../../index.css";
 import { Link } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import "jspdf-autotable";
 
 import '../../dashboard/DashboardLayout.css'
 import SidebarComp from "../../dashboard/SidebarComp.tsx";
@@ -130,32 +131,66 @@ const StatProducts: React.FC = () => {
     document.body.removeChild(a);
   };
 
-  // Function to trigger PDF download
+  // Function to trigger PDF download with all products
   const handleDownloadPDF = () => {
-    const input = document.getElementById("stock-table") as HTMLElement;
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    // Center title and date in PDF
-    const title = `Stock Information as at ${currentDate}`;
-    pdf.setFontSize(18);
-
+    const pdf = new jsPDF();
+    const currentDate = new Date().toISOString().slice(0, 10);
     const pageWidth = pdf.internal.pageSize.getWidth();
-    const textWidth = pdf.getTextWidth(title);
-
-    const titleXPosition = (pageWidth - textWidth) / 2; // Centering the text
-
-    pdf.text(title, titleXPosition, 20);
-
-    // Capture the table and add it to the PDF
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const imgWidth = 200;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      pdf.addImage(imgData, "PNG", 5, 30, imgWidth, imgHeight);
-      pdf.save(`stock_information_${currentDate}.pdf`);
+  const title = `Stock Information as at ${currentDate}`;
+  
+  // Center the title and date in PDF
+  pdf.setFontSize(18);
+  const titleWidth = pdf.getTextWidth(title);
+  pdf.text(title, (pageWidth - titleWidth) / 2, 20);
+  
+    const tableColumn = [
+      "Product Name",
+      "Category",
+      "Unit Price",
+      "Color",
+      "Size",
+      "Quantity",
+      "Available Status",
+    ];
+  
+    const tableRows = [];
+  
+    // Add products data into tableRows
+    filteredProducts.forEach((product) => {
+      product.metadata.forEach((meta) => {
+        const isAvailable = meta.quantity > 0 ? "Available" : "Not Available";
+        const productData = [
+          product.name,
+          categories[product.category[0]] || "Unknown",
+          product.unit_price.toString(),
+          meta.color,
+          meta.size,
+          meta.quantity.toString(),
+          isAvailable,
+        ];
+        tableRows.push(productData);
+      });
     });
+  
+    // Automatically generate table with headers and rows
+    pdf.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 40, // Initial vertical position on the page
+      theme: 'grid', //  table theme (striped, grid, plain)
+      styles: {
+        fontSize: 10, // Adjust font size if needed
+        cellPadding: 3, // Adjust cell padding for better readability
+      },
+      headStyles: {
+        fillColor: [0, 150, 136], // Customize header background color
+        textColor: [255, 255, 255], // Customize header text color
+      },
+    });
+  
+    pdf.save(`stock_information_${currentDate}.pdf`);
   };
+
 
   return (
     <div className="flex h-screen ">
