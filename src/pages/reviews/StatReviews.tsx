@@ -180,11 +180,6 @@ const StatReviews: React.FC = () => {
       // Add table borders in the PDF
       const pageHeight = pdf.internal.pageSize.height; 
 
-      // Footer
-      pdf.setFontSize(10);
-      pdf.setTextColor(100);
-      pdf.text('Footer Text Here', 105, pageHeight - 10, { align: 'center' });
-
       pdf.save('review_statistics.pdf');
 
       for (let i = 0; i < buttonsToHide.length; i++) {
