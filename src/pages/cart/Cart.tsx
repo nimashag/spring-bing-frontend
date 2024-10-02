@@ -4,6 +4,7 @@ import { ImCancelCircle } from "react-icons/im";
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 import { enqueueSnackbar } from "notistack";
+import currencyFormatter from 'currency-formatter';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -235,7 +236,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
   {(cart.length > 0 || selectedCartItem.length > 0) && (
     <div className="max-w-4xl mx-auto p-5 mt-5 bg-white shadow-md rounded-lg">
       <div className="text-2xl mb-4">
-        Total Price: <strong>${totalPrice.toFixed(2)}</strong>
+        Total Price: <strong>{currencyFormatter.format(totalPrice.toFixed(2),{ code: 'USD' })}</strong>
       </div>
       <div className="mb-4">
         <label className="block text-gray-700 mb-2">Delivery Address:</label>

@@ -147,9 +147,11 @@ const DashboardLayout: React.FC = ({}) => {
                   <div className="ml-5">
                     <h3 className='text-xl font-semibold text-black text-left'>Manage Orders</h3>
                     <p className='mt-2 text-left'>Easily view, track, and update customer orders, ensuring smooth order fulfillment and timely delivery.</p>
+                    <Link to="/admin/orders">
                     <button className='bg-black font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-blue-500 transition-all duration-300'>
                       Check Orders
                     </button>
+                    </Link>
                   </div>
                 </div>
                 <div className="stat-card flex items-center">
@@ -157,9 +159,11 @@ const DashboardLayout: React.FC = ({}) => {
                   <div className="ml-5">
                     <h3 className='text-xl font-semibold text-black text-left'>Finance Reports</h3>
                     <p className='mt-2 text-left'>Access detailed financial summaries, including revenue, expenses, and profit trends, to help manage your business's financial health.</p>
+                    <Link to="/admin/order/FinanceReport/">  
                     <button className='bg-black font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-green-300 transition-all duration-300'>
                       Check Reports
                     </button>
+                    </Link>
                   </div>
                 </div>
                 </section>
