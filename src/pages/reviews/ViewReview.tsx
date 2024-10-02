@@ -24,6 +24,10 @@ const ViewReview: React.FC = () => {
     const [filteredReviews, setFilteredReviews] = useState<Review[]>([]);
     const [sortOption, setSortOption] = useState<string>("none");
     const [dateSortOption, setDateSortOption] = useState<string>("none");
+    
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const reviewsPerPage = 9; 
 
     useEffect(() => {
         const fetchReviews = async () => {
@@ -60,32 +64,59 @@ const ViewReview: React.FC = () => {
         setFilteredReviews(results);
     }, [searchQuery, reviews, sortOption, dateSortOption]);
 
+    // Calculate the current reviews to display
+    const indexOfLastReview = currentPage * reviewsPerPage;
+    const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+    const currentReviews = filteredReviews.slice(indexOfFirstReview, indexOfLastReview);
+    
+    // Calculate total pages
+    const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
+
+    // Handle page change
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Handle previous page
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // Handle next page
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
     return (
-        <div className='mt-28 px-4 lg:px-24'>
+        <div className='mt-18 px-4 lg:px-24 pt-10 border-t'>
             <div className='flex justify-between items-start mb-8'>
                 <h2 className='text-4xl font-bold'>What People Think About Us!</h2>
                 <div className='flex items-center gap-3'>
                     <div>
-                    <select
-                        value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)}
-                        className="h-10 pl-4 pr-8 border border-gray-300 rounded-full"
-                    >
-                        <option value="none">Sort by Rating</option>
-                        <option value="highest">Highest First</option>
-                        <option value="lowest">Lowest First</option>
-                    </select>
+                        <select
+                            value={sortOption}
+                            onChange={(e) => setSortOption(e.target.value)}
+                            className="h-10 pl-4 pr-8 border border-gray-300 rounded-full"
+                        >
+                            <option value="none">Sort by Rating</option>
+                            <option value="highest">Highest First</option>
+                            <option value="lowest">Lowest First</option>
+                        </select>
                     </div>
                     <div>
-                    <select
-                        value={dateSortOption}
-                        onChange={(e) => setDateSortOption(e.target.value)}
-                        className="h-10 pl-4 pr-8 border border-gray-300 rounded-full"
-                    >
-                        <option value="none">Sort by Date</option>
-                        <option value="latest">Latest First</option>
-                        <option value="oldest">Oldest First</option>
-                    </select>
+                        <select
+                            value={dateSortOption}
+                            onChange={(e) => setDateSortOption(e.target.value)}
+                            className="h-10 pl-4 pr-8 border border-gray-300 rounded-full"
+                        >
+                            <option value="none">Sort by Date</option>
+                            <option value="latest">Latest First</option>
+                            <option value="oldest">Oldest First</option>
+                        </select>
                     </div>
 
                     <div className="relative w-96">
@@ -132,13 +163,13 @@ const ViewReview: React.FC = () => {
             </div>
 
             <div className="mt-12">
-                <div className='text-4xl  pt-3'>
-                <Title text1={'Customer'} text2={' Reviews'}/>
+                <div className='text-4xl pt-3'>
+                    <Title text1={'Customer'} text2={' Reviews'}/>
                 </div>
                 <br/>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {filteredReviews.length > 0 ? (
-                        filteredReviews.map((review) => (
+                    {currentReviews.length > 0 ? (
+                        currentReviews.map((review) => (
                             <Card key={review._id}>
                                 <h4 className="text-xl font-bold">{review.title}</h4>
                                 <p className="text-gray-500">{review.description}</p>
@@ -146,24 +177,45 @@ const ViewReview: React.FC = () => {
                                 <p className="text-gray-400 text-sm">Posted by {review.user?.fname} on {new Date(review.date).toLocaleDateString()}</p>
                                 
                                 {review.images_path && review.images_path.length > 0 && (
-                                <div className="mt-4">
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {review.images_path.map((image, index) => (
-                                            <img
-                                                key={index}
-                                                src={image} 
-                                                alt={`review image ${index + 1}`}
-                                                className="h-60 w-full object-cover rounded" 
-                                            />
-                                        ))}
+                                    <div className="mt-4">
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {review.images_path.map((image, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={image} 
+                                                    alt={`review image ${index + 1}`}
+                                                    className="h-60 w-full object-cover rounded" 
+                                                />
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
                             </Card>
                         ))
                     ) : (
                         <p>No reviews found</p>
                     )}
+                </div>
+                
+                {/* Pagination Controls */}
+                <div className="flex justify-center items-center mt-6">
+                    <button
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                        className={`mx-2 px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500' : 'bg-black text-white'}`}
+                    >
+                        Previous
+                    </button>
+                    <span className="mx-2 text-lg">
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={currentPage === totalPages}
+                        className={`mx-2 px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500' : 'bg-black text-white'}`}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
 

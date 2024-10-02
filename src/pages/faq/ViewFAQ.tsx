@@ -20,6 +20,10 @@ const ViewFAQ: React.FC = () => {
     const [categories, setCategories] = useState<string[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const faqsPerPage = 10; 
+
     useEffect(() => {
         // Fetch FAQs from the backend
         fetch("http://localhost:3000/faqs")
@@ -40,8 +44,35 @@ const ViewFAQ: React.FC = () => {
         (selectedCategory === "" || faq.category === selectedCategory)
     );
 
+    // Calculate the current FAQs to display
+    const indexOfLastFAQ = currentPage * faqsPerPage;
+    const indexOfFirstFAQ = indexOfLastFAQ - faqsPerPage;
+    const currentFaqs = filteredFaqs.slice(indexOfFirstFAQ, indexOfLastFAQ);
+    
+    // Calculate total pages
+    const totalPages = Math.ceil(filteredFaqs.length / faqsPerPage);
+
+    // Handle page change
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Handle previous page
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // Handle next page
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
     return (
-        <div className='mt-28 px-4 lg:px-24'>
+        <div className='mt-18 px-4 lg:px-24 pt-10 border-t'>
             <div className='flex justify-between items-start mb-8'>
                 <h2 className='text-5xl font-bold'>Frequently Asked Questions</h2>
                 <div className='flex items-center space-x-4'>
@@ -85,13 +116,13 @@ const ViewFAQ: React.FC = () => {
                         </Link>
                     </div>
                     <div>
-                        <img className='w-[500px] md:max-w-[500px]' src={FAQpic} alt="FAQ Section"  />
+                        <img className='w-[500px] md:max-w-[500px]' src={FAQpic} alt="FAQ Section" />
                     </div>
                 </div>
             </div>
 
             <div className='grid gap-5 my-12 lg:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 grid-cols-1'>
-                {filteredFaqs.map(faq => (
+                {currentFaqs.map(faq => (
                     <Card key={faq._id} className="h-auto relative transition-shadow duration-300 ease-in-out hover:shadow-xl">
                         <div className="px-6 py-4">
                             <h5 className="text-xl font-bold tracking-tight text-gray-900 mb-2">
@@ -102,13 +133,35 @@ const ViewFAQ: React.FC = () => {
                             </p> 
                             {faq.answer && (
                                 <p className="text-black mt-4">
-                                    <p className='text-sm'><strong>Answer:</strong></p>{faq.answer}
+                                    <span className='text-sm'><strong>Answer:</strong></span> {faq.answer}
                                 </p>
                             )}
                         </div>
                     </Card>
                 ))}
             </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center items-center mt-6">
+                <button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 1}
+                    className={`mx-2 px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500' : 'bg-black text-white'}`}
+                >
+                    Previous
+                </button>
+                <span className="mx-2 text-lg">
+                    Page {currentPage} of {totalPages}
+                </span>
+                <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages}
+                    className={`mx-2 px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500' : 'bg-black text-white'}`}
+                >
+                    Next
+                </button>
+            </div>
+
             <br/><br/><NewsLetter />
         </div>
     );

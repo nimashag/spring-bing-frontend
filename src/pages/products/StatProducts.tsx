@@ -7,6 +7,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
 import '../../dashboard/DashboardLayout.css'
+import SidebarComp from "../../dashboard/SidebarComp.tsx";
 
 const StatProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -159,42 +160,7 @@ const StatProducts: React.FC = () => {
   return (
     <div className="flex h-screen ">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo">
-          <h2>Admin Dashboard</h2>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li>
-              <Link to="/admin/dash">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-products">Manage Products</Link>
-            </li>
-            <li>
-              <Link to="/admin/stat-products">Stock Summary</Link>
-            </li>
-            <li>
-              <Link to="">Orders</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-reviews">Manage Reviews</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-faq">Manage FAQs</Link>
-            </li>
-            <li>
-              <Link to="">Finance Report</Link>
-            </li>
-            <li>
-              <Link to="">Profile</Link>
-            </li>
-            <li>
-              <Link to="">Logout</Link>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+      <SidebarComp />
 
       {/* Main Content */}
       <main className="main-content">

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
-import '../../dashboard/DashboardLayout.css'
+import { AiFillHome, AiOutlineUser, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart, AiOutlineForm, AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
+import { MdProductionQuantityLimits } from 'react-icons/md';
+import '../../dashboard/DashboardLayout.css';
+import SidebarComp from '../../dashboard/SidebarComp';
 
 interface Review {
   _id: string;
@@ -20,7 +23,9 @@ interface Review {
 const ManageReviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState(''); 
+  const [statusFilter, setStatusFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 10;
 
   useEffect(() => {
     fetch("http://localhost:3000/reviews")
@@ -31,8 +36,8 @@ const ManageReviews: React.FC = () => {
         return res.json();
       })
       .then((data) => {
-        console.log("Fetched reviews data:", data); 
-        setReviews(data || []); 
+        console.log("Fetched reviews data:", data);
+        setReviews(data || []);
       })
       .catch((error) => {
         console.error('Error fetching reviews:', error);
@@ -66,7 +71,7 @@ const ManageReviews: React.FC = () => {
     }
   };
 
-  
+  // Filter and paginate reviews
   const filteredReviews = reviews.filter(review =>
     (review.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       review.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -74,48 +79,37 @@ const ManageReviews: React.FC = () => {
     (statusFilter === '' || review.status === statusFilter)
   );
 
+  // Calculate pagination variables
+  const indexOfLastReview = currentPage * reviewsPerPage;
+  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+  const currentReviews = filteredReviews.slice(indexOfFirstReview, indexOfLastReview);
+  const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
+
+  // Handle page change
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Handle previous and next page
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
-    <div className="flex h-screen">
+    <div className="dashboard-layout">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo">
-          <h2>Admin Dashboard</h2>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li>
-              <Link to="/admin/dash">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-products">Manage Products</Link>
-            </li>
-            <li>
-              <Link to="/admin/stat-products">Stock Summary</Link>
-            </li>
-            <li>
-              <Link to="">Orders</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-reviews">Manage Reviews</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-faq">Manage FAQs</Link>
-            </li>
-            <li>
-              <Link to="">Finance Report</Link>
-            </li>
-            <li>
-              <Link to="">Profile</Link>
-            </li>
-            <li>
-              <Link to="">Logout</Link>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+      <SidebarComp />
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
+      <main className="main-content">
         <div className="px-4 my-6">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between mb-4">
@@ -150,7 +144,7 @@ const ManageReviews: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex justify-center items-center min-h-screen">
+            <div className="flex justify-center items-center ">
               <table className="w-full table-auto bg-white shadow-lg rounded-lg overflow-hidden">
                 <thead className="bg-sky-700 text-white">
                   <tr>
@@ -163,14 +157,14 @@ const ManageReviews: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {filteredReviews.length > 0 ? (
-                    filteredReviews.map((review, index) => (
+                  {currentReviews.length > 0 ? (
+                    currentReviews.map((review, index) => (
                       <tr key={review._id} className="bg-white hover:bg-gray-100 transition duration-300">
                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                          {index + 1}
+                          {indexOfFirstReview + index + 1}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                          {review.user?.fname || 'Unknown'}
+                          {review.user?.fname || 'SpringBing User'}
                         </td>
                         <td className="px-6 py-4 text-gray-700">
                           {review.title}
@@ -207,6 +201,29 @@ const ManageReviews: React.FC = () => {
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-between items-center mt-8">
+              <div className="flex-grow text-center">
+                Page {currentPage} of {totalPages}
+              </div>
+              <div className="flex gap-4">
+                <button 
+                  onClick={handlePrevious} 
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300' : 'bg-sky-700 text-white'}`}
+                >
+                  Previous
+                </button>
+                <button 
+                  onClick={handleNext} 
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300' : 'bg-sky-700 text-white'}`}
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>
