@@ -5,6 +5,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
+import SidebarComp from "../../dashboard/SidebarComp";
 
 interface IOrdersProps {}
 
@@ -71,58 +72,63 @@ const Orders: React.FunctionComponent<IOrdersProps> = (props) => {
   };
 
   return (
-    <div>
-      <div className="p-8">
-        <Link to={`/order/FinanceReport/`}>
-        <button className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors">Finance Report</button>
-        </Link>
-      </div>
+    <div className="dashboard-layout">
+      <SidebarComp />
+      
+      <div className="main-content">
+      <h2 className="text-3xl font-bold">Manage Your Orders</h2>
+        <div className="p-8">
+          <Link to={`/admin/order/FinanceReport/`}>
+          <button className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors">Finance Report</button>
+          </Link>
+        </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg shadow-md">
-          <thead className="bg-sky-700 text-white">
-            <tr>
-              <th className="py-3 px-4 text-left text-sm font-semibold">
-                Number
-              </th>
-              <th className="py-3 px-4 text-left text-sm font-semibold">
-                Order ID
-              </th>
-              <th className="py-3 px-4 text-left text-sm font-semibold">
-                Order Status
-              </th>
-              <th className="py-3 px-4 text-left text-sm font-semibold">
-                Date
-              </th>
-              <th className="py-3 px-4 text-left text-sm font-semibold">
-                Total Amount
-              </th>
-            </tr>
-          </thead>
-          <tbody>{loading ? <Loading /> : displayOrders}</tbody>
-        </table>
-      </div>
-      <div className="p-5">
-        <ReactPaginate
-          className="flex justify-center space-x-2 mt-4"
-          previousLabel={
-            <button className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors">
-              Previous
-            </button>
-          }
-          nextLabel={
-            <button className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors">
-              Next
-            </button>
-          }
-          pageCount={totalPages}
-          onPageChange={changePage}
-          containerClassName="flex space-x-2"
-          activeClassName="bg-black text-white"
-          pageClassName="px-3 py-1 border border-gray-300 hover:bg-blue-100"
-          breakClassName="px-3 py-1"
-          disabledClassName="opacity-50 cursor-not-allowed"
-        />
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white rounded-lg shadow-md">
+            <thead className="bg-sky-700 text-white">
+              <tr>
+                <th className="py-3 px-4 text-left text-sm font-semibold">
+                  Number
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-semibold">
+                  Order ID
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-semibold">
+                  Order Status
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-semibold">
+                  Date
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-semibold">
+                  Total Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody>{loading ? <Loading /> : displayOrders}</tbody>
+          </table>
+        </div>
+        <div className="p-5">
+          <ReactPaginate
+            className="flex justify-center space-x-2 mt-4"
+            previousLabel={
+              <button className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors">
+                Previous
+              </button>
+            }
+            nextLabel={
+              <button className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors">
+                Next
+              </button>
+            }
+            pageCount={totalPages}
+            onPageChange={changePage}
+            containerClassName="flex space-x-2"
+            activeClassName="bg-black text-white"
+            pageClassName="px-3 py-1 border border-gray-300 hover:bg-blue-100"
+            breakClassName="px-3 py-1"
+            disabledClassName="opacity-50 cursor-not-allowed"
+          />
+        </div>
       </div>
     </div>
   );
