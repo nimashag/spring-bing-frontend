@@ -76,7 +76,7 @@ const App: React.FC = () => {
           {/*Routes for Orders */}
 
           {/* pagination included here */}
-          <Route path="/order/orders" element={<Orders />} />
+          <Route path="/admin/orders" element={<Orders />} />
           <Route path="/order/pendingOrder" element={<PendingOrders />} />
           <Route path="/order/orderHistory" element={<OrderHistory />} />
           <Route path="/order/viewOrder/:id" element={<ViewOrder />} />

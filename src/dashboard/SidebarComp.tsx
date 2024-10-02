@@ -42,12 +42,12 @@ const SidebarComp :React.FC= () => {
             </li>
             <hr />
             <li>
-              <Link to="">
+              <Link to="/admin/orders">
                 <AiOutlineShopping /> Manage Orders
               </Link>
             </li>
             <li>
-              <Link to="">
+              <Link to="/order/FinanceReport/">
                 <AiOutlineFileDone /> Finance Report
               </Link>
             </li>
