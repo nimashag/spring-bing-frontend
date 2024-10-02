@@ -6,7 +6,7 @@ import { Order } from "../../interfaces/Order";
 import { motion } from "framer-motion";
 import Loading from "../../components/Loading.tsx";
 import Model from "../../components/Modal.tsx";
-import currencyFormatter from 'currency-formatter';
+import currencyFormatter from "currency-formatter";
 
 const ViewOrder: React.FunctionComponent = () => {
   const [order, setOrder] = useState<Order>();
@@ -49,7 +49,9 @@ const ViewOrder: React.FunctionComponent = () => {
       ) : (
         <div className="w-full p-4 bg-white rounded-lg shadow-lg">
           <div className="mb-6 text-3xl font-semibold text-gray-800">
-            <h1>{currencyFormatter.format(order?.total_price,{ code: 'USD' })} /=</h1>
+            <h1>
+              {currencyFormatter.format(order?.total_price, { code: "USD" })} /=
+            </h1>
           </div>
           <div className="bg-slate-50 p-4 rounded-lg">
             <table className="min-w-full border-collapse border border-gray-200">
@@ -68,7 +70,6 @@ const ViewOrder: React.FunctionComponent = () => {
               </thead>
               <tbody>
                 {order?.orderProducts.map((item) => (
-                
                   <tr key={item.product_id._id} className="hover:bg-gray-50">
                     <td className="py-3 px-4 border-b border-gray-200">
                       <div className="flex items-center space-x-4">
@@ -123,6 +124,7 @@ const ViewOrder: React.FunctionComponent = () => {
                 open={open}
                 onClose={() => setOpen(false)}
                 order={order}
+                type="user"
               ></Model>
             </div>
           </div>
