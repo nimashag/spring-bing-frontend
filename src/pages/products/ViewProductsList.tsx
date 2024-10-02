@@ -14,7 +14,7 @@ const ViewProductsList: React.FC = () => {
 
    // Pagination states
    const [currentPage, setCurrentPage] = useState(1);
-   const itemsPerPage = 8; // Set how many items to show per page
+   const itemsPerPage = 12; // Set how many items to show per page
 
   useEffect(() => {
     fetch("http://localhost:3000/product")
