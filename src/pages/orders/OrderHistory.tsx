@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Order } from "../../interfaces/Order";
 import { useCartStore } from "../../store/cart-store";
+import { format } from "date-fns";
 import Loading from "../../components/Loading";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import currencyFormatter from 'currency-formatter';
 
 import "../../dashboard/DashboardLayout.css";
 import SidebarComp from "../../dashboard/SidebarComp.tsx";
@@ -44,7 +46,7 @@ const OrderHistory = (props: Props) => {
   }, [user_id]);
 
   return (
-    <div className="flex">
+    <>
         <div>
           <div className="flex justify-center items-center">
             <h1 className="text-3xl font-bold mb-4">Your Order History</h1>
@@ -62,6 +64,9 @@ const OrderHistory = (props: Props) => {
                   </th>
                   <th className="py-3 px-4 text-left text-sm font-semibold">
                     Order ID
+                  </th>
+                  <th className="py-3 px-4 text-left text-sm font-semibold">
+                    Date
                   </th>
                   <th className="py-3 px-4 text-left text-sm font-semibold">
                     Total Amount
@@ -83,7 +88,10 @@ const OrderHistory = (props: Props) => {
                       </Link>
                     </td>
                     <td className="py-3 px-4 text-sm font-medium text-gray-900">
-                      {order.total_price}
+                    {format(new Date(order.purchase_date), "yyyy-MM-dd")}
+                    </td>
+                    <td className="py-3 px-4 text-sm font-medium text-gray-900">
+                    {currencyFormatter.format(order.total_price,{ code: 'USD' })}
                     </td>
                   </tr>
                 ))}
@@ -91,7 +99,7 @@ const OrderHistory = (props: Props) => {
             </table>
           </div>
         )}
-    </div>
+    </>
   );
 };
 

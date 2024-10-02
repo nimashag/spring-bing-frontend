@@ -6,6 +6,8 @@ import axios from "axios";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import currencyFormatter from 'currency-formatter';
+import { format } from "date-fns";
 
 interface IPendingOrdersProps {}
 
@@ -18,7 +20,10 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
     user_id: state.user_id,
   }));
 
+  const { setUserId } = useCartStore();
+
   useEffect(() => {
+    setUserId('66d196a444e126395cbed7d9')
     const getPendingOrders = async () => {
       try {
         setLoading(true);
@@ -65,6 +70,7 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
           <tr>
             <th className="py-3 px-4 text-left text-sm font-semibold">Number</th>
             <th className="py-3 px-4 text-left text-sm font-semibold">Order ID</th>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Date</th>
             <th className="py-3 px-4 text-left text-sm font-semibold">Total Amount</th>
             <th className="py-3 px-4 text-left text-sm font-semibold">Actions</th>
           </tr>
@@ -81,7 +87,8 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
                 {order._id}
                 </Link>
                 </td>
-              <td className="py-3 px-4 text-sm font-medium text-gray-900">{order.total_price}</td>
+                <td className="py-3 px-4 text-sm font-medium text-gray-900">{format(new Date(order.purchase_date), "yyyy-MM-dd")}</td>
+              <td className="py-3 px-4 text-sm font-medium text-gray-900">{currencyFormatter.format(order.total_price,{ code: 'USD' })}</td>
               <td className="py-3 px-4 text-sm font-medium text-gray-900">
                 <div className="flex gap-3">
                   <Link to={`/order/updateOrder/${order._id}`}>

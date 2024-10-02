@@ -40,6 +40,7 @@ import DashboardLayout from "./dashboard/DashboardLayout.tsx";
 import OrderHistory from "./pages/orders/OrderHistory.tsx";
 import Orders from "./pages/orders/Orders.tsx";
 import SummaryReviews from "./pages/reviews/SummaryReviews.tsx";
+import OrderUpdateStatus from "./pages/orders/OrderUpdateStatus.tsx";
 
 const App: React.FC = () => {
 
@@ -82,6 +83,7 @@ const App: React.FC = () => {
           <Route path="/order/viewOrder/:id" element={<ViewOrder />} />
           <Route path="/order/updateOrder/:id" element={<UpdateOrder />} />
           <Route path="/admin/order/FinanceReport/" element={<FinanceReport />} />
+          <Route path="/admin/order/updateOrderStatus/:id" element={<OrderUpdateStatus />} />
 
           {/* Routes for FAQ Module */}
           <Route path="/faqs" element={<ViewFAQ />} />
