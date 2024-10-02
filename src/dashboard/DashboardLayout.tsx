@@ -62,7 +62,7 @@ const DashboardLayout: React.FC = ({}) => {
 
                     <div className="stat-card">
                       <h3 className='text-xl font-semibold text-black'>Manage Products</h3>
-                      <img src={manageproduct} className=" h-64"/>
+                      <img src={manageproduct} className=" h-56"/>
                       <p className='mt-2 '>Upload new products to the catalog and View items, update or remove products.</p>
                       <Link to="/admin/manage-products">
                       <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-400  transition-all duration-300'>

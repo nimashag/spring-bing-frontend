@@ -7,6 +7,7 @@ import SubCategory from "../../interfaces/SubCategory.tsx";
 import { Link } from "react-router-dom";
 
 import '../../dashboard/DashboardLayout.css'
+import SidebarComp from "../../dashboard/SidebarComp.tsx";
 
 const CreateProduct: React.FC = () => {
   const [categories, setCategories] = useState([]);
@@ -161,45 +162,10 @@ const CreateProduct: React.FC = () => {
   return (
     <div className="flex h-screen ">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo">
-          <h2>Admin Dashboard</h2>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li>
-              <Link to="/admin/dash">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-products">Manage Products</Link>
-            </li>
-            <li>
-              <Link to="/admin/stat-products">Stock Summary</Link>
-            </li>
-            <li>
-              <Link to="">Orders</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-reviews">Manage Reviews</Link>
-            </li>
-            <li>
-              <Link to="/admin/manage-faq">Manage FAQs</Link>
-            </li>
-            <li>
-              <Link to="">Finance Report</Link>
-            </li>
-            <li>
-              <Link to="">Profile</Link>
-            </li>
-            <li>
-              <Link to="">Logout</Link>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+      <SidebarComp />
 
       {/* Main Content */}
-      <main className="flex-1 p-8 ">
+      <main className="main-content ">
       <div className="px-4 my-12">
         <form
             onSubmit={handleProductSubmit}

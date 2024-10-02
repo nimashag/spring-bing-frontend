@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
 import { useParams } from "react-router-dom";
 import { PiCheckCircleBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
+
+import '../../dashboard/DashboardLayout.css'
+import SidebarComp from "../../dashboard/SidebarComp.tsx";
 
 const UpdateProduct: React.FC = () => {
   const { id } = useParams();
@@ -64,7 +68,7 @@ const UpdateProduct: React.FC = () => {
     }
 
     // Unit Price Validation
-    if (isNaN(updatedProduct.unit_price) || updatedProduct.unit_price <= 0) {
+    if (isNaN(updatedProduct.unit_price) || parseFloat(updatedProduct.unit_price) <= 0) {
       newErrors.unit_price = "Unit price must be a positive number.";
     }
 
@@ -158,12 +162,18 @@ const UpdateProduct: React.FC = () => {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <div className="px-4 my-12">
+    <div className="flex h-screen ">
+      {/* Sidebar */}
+      <SidebarComp />
+
+      {/* Main Content */}
+      <main className="main-content">
+    <div className="px-4 my-12 pb-20">
       <form
         onSubmit={handleUpdate}
-        className="flex flex-col gap-6 p-8 bg-white shadow-md rounded-lg max-w-3xl mx-auto"
+        className="flex flex-col gap-6 p-8 bg-white shadow-2xl rounded-lg max-w-6xl mx-auto"
       >
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        <h2 className="text-4xl font-semibold text-gray-800 mb-4">
           Update Product
         </h2>
 
@@ -173,7 +183,7 @@ const UpdateProduct: React.FC = () => {
             <Label
               htmlFor="name"
               value="Product Name"
-              className="text-gray-700 font-medium mb-2"
+              className="text-gray-700 font-medium  text-xl mb-2"
             />
             <TextInput
               id="name"
@@ -192,7 +202,7 @@ const UpdateProduct: React.FC = () => {
             <Label
               htmlFor="unit_price"
               value="Unit Price"
-              className="text-gray-700 font-medium mb-2"
+              className="text-gray-700 font-medium text-xl mb-2"
             />
             <TextInput
               id="unit_price"
@@ -217,7 +227,7 @@ const UpdateProduct: React.FC = () => {
                 <Label
                   htmlFor={`color-${index}`}
                   value="Color"
-                  className="text-gray-700 font-medium mb-2"
+                  className="text-gray-700 font-medium text-xl mb-2"
                 />
                 <TextInput
                   id={`color-${index}`}
@@ -239,7 +249,7 @@ const UpdateProduct: React.FC = () => {
                 <Label
                   htmlFor={`size-${index}`}
                   value="Size"
-                  className="text-gray-700 font-medium mb-2"
+                  className="text-gray-700 font-medium text-xl mb-2"
                 />
                 <TextInput
                   id={`size-${index}`}
@@ -261,7 +271,7 @@ const UpdateProduct: React.FC = () => {
                 <Label
                   htmlFor={`quantity-${index}`}
                   value="Quantity"
-                  className="text-gray-700 font-medium mb-2"
+                  className="text-gray-700 font-medium text-xl mb-2"
                 />
                 <TextInput
                   id={`quantity-${index}`}
@@ -308,7 +318,7 @@ const UpdateProduct: React.FC = () => {
             <Label
               htmlFor="category"
               value="Category"
-              className="text-gray-700 font-medium mb-2"
+              className="text-gray-700 font-medium text-xl mb-2"
             />
             <Select
               id="category"
@@ -331,7 +341,7 @@ const UpdateProduct: React.FC = () => {
             <Label
               htmlFor="sub_category"
               value="Sub Category"
-              className="text-gray-700 font-medium mb-2"
+              className="text-gray-700 font-medium  text-xl mb-2"
             />
             <Select
               id="sub_category"
@@ -359,7 +369,7 @@ const UpdateProduct: React.FC = () => {
           <Label
             htmlFor="description"
             value="Product Description"
-            className="text-gray-700 font-medium mb-2"
+            className="text-gray-700 font-medium text-xl mb-2"
           />
           <Textarea
             id="description"
@@ -377,7 +387,7 @@ const UpdateProduct: React.FC = () => {
           <Label
             htmlFor="images_path"
             value="Images Path"
-            className="text-gray-700 font-medium mb-2"
+            className="text-gray-700 font-medium text-xl mb-2"
           />
           <Textarea
             id="images_path"
@@ -397,7 +407,7 @@ const UpdateProduct: React.FC = () => {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full mt-4 bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-150 ease-in-out"
+          className="w-full mt-4 bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-150 ease-in-out "
         >
           Update Product
         </Button>
@@ -416,6 +426,8 @@ const UpdateProduct: React.FC = () => {
           </div>
         )}
       </form>
+    </div>
+    </main>
     </div>
   );
 };
