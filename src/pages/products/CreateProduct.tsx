@@ -199,7 +199,7 @@ const CreateProduct: React.FC = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 ">
+      <main className="main-content ">
       <div className="px-4 my-12">
         <form
             onSubmit={handleProductSubmit}
