@@ -10,87 +10,14 @@ import financereportimg from '../assets/reportfinanceimg.jpg'
 import manageorderimg from '../assets/ordermanageimg.jpg'
 import manageproduct from '../assets/manage-product-vector.jpg'
 import productreport from '../assets/stock-report.jpg'
+import SidebarComp from './SidebarComp';
 
 const DashboardLayout: React.FC = ({}) => {
   
   return (
     <div className="dashboard-layout">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo">
-          <h2>Admin Dashboard</h2>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li>
-              <Link to="">
-                <AiFillHome /> Dashboard
-              </Link>
-            </li>
-            <hr />
-            <li>
-              <Link to="/admin/manage-products">
-                <MdProductionQuantityLimits /> Manage Products
-              </Link>
-            </li>
-            <li>
-              <Link to="">
-                <AiOutlineRise /> Trending Products
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin//stat-products">
-                <AiTwotoneFund /> Product Statistics
-              </Link>
-            </li>
-            <hr />
-            <li>
-              <Link to="">
-                <AiOutlineShopping /> Manage Orders
-              </Link>
-            </li>
-            <li>
-              <Link to="">
-                <AiOutlineFileDone /> Finance Report
-              </Link>
-            </li>
-            <hr />
-            <li>
-              <Link to="/admin/manage-reviews">
-                <AiTwotoneHeart /> Manage Reviews
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/stat-review">
-                <AiTwotoneFund /> Reviews Statistics
-              </Link>
-            </li>
-            <hr />
-            <li>
-              <Link to="/admin/manage-faq">
-                <AiOutlineQuestion /> Manage FAQs
-              </Link>
-            </li>
-            <hr />
-            <li>
-              <Link to="">
-                <AiOutlineTeam /> Manage User Profiles
-              </Link>
-            </li>
-            <li>
-              <Link to="">
-                <AiOutlineUserSwitch /> Manage Admin Profiles
-              </Link>
-            </li>
-            <hr />
-            <li>
-              <Link to="">
-                <AiOutlineUser /> Logout
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+      <SidebarComp />
 
       {/* PALAWENI KAAALLA */}
       <main className="main-content">
@@ -179,27 +106,33 @@ const DashboardLayout: React.FC = ({}) => {
                       <h3 className='text-xl font-semibold text-black'>Manage FAQs</h3>
                       <img src={faqimg} />
                       <p className='mt-2 '>Oversee and update frequently asked questions to ensure users have accurate information.</p>
+                      <Link to="/admin/manage-faq">
                       <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-400  transition-all duration-300'>
                       Check FAQs
                       </button>
+                      </Link>
                     </div>
 
                     <div className="stat-card">
                       <h3 className='text-xl font-semibold text-black'>Manage Reviews</h3>
                       <img src={managereviewimg} />
                       <p className='mt-2 '>Monitor and manage product reviews, including editing and deleting as needed.</p>
+                      <Link to="/admin/manage-reviews">
                       <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-blue-500  transition-all duration-300'>
                       Check Reviews
                       </button>
+                      </Link>
                     </div>
 
                     <div className="stat-card">
                       <h3 className='text-xl font-semibold text-black'>Review Statistics</h3>
                       <img src={reviewstatsimg} />
                       <p className='mt-2 '>Analyze customer feedback  with insights on ratings and averages for selected periods.</p>
+                      <Link to="/admin/stat-review">
                       <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-purple-800  transition-all duration-300'>
                       Check Statistics
                       </button>
+                      </Link>
                     </div>
 
                 </section>

@@ -39,6 +39,7 @@ import FinanceReport from "./components/charts/orderCharts/FinanceReport.tsx";
 import DashboardLayout from "./dashboard/DashboardLayout.tsx";
 import OrderHistory from "./pages/orders/OrderHistory.tsx";
 import Orders from "./pages/orders/Orders.tsx";
+import SummaryReviews from "./pages/reviews/SummaryReviews.tsx";
 
 const App: React.FC = () => {
 
@@ -75,7 +76,7 @@ const App: React.FC = () => {
           {/*Routes for Orders */}
 
           {/* pagination included here */}
-          <Route path="/order/orders" element={<Orders />} />
+          <Route path="/admin/orders" element={<Orders />} />
           <Route path="/order/pendingOrder" element={<PendingOrders />} />
           <Route path="/order/orderHistory" element={<OrderHistory />} />
           <Route path="/order/viewOrder/:id" element={<ViewOrder />} />
@@ -102,6 +103,7 @@ const App: React.FC = () => {
           <Route path="/admin/manage-reviews" element={<ManageReviews />} />
           <Route path="/admin/edit-review/:id" element={<EditReview />} />
           <Route path="/admin/stat-review" element={<StatReviews />} />
+          <Route path="admin/summary-review" element={<SummaryReviews />} />
 
           {/* Admin Routes */}
           <Route path='/admin/dash' element={<DashboardLayout />} />

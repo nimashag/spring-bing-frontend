@@ -45,6 +45,11 @@ const Navbar: React.FC = () => {
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
 
+        <NavLink to="/reviews" className="flex flex-col items-center gap-1">
+          <p>Reviews</p>
+          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+        </NavLink>
+
         <NavLink to="/about" className="flex flex-col items-center gap-1">
           <p>About Us</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
@@ -52,6 +57,11 @@ const Navbar: React.FC = () => {
 
         <NavLink to="/contactus" className="flex flex-col items-center gap-1">
           <p>Contact Us</p>
+          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+        </NavLink>
+
+        <NavLink to="/faqs" className="flex flex-col items-center gap-1">
+          <p>FAQs</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
 
@@ -63,22 +73,7 @@ const Navbar: React.FC = () => {
         <NavLink to="/order/orders" className="flex flex-col items-center gap-1">
           <p>Manage Orders</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
-        </NavLink>
-        
-        <NavLink to="/manage-faq" className="flex flex-col items-center gap-1">
-          <p>Manage FAQ</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
-        </NavLink>
-
-        <NavLink to="/manage-reviews" className="flex flex-col items-center gap-1">
-          <p>Manage Reviews</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
-        </NavLink>
-
-        <NavLink to="/stat-review" className="flex flex-col items-center gap-1">
-          <p>Stat Reviews</p>
-          <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
-        </NavLink> */}
+        </NavLink>*/}
 
       </ul>
 
