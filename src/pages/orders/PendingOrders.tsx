@@ -20,7 +20,10 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
     user_id: state.user_id,
   }));
 
+  const { setUserId } = useCartStore();
+
   useEffect(() => {
+    setUserId('66d196a444e126395cbed7d9')
     const getPendingOrders = async () => {
       try {
         setLoading(true);

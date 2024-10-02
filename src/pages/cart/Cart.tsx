@@ -110,6 +110,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
   };
 
   const removeItemFromCart = (item_id: string) => {
+    console.log(item_id)
     removeItem(item_id)
     calculateTotal()
   };
@@ -139,9 +140,9 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
           billing_address: address,
           order_status: "processing"
         });
-        added.map((item) => {
+        /* added.map((item) => {
           removeItemFromCart(item.product_id)
-        })
+        }) */
         clearSelectedCart();
         navigate('/order/pendingOrder');
         console.log(added)
@@ -199,7 +200,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
               <td className="p-5">
                 <div className="flex justify-center items-center gap-3">
                   <button
-                    onClick={() => removeItemFromCart(item.product._id)}
+                    onClick={() => removeItemFromCart(item.product._id,)}
                     className="text-2xl text-red-600 hover:text-red-800"
                   >
                     <ImCancelCircle />
