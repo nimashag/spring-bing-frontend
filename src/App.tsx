@@ -81,7 +81,7 @@ const App: React.FC = () => {
           <Route path="/order/orderHistory" element={<OrderHistory />} />
           <Route path="/order/viewOrder/:id" element={<ViewOrder />} />
           <Route path="/order/updateOrder/:id" element={<UpdateOrder />} />
-          <Route path="/order/FinanceReport/" element={<FinanceReport />} />
+          <Route path="/admin/order/FinanceReport/" element={<FinanceReport />} />
 
           {/* Routes for FAQ Module */}
           <Route path="/faqs" element={<ViewFAQ />} />

@@ -27,6 +27,7 @@ Chart.register(
   Legend
 );
 import currencyFormatter from 'currency-formatter'
+import SidebarComp from "../../../dashboard/SidebarComp.tsx";
 
 const FinanceReport: React.FC = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2024);
@@ -391,6 +392,12 @@ const FinanceReport: React.FC = () => {
 
   return (
     <>
+    <div className="dashboard-layout">
+      <SidebarComp />
+
+      <div className="main-content">
+      <h2 className="text-3xl font-bold">Finance Report</h2>
+      <br />
       <div>
         <select
           className="border border-black p-2"
@@ -438,6 +445,8 @@ const FinanceReport: React.FC = () => {
       >
         Download PDF
       </button>
+      </div>
+      </div>
     </>
   );
 };

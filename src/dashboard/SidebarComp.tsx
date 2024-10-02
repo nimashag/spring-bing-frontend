@@ -47,7 +47,7 @@ const SidebarComp :React.FC= () => {
               </Link>
             </li>
             <li>
-              <Link to="/order/FinanceReport/">
+              <Link to="/admin/order/FinanceReport/">
                 <AiOutlineFileDone /> Finance Report
               </Link>
             </li>
