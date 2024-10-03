@@ -7,7 +7,7 @@ import html2canvas from 'html2canvas';
 
 import '../../dashboard/DashboardLayout.css';
 import SidebarComp from '../../dashboard/SidebarComp';
-import logoImgPath from '../../assets/logoimg1.png'
+import logoImgPath from '../../assets/finallogo.png'
 
 interface Review {
   _id: string;
@@ -74,9 +74,9 @@ const StatReviews: React.FC = () => {
     const title = ``;
 
      //header
-     const logoWidth = 25;
-     const logoHeight = 25; 
-     pdf.addImage(logoImgPath, 'PNG', 0, 0, logoWidth, logoHeight); 
+     const logoWidth = 20;
+     const logoHeight = 20; 
+     pdf.addImage(logoImgPath, 'PNG', 5, 5, logoWidth, logoHeight); 
 
      // Set font for the title
      pdf.setFontSize(22);
