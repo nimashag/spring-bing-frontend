@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion"; // Import Framer Motion for smooth animations
-import logoicon2 from '../assets/logoimg1.png';
+import logoicon2 from '../assets/finallogo.png';
 import searchicon from "../assets/search_icon.png";
 import usericon from "../assets/user_icon.png";
 import carticon from "../assets/carticon.png";
@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
       {/* Logo */}
       <motion.img
         src={logoicon2}
-        className="w-24 cursor-pointer"
+        className="mt-2 w-20 cursor-pointer"
         alt="Logo"
         whileHover={{ scale: 1.1 }}
         transition={{ type: "spring", stiffness: 300 }}
