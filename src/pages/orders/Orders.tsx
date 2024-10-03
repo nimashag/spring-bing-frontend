@@ -26,7 +26,7 @@ const Orders: React.FunctionComponent<IOrdersProps> = (props) => {
         setLoading(true);
 
         const response = await axios.get(
-          `http://localhost:3000/order/getAllOrders`,
+          `http://localhost:3000/order/getOrdersByPage`,
           {
             params: {
               page: pageNumber,
