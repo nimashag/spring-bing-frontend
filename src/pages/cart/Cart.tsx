@@ -154,6 +154,17 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
   };
 
 
+  const add = (item: cartItem) => {
+   
+    addFromCart(item)
+    calculateTotal()
+  }
+
+  const cancel = () => {
+    cancelPay()
+    calculateTotal()
+  }
+
   return (
     <>
   <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -206,10 +217,10 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
                     <ImCancelCircle />
                   </button>
                   <button
-                    onClick={() => addFromCart(item)}
+                    onClick={() => add(item)}
                     className="bg-green-300 text-white rounded-md px-3 py-1 hover:bg-green-500 transition-colors"
                   >
-                    Buy
+                    Add
                   </button>
                 </div>
               </td>
@@ -257,7 +268,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
         </button>
         <button
           className="bg-red-600 text-white rounded-md px-4 py-2 hover:bg-red-700 transition-colors"
-          onClick={cancelPay}
+          onClick={cancel}
         >
           Cancel
         </button>

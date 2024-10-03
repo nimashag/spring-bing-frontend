@@ -163,7 +163,7 @@ export const useCartStore = create<CartStore>()(
       calculateTotal: () =>
         set(
           produce((state: CartStore) => {
-            state.totalPrice = state.cart.reduce((total, item) => {
+            state.totalPrice = state.selectedCartItem.reduce((total, item) => {
               return total + item.product.unit_price * item.quantity;
             }, 0);
           })
