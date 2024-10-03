@@ -72,7 +72,7 @@ const ViewFAQ: React.FC = () => {
     };
 
     return (
-        <div className='mt-18 px-4 lg:px-24 pt-10 border-t'>
+        <div className='mt-18 px-4 lg:px-24 pt-10'>
             <div className='flex justify-between items-start mb-8'>
                 <h2 className='text-5xl font-bold'>Frequently Asked Questions</h2>
                 <div className='flex items-center space-x-4'>

@@ -42,6 +42,8 @@ import Orders from "./pages/orders/Orders.tsx";
 import SummaryReviews from "./pages/reviews/SummaryReviews.tsx";
 import OrderUpdateStatus from "./pages/orders/OrderUpdateStatus.tsx";
 
+
+
 const App: React.FC = () => {
 
   const location = useLocation();
@@ -52,7 +54,7 @@ const App: React.FC = () => {
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
 
       {!isAdminRoute && <Navbar />}
-        
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -111,7 +113,6 @@ const App: React.FC = () => {
           <Route path='/admin/dash' element={<DashboardLayout />} />
 
         </Routes>
-        
         {!isAdminRoute && <Footer />}
 
       </div>

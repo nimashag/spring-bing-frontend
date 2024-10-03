@@ -6,8 +6,8 @@ import NewsLetter from '../components/NewsLetter'
 const About : React.FC = () => {
   return (
     <div>
-      <div className='text-2xl text-center pt-8 border-t'>
-          <Title text1={'ABOUT'} text2={' US'}/>
+      <div className='text-2xl pt-8'>
+        <h2 className='text-4xl font-bold'>About Us</h2>
       </div>
 
       <div className='my-10 flex flex-col md:flex-row gap-16'>

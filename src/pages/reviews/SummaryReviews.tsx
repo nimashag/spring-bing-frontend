@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-import { AiFillHome, AiOutlineUser, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart, AiOutlineForm, AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
-import { MdProductionQuantityLimits } from 'react-icons/md';
+
 import '../../dashboard/DashboardLayout.css';
 
 import { FaCalendarAlt, FaTimes } from 'react-icons/fa';
@@ -18,7 +17,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Link } from 'react-router-dom';
+
 import SidebarComp from '../../dashboard/SidebarComp';
 
 interface Review {

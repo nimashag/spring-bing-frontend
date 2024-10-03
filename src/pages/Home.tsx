@@ -14,6 +14,7 @@ const Home : React.FC = () => {
   const token = localStorage.getItem("token");
   return (
     <div>
+      <br/>
       <Hero />
       <Trending />
       { token && (

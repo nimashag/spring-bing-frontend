@@ -6,6 +6,7 @@ import reviewpic from '../../assets/reviewpic.jpg';
 import NewsLetter from '../../components/NewsLetter';
 import Title from '../../components/Title';
 
+
 interface Review {
     _id: string;
     title: string;
@@ -92,7 +93,7 @@ const ViewReview: React.FC = () => {
     };
 
     return (
-        <div className='mt-18 px-4 lg:px-24 pt-10 border-t'>
+        <div className='mt-18 px-4 lg:px-24 pt-10'>
             <div className='flex justify-between items-start mb-8'>
                 <h2 className='text-4xl font-bold'>What People Think About Us!</h2>
                 <div className='flex items-center gap-3'>
@@ -163,9 +164,45 @@ const ViewReview: React.FC = () => {
             </div>
 
             <div className="mt-12">
-                <div className='text-4xl pt-3'>
-                    <Title text1={'Customer'} text2={' Reviews'}/>
-                </div>
+                <div className='flex justify-between items-start mb-8'>
+                    <h2 className='text-4xl font-bold'>Customer Reviews</h2>
+                        <div className='flex items-center gap-3'>
+                            <div>
+                                <select
+                                    value={sortOption}
+                                    onChange={(e) => setSortOption(e.target.value)}
+                                    className="h-10 pl-4 pr-8 border border-gray-300 rounded-full"
+                                >
+                                    <option value="none">Sort by Rating</option>
+                                    <option value="highest">Highest First</option>
+                                    <option value="lowest">Lowest First</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select
+                                    value={dateSortOption}
+                                    onChange={(e) => setDateSortOption(e.target.value)}
+                                    className="h-10 pl-4 pr-8 border border-gray-300 rounded-full"
+                                >
+                                    <option value="none">Sort by Date</option>
+                                    <option value="latest">Latest First</option>
+                                    <option value="oldest">Oldest First</option>
+                                </select>
+                            </div>
+
+                            <div className="relative w-96">
+                                <input
+                                    type="text"
+                                    placeholder="Search"
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className='h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300'
+                                />
+                                <div className="absolute top-0 left-0 mt-2.5 ml-4 text-gray-500">
+                                    <FaSearch size="20px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <br/>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {currentReviews.length > 0 ? (

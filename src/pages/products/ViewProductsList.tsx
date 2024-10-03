@@ -77,9 +77,9 @@ const ViewProductsList: React.FC = () => {
 
 
   return (
-    <div className="mt-28 px-4 lg:px-24">
+    <div className="mt-10 px-4 lg:px-24">
       <div className="flex justify-between items-start mb-8">
-        <h2 className="text-5xl font-bold">Our Products</h2>
+        <h2 className="text-4xl font-bold">Our Products</h2>
         <div className="flex justify-between mb-4">
           {/* Search bar on the left side */}
           <div className="relative w-93 mr-3">
