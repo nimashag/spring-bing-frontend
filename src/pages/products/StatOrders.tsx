@@ -10,6 +10,7 @@ import html2canvas from "html2canvas";
 
 import "../../dashboard/DashboardLayout.css";
 import SidebarComp from "../../dashboard/SidebarComp.tsx";
+import logoImgPath from '../../assets/finallogo.png'
 
 interface Order {
   _id: string;
@@ -157,7 +158,7 @@ const StatOrders: React.FC = () => {
 
   const printPDF = () => {
     const doc = new jsPDF("p", "pt", "a4");
-  
+
     // Capture the order summary
     html2canvas(document.getElementById("order-summary") as HTMLElement, {
       scale: 2, // Higher scale for better quality
@@ -166,21 +167,21 @@ const StatOrders: React.FC = () => {
       height: document.getElementById("order-summary")?.scrollHeight, // Exact height
     }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
-  
+
       // Set text color for title
       doc.setTextColor(0, 139, 139); // RGB for teal color
       doc.text("Orders", doc.internal.pageSize.getWidth() / 2, 40, {
         align: "center",
       }); // Center title
-  
+
       // Adjust the image size to avoid overflow and neatly fit within the page
       const imgWidth = 520;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       doc.addImage(imgData, "PNG", 40, 60, imgWidth, imgHeight);
-  
+
       // New page for sales trends
       doc.addPage();
-  
+
       // Capture the sales trends after ensuring the first page is completed
       html2canvas(document.getElementById("sales-trends") as HTMLElement, {
         scale: 2, // Ensure high-quality canvas rendering
@@ -189,25 +190,23 @@ const StatOrders: React.FC = () => {
         height: document.getElementById("sales-trends")?.scrollHeight,
       }).then((canvas2) => {
         const imgData2 = canvas2.toDataURL("image/png");
-  
+
         // Set text color for title
         doc.setTextColor(0, 139, 139);
         doc.text("Sales Trends", doc.internal.pageSize.getWidth() / 2, 40, {
           align: "center",
         }); // Center title
-  
+
         // Adjust the image size for sales trends section
         const imgWidth2 = 520;
         const imgHeight2 = (canvas2.height * imgWidth2) / canvas2.width;
         doc.addImage(imgData2, "PNG", 40, 60, imgWidth2, imgHeight2);
-  
+
         // Save the PDF file
         doc.save("Order_Summary_and_Sales_Trends.pdf");
       });
     });
   };
-  
-  
 
   return (
     <div className="flex h-screen ">
