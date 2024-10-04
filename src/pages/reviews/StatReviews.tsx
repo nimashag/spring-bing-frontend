@@ -7,7 +7,7 @@ import html2canvas from 'html2canvas';
 
 import '../../dashboard/DashboardLayout.css';
 import SidebarComp from '../../dashboard/SidebarComp';
-import logoImgPath from '../../assets/finallogo.png'
+import logoImgPath from '../../assets/logospringbing.jpeg'
 
 interface Review {
   _id: string;
