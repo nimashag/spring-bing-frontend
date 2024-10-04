@@ -10,6 +10,8 @@ import manageproduct from '../assets/managedash3.png'
 import productreport from '../assets/proreportdash1.png'
 import SidebarComp from './SidebarComp';
 
+import { FaBell, FaHome, FaSearch } from 'react-icons/fa'; 
+
 const DashboardLayout: React.FC = ({}) => {
   
   return (
@@ -24,13 +26,28 @@ const DashboardLayout: React.FC = ({}) => {
             <img src={adminimg} className="profile-image" alt="Admin" />
             <div className="user-info">
               <h2 className="text-xl font-bold">Nuaghty Vihanga Max</h2>
-              <p>System Adminsitrator</p>
+              <p>System Administrator</p>
             </div>
           </div>
-          <div className="header-right">
-            <p>searchbar</p>
-            <button>icon2</button>
-            <button>icon1</button>
+          <div className="header-right flex items-center">
+            {/* Search Bar */}
+            <input
+              type="text"
+              placeholder="Search..."
+              className='h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300'
+            />
+            <div className="absolute mt-0.7 ml-4 text-gray-500">
+              <FaSearch size="15px" />
+            </div>
+
+            {/*Icons */}
+            <button className="notification-icon mr-4">
+              <FaBell size={18} />
+            </button>
+            
+            <button className="home-icon mr-2">
+              <FaHome size={20} />
+            </button>
           </div>
         </header>
 
