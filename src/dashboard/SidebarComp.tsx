@@ -1,8 +1,9 @@
 import React from 'react'
-import { AiOutlineBank, AiFillHome, AiOutlineUser, AiOutlineIdcard, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart, AiOutlineForm, AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
+import { AiOutlineBank, AiFillHome, AiOutlineUser, AiOutlineIdcard, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart,  AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import '../dashboard/DashboardLayout.css';
+
 
 const SidebarComp :React.FC= () => {
   return (

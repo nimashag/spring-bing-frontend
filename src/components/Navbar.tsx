@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { motion } from "framer-motion"; // Import Framer Motion for smooth animations
-import logoicon2 from '../assets/finallogo.png';
+import { motion } from "framer-motion"; 
+import logoicon2 from '../assets/logospringbing.jpeg';
 import searchicon from "../assets/search_icon.png";
 import usericon from "../assets/user_icon.png";
 import carticon from "../assets/carticon.png";
 import SignupForm from "../auth/Signupform";
 import Loginform from "../auth/Loginform";
+import { FaBars, FaTimes } from "react-icons/fa"; 
 
 const Navbar: React.FC = () => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [signup, setSignup] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false); 
+  const [isUserDropdownOpen, setUserDropdownOpen] = useState<boolean>(false); 
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,10 +23,20 @@ const Navbar: React.FC = () => {
 
   const toggleSignup = () => {
     setSignup((prev) => !prev);
+    setUserDropdownOpen(false); 
   };
 
   const toggleLogin = () => {
     setLogin((prev) => !prev);
+    setUserDropdownOpen(false); 
+  };
+
+  const toggleUserDropdown = () => {
+    setUserDropdownOpen((prev) => !prev); 
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen((prev) => !prev); 
   };
 
   return (
@@ -31,7 +44,7 @@ const Navbar: React.FC = () => {
       {/* Logo */}
       <motion.img
         src={logoicon2}
-        className="mt-2 w-20 cursor-pointer"
+        className="mt-2 w-28 cursor-pointer"
         alt="Logo"
         whileHover={{ scale: 1.1 }}
         transition={{ type: "spring", stiffness: 300 }}
@@ -67,9 +80,20 @@ const Navbar: React.FC = () => {
         ))}
       </ul>
 
+      
+      <div className="sm:hidden flex items-center">
+        <motion.button
+          onClick={toggleMobileMenu}
+          whileHover={{ scale: 1.2 }}
+          transition={{ duration: 0.3 }}
+        >
+          {isMobileMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+        </motion.button>
+      </div>
+
       {/* Icons */}
       <div className="flex items-center gap-6">
-        {/* Search Icon */}
+        
         <motion.img
           src={searchicon}
           className="w-5 cursor-pointer"
@@ -78,52 +102,55 @@ const Navbar: React.FC = () => {
           transition={{ duration: 0.3 }}
         />
 
-        {/* User Dropdown */}
-        <div className="relative group">
+        
+        <div className="relative">
           <motion.img
             src={usericon}
             className="w-5 cursor-pointer"
             alt="User"
+            onClick={toggleUserDropdown} 
             whileHover={{ scale: 1.2 }}
           />
-          <motion.div
-            className="absolute right-0 hidden group-hover:block mt-2 bg-slate-100 rounded shadow-lg p-4 z-10"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-          >
-            <div className="flex flex-col gap-2 w-36 py-3 px-5">
-              {!isLogged ? (
-                <div>
-                  <p
-                    className="cursor-pointer hover:text-black"
-                    onClick={toggleSignup}
-                  >
-                    Signup
-                  </p>
-                  <p
-                    className="cursor-pointer hover:text-black"
-                    onClick={toggleLogin}
-                  >
-                    Login
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <Link to="profile">
-                    <p className="cursor-pointer hover:text-black">My Profile</p>
-                  </Link>
-                  <Link to="/order/pendingOrder">
-                    <p className="cursor-pointer hover:text-black">My Orders</p>
-                  </Link>
-                  <p className="cursor-pointer hover:text-black">Logout</p>
-                </div>
-              )}
-            </div>
-          </motion.div>
+          {isUserDropdownOpen && (
+            <motion.div
+              className="absolute right-0 mt-2 bg-slate-100 rounded shadow-lg p-4 z-10"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <div className="flex flex-col gap-2 w-36 py-3 px-5">
+                {!isLogged ? (
+                  <div>
+                    <p
+                      className="cursor-pointer hover:text-black"
+                      onClick={toggleSignup}
+                    >
+                      Signup
+                    </p>
+                    <p
+                      className="cursor-pointer hover:text-black"
+                      onClick={toggleLogin}
+                    >
+                      Login
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <Link to="profile">
+                      <p className="cursor-pointer hover:text-black">My Profile</p>
+                    </Link>
+                    <Link to="/order/pendingOrder">
+                      <p className="cursor-pointer hover:text-black">My Orders</p>
+                    </Link>
+                    <p className="cursor-pointer hover:text-black">Logout</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
         </div>
 
-        {/* Cart Icon */}
+        
         <Link to="/cart" className="relative">
           <motion.img
             src={carticon}
@@ -134,7 +161,37 @@ const Navbar: React.FC = () => {
         </Link>
       </div>
 
-      {/* Signup and Login Forms */}
+      {/* Mobile Menu (Hamburger) */}
+      {isMobileMenuOpen && (
+        <div className="absolute top-14 left-0 w-full bg-white shadow-lg z-20 sm:hidden">
+          <ul className="flex flex-col items-center py-4 gap-4">
+            {[
+              { to: "/", text: "Home" },
+              { to: "/newarrivals", text: "New Arrivals" },
+              { to: "/products", text: "Collections" },
+              { to: "/reviews", text: "Reviews" },
+              { to: "/about", text: "About Us" },
+              { to: "/contactus", text: "Contact Us" },
+              { to: "/faqs", text: "FAQs" },
+            ].map((item, index) => (
+              <li key={index} onClick={() => setMobileMenuOpen(false)}>
+                <NavLink
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-gray-600 hover:text-blue-500 ${
+                      isActive ? "text-blue-600" : ""
+                    }`
+                  }
+                >
+                  {item.text}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      
       {signup && <SignupForm close={toggleSignup} open={toggleLogin} />}
       {login && <Loginform close={toggleLogin} />}
     </div>

@@ -104,19 +104,30 @@ const ViewFAQ: React.FC = () => {
                 </div>
             </div>
 
-            <div className='mt-16 py-12 bg-black px-4 lg:px-24 rounded'>
-                <div className='flex flex-col md:flex-row justify-between items-center gap-12'>
-                    <div className='md:w-1/2 text-white'>
-                        <h2 className='text-4xl font-bold mb-6 leading-snug'>Have a Question? We've Got Answers!</h2>
-                        <p>Welcome to our Frequently Asked Questions (FAQ) section. Here, you'll find answers to the most common inquiries about our 
-                            services, products, and policies. We're committed to providing you with all the information you need, so if you don't see your 
-                            question answered here, feel free to ask! Simply submit your question in this section, and our team will get back to you as soon as possible.</p>
-                        <Link to="/create-faq" className='mt-5 block'>
-                          <button className='bg-white text-black font-semibold px-5 py-2 rounded hover:bg-blue-300 transition-all duration-300'>Ask Your Question</button>
-                        </Link>
-                    </div>
-                    <div>
-                        <img className='w-[500px] md:max-w-[500px]' src={FAQpic} alt="FAQ Section" />
+            <div className='w-full mt-16 py-12 bg-white px-4 lg:px-24 relative'>
+                {/* Background Image */}
+                <div className='absolute inset-0'>
+                    <img src={FAQpic} alt="background" className='w-full h-full object-cover' />
+                </div>
+
+                {/* Overlay */}
+                <div className='relative z-10 bg-black bg-opacity-50 p-8 md:p-12 lg:p-16 text-white'>
+                    <div className='flex flex-col md:flex-row justify-between items-center gap-12'>
+                        <div>
+                            <h2 className='text-4xl font-bold mb-6 leading-snug'>
+                                Have a Question? We've Got Answers!
+                            </h2>
+                            <p className='md:w-1/2'>
+                                Welcome to our Frequently Asked Questions (FAQ) section. Here, you'll find answers to the most common inquiries about our 
+                                services, products, and policies. We're committed to providing you with all the information you need, so if you don't see your 
+                                question answered here, feel free to ask! Simply submit your question in this section, and our team will get back to you as soon as possible.
+                            </p>
+                            <Link to="/create-faq" className='mt-5 block'>
+                                <button className='bg-black text-white font-semibold px-5 py-2 rounded hover:bg-white hover:text-black transition-all duration-300'>
+                                    Ask Your Question
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

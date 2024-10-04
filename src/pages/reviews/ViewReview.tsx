@@ -1,11 +1,10 @@
 import { Card } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaStar, FaRegStar } from 'react-icons/fa'; // Import star icons
 import { Link } from 'react-router-dom';
 import reviewpic from '../../assets/reviewpic.jpg';
 import NewsLetter from '../../components/NewsLetter';
 import Title from '../../components/Title';
-
 
 interface Review {
     _id: string;
@@ -16,14 +15,14 @@ interface Review {
     user: {
         fname: string;
     };
-    images_path?: string[]; 
+    images_path?: string[];
 }
 
 const ViewReview: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [reviews, setReviews] = useState<Review[]>([]);
     const [filteredReviews, setFilteredReviews] = useState<Review[]>([]);
-    const [sortOption, setSortOption] = useState<string>("none");
+    const [filterOption, setFilterOption] = useState<number | null>(null); // Change to a number representing the star filter
     const [dateSortOption, setDateSortOption] = useState<string>("none");
     
     // Pagination state
@@ -50,10 +49,8 @@ const ViewReview: React.FC = () => {
             review.description.toLowerCase().includes(searchQuery.toLowerCase())
         );
 
-        if (sortOption === "highest") {
-            results = results.sort((a, b) => b.rating - a.rating); // Descending
-        } else if (sortOption === "lowest") {
-            results = results.sort((a, b) => a.rating - b.rating); // Ascending
+        if (filterOption) {
+            results = results.filter(review => review.rating === filterOption);
         }
 
         if (dateSortOption === "latest") {
@@ -63,7 +60,7 @@ const ViewReview: React.FC = () => {
         }
 
         setFilteredReviews(results);
-    }, [searchQuery, reviews, sortOption, dateSortOption]);
+    }, [searchQuery, reviews, filterOption, dateSortOption]);
 
     // Calculate the current reviews to display
     const indexOfLastReview = currentPage * reviewsPerPage;
@@ -90,6 +87,19 @@ const ViewReview: React.FC = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
+    };
+
+    // Function to render stars based on the rating
+    const renderStars = (rating: number) => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= rating) {
+                stars.push(<FaStar key={i} className="text-yellow-500" />); // Filled star
+            } else {
+                stars.push(<FaRegStar key={i} className="text-yellow-500" />); // Empty star
+            }
+        }
+        return stars;
     };
 
     return (
@@ -133,13 +143,16 @@ const ViewReview: React.FC = () => {
                         <div className='flex items-center gap-3'>
                             <div>
                                 <select
-                                    value={sortOption}
-                                    onChange={(e) => setSortOption(e.target.value)}
+                                    value={filterOption ?? "none"}
+                                    onChange={(e) => setFilterOption(e.target.value === "none" ? null : parseInt(e.target.value))}
                                     className="h-10 pl-4 pr-8 border border-gray-300 rounded-full"
                                 >
-                                    <option value="none">Sort by Rating</option>
-                                    <option value="highest">Highest First</option>
-                                    <option value="lowest">Lowest First</option>
+                                    <option value="none">Filter by Rating</option>
+                                    <option value="5">5 Stars</option>
+                                    <option value="4">4 Stars</option>
+                                    <option value="3">3 Stars</option>
+                                    <option value="2">2 Stars</option>
+                                    <option value="1">1 Star</option>
                                 </select>
                             </div>
                             <div>
@@ -174,7 +187,12 @@ const ViewReview: React.FC = () => {
                             <Card key={review._id}>
                                 <h4 className="text-xl font-bold">{review.title}</h4>
                                 <p className="text-gray-500">{review.description}</p>
-                                <p className="text-yellow-500">Rating: {review.rating} / 5</p>
+                                
+                                {/* Display Stars for Rating */}
+                                <div className="flex items-center mt-2">
+                                    {renderStars(review.rating)}
+                                </div>
+
                                 <p className="text-gray-400 text-sm">Posted by {review.user?.fname} on {new Date(review.date).toLocaleDateString()}</p>
                                 
                                 {review.images_path && review.images_path.length > 0 && (
@@ -203,24 +221,21 @@ const ViewReview: React.FC = () => {
                     <button
                         onClick={handlePreviousPage}
                         disabled={currentPage === 1}
-                        className={`mx-2 px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-500' : 'bg-black text-white'}`}
+                        className="bg-gray-300 px-4 py-2 rounded-md mr-2"
                     >
                         Previous
                     </button>
-                    <span className="mx-2 text-lg">
-                        Page {currentPage} of {totalPages}
-                    </span>
+                    <span>{`Page ${currentPage} of ${totalPages}`}</span>
                     <button
                         onClick={handleNextPage}
                         disabled={currentPage === totalPages}
-                        className={`mx-2 px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500' : 'bg-black text-white'}`}
+                        className="bg-gray-300 px-4 py-2 rounded-md ml-2"
                     >
                         Next
                     </button>
                 </div>
             </div>
-
-            <br /><br /><br />
+            <br/>
             <NewsLetter />
         </div>
     );

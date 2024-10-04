@@ -17,7 +17,7 @@ const ShopBy :React.FC= () => {
 
       <div className="social-media-footer">
           <p className='text-xl'>Browse our collections and find the perfect pieces to elevate your wardrobe.</p>
-          <a href="https://www.instagram.com/_.spring_bing._/" target="_blank" rel="noopener noreferrer">
+          <a href="/products">
               <br/>
               <button className="bg-black text-white font-semibold px-5 py-2 rounded hover:bg-white hover:text-black transition-all duration-300">Browse Collections</button>
           </a>
