@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import '../../dashboard/DashboardLayout.css'
 import SidebarComp from "../../dashboard/SidebarComp.tsx";
+import { AiOutlineDelete,  AiOutlineEdit} from "react-icons/ai";
 
 const ManageProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -214,7 +215,7 @@ const ManageProducts: React.FC = () => {
                 Quantity
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold">
-                Edit Or Delete
+                Action
               </th>
             </tr>
           </thead>
@@ -250,15 +251,15 @@ const ManageProducts: React.FC = () => {
                 </td>
                 <td className="px-6 py-4 flex gap-4 items-center align-top">
                   <Link to={`/admin/update-product/${product._id}`}>
-                    <button className="text-cyan-600 font-medium hover:underline">
-                      Edit
+                    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-1 rounded transition duration-300">
+                    <AiOutlineEdit />
                     </button>
                   </Link>
                   <button
                     className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-1 rounded transition duration-300"
                     onClick={() => handleDelete(product._id)}
                   >
-                    Delete
+                    <AiOutlineDelete />
                   </button>
                 </td>
               </tr>

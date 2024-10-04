@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
-import { AiFillHome, AiOutlineUser, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart, AiOutlineForm, AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
-import { MdProductionQuantityLimits } from 'react-icons/md';
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import '../../dashboard/DashboardLayout.css';
 import SidebarComp from '../../dashboard/SidebarComp';
 
@@ -180,14 +179,14 @@ const ManageReviews: React.FC = () => {
                             <button 
                               className="bg-green-700 hover:bg-green-800 text-white font-semibold px-4 py-1 rounded transition duration-300"
                             >
-                              Edit
+                              <AiOutlineEdit />
                             </button>
                           </Link>
                           <button
                             className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-1 rounded transition duration-300"
                             onClick={() => handleDelete(review._id)}
                           >
-                            Delete
+                            <AiOutlineDelete />
                           </button>
                         </td>
                       </tr>

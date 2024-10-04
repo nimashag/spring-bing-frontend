@@ -8,8 +8,8 @@ import managereviewimg from '../assets/managerev12.jpg'
 import reviewstatsimg from '../assets/revstat12.jpg'
 import financereportimg from '../assets/reportfinanceimg.jpg'
 import manageorderimg from '../assets/ordermanageimg.jpg'
-import manageproduct from '../assets/manage-product-vector.jpg'
-import productreport from '../assets/stock-report.jpg'
+import manageproduct from '../assets/managedash3.png'
+import productreport from '../assets/proreportdash1.png'
 import SidebarComp from './SidebarComp';
 
 const DashboardLayout: React.FC = ({}) => {
@@ -51,10 +51,8 @@ const DashboardLayout: React.FC = ({}) => {
           </div>
         </section>
 
-        <hr className="my-5" />
-
         {/* dewani KAAALLA */}
-        <h2 className='text-xl font-bold leading-snug text-black mt-5'>Products Dashboard</h2>
+        <h2 className='text-xl font-bold leading-snug text-black mt-6'>Products Dashboard</h2>
           <div className='flex w-full md:flex-row  items-center gap-5'>
               {/* left side */}
               <div className='md:w-3/4'>
@@ -62,10 +60,10 @@ const DashboardLayout: React.FC = ({}) => {
 
                     <div className="stat-card">
                       <h3 className='text-xl font-semibold text-black'>Manage Products</h3>
-                      <img src={manageproduct} className=" h-56"/>
+                      <img src={manageproduct} className='mt-2 px-16 h-56'/>
                       <p className='mt-2 '>Upload new products to the catalog and View items, update or remove products.</p>
                       <Link to="/admin/manage-products">
-                      <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-400  transition-all duration-300'>
+                      <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-cyan-800  transition-all duration-300'>
                       Check Products
                       </button>
                       </Link>
@@ -73,10 +71,10 @@ const DashboardLayout: React.FC = ({}) => {
 
                     <div className="stat-card ">
                       <h3 className='text-xl font-semibold text-black'>Product Reports</h3>
-                      <img src={productreport} />
-                      <p className='mt-2'>Generate insights on stock levels and order performance, optimizing product availability and sales strategies.</p>
+                      <img src={productreport} className='mt-2 px-16 h-56'/>
+                      <p className='mt-2'>Generate insights on stock levels and order performance, sales strategies.</p>
                       <Link to="/admin/stat-products">
-                      <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-400  transition-all duration-300'>
+                      <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-purple-700  transition-all duration-300'>
                       Check Reports
                       </button>
                       </Link>
@@ -95,12 +93,11 @@ const DashboardLayout: React.FC = ({}) => {
               </div>
           </div>
 
-          <hr className="my-5" />
 
           {/* thunweni KAAALLA */}
           <div className='flex w-full md:flex-row  items-center gap-5'>
               <div>
-              <h2 className='text-xl font-bold leading-snug text-black mt-5'>Reviews & FAQs dashboard</h2>
+              <h2 className='text-xl font-bold leading-snug text-black mt-6'>Reviews & FAQs dashboard</h2>
                 <section className="dashboard-overview-2">
                     <div className="stat-card">
                       <h3 className='text-xl font-semibold text-black'>Manage FAQs</h3>
@@ -130,14 +127,13 @@ const DashboardLayout: React.FC = ({}) => {
                       <p className='mt-2 '>Analyze customer feedback  with insights on ratings and averages for selected periods.</p>
                       <Link to="/admin/stat-review">
                       <button className='bg-black  font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-purple-800  transition-all duration-300'>
-                      Check Statistics
+                      Review Statistics
                       </button>
                       </Link>
                     </div>
 
                 </section>
 
-                <hr className="my-5" />
 
                 {/* 4weni KAAALLA */}
                 <h2 className='text-xl font-bold leading-snug text-black mt-5'>Order Status Dashboard</h2>
@@ -158,7 +154,7 @@ const DashboardLayout: React.FC = ({}) => {
                   <img src={financereportimg} className="w-1/3" />
                   <div className="ml-5">
                     <h3 className='text-xl font-semibold text-black text-left'>Finance Reports</h3>
-                    <p className='mt-2 text-left'>Access detailed financial summaries, including revenue, expenses, and profit trends, to help manage your business's financial health.</p>
+                    <p className='mt-2 text-left'>Access detailed financial summaries, including revenue, expenses, and profit trends.</p>
                     <Link to="/admin/order/FinanceReport/">  
                     <button className='bg-black font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-green-300 transition-all duration-300'>
                       Check Reports
