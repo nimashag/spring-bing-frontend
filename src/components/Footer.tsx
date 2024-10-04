@@ -1,5 +1,5 @@
 import React from 'react';
-import logoicon from '../assets/finallogo.png';
+import logoicon from '../assets/logospringbing.jpeg';
 
 const Footer: React.FC = () => {
   return (
