@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
-import Product from "../../interfaces/Product";
-import Category from "../../interfaces/Category";
-import { useCartStore } from "../../store/cart-store";
+import Product from "../interfaces/Product";
+import Category from "../interfaces/Category";
+import { useCartStore } from "../store/cart-store";
 
 const NewArrivalList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
