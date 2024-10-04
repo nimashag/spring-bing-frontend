@@ -1,6 +1,6 @@
 import React from 'react'
 import Title from '../components/Title'
-import aboutusimg from '../assets/aboutusimg3.jpg'
+import aboutusimg from '../assets/womenase1.jpg'
 import NewsLetter from '../components/NewsLetter'
 
 const About : React.FC = () => {
