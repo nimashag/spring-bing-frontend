@@ -10,7 +10,7 @@ import html2canvas from "html2canvas";
 
 import "../../dashboard/DashboardLayout.css";
 import SidebarComp from "../../dashboard/SidebarComp.tsx";
-import logoImgPath from '../../assets/finallogo.png'
+import logoImgPath from '../../assets/logospringbing.jpeg'
 
 interface Order {
   _id: string;
@@ -167,21 +167,39 @@ const StatOrders: React.FC = () => {
       height: document.getElementById("order-summary")?.scrollHeight, // Exact height
     }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
-
-      // Set text color for title
-      doc.setTextColor(0, 139, 139); // RGB for teal color
-      doc.text("Orders", doc.internal.pageSize.getWidth() / 2, 40, {
-        align: "center",
-      }); // Center title
-
+  
+      // Add the header from generatePDF
+      // Set the logo, title, and other header elements
+      const logoWidth = 25;
+      const logoHeight = 25;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      doc.addImage(logoImgPath, 'PNG', 60, 20, logoWidth, logoHeight); // Adjust positioning as needed
+  
+      // Set font for the title
+      doc.setFontSize(22);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(33, 37, 41); // Dark color for title
+      doc.text("Orders", pageWidth / 2, 40, { align: "center" }); // Adjust positioning as needed
+  
+      // Report type and date
+      doc.setFontSize(10);
+      doc.setTextColor(100); // Lighter color for subtitle
+      doc.text("Report Category: Orders", 450, 30); // Adjust position as needed
+      doc.text("Contact: +94 75 123 546", 450, 40); // Adjust position as needed
+      doc.text(`Date: ${new Date().toLocaleDateString()}`, 450, 50); // Add date on the header
+  
+      // Draw a line under the header
+      doc.setDrawColor(100);
+      doc.line(40, 55, 570, 55); // Adjust position based on layout
+  
       // Adjust the image size to avoid overflow and neatly fit within the page
       const imgWidth = 520;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      doc.addImage(imgData, "PNG", 40, 60, imgWidth, imgHeight);
-
+      doc.addImage(imgData, "PNG", 40, 70, imgWidth, imgHeight); // Adjust the y position to be below the header
+  
       // New page for sales trends
       doc.addPage();
-
+  
       // Capture the sales trends after ensuring the first page is completed
       html2canvas(document.getElementById("sales-trends") as HTMLElement, {
         scale: 2, // Ensure high-quality canvas rendering
@@ -190,23 +208,35 @@ const StatOrders: React.FC = () => {
         height: document.getElementById("sales-trends")?.scrollHeight,
       }).then((canvas2) => {
         const imgData2 = canvas2.toDataURL("image/png");
-
-        // Set text color for title
-        doc.setTextColor(0, 139, 139);
-        doc.text("Sales Trends", doc.internal.pageSize.getWidth() / 2, 40, {
-          align: "center",
-        }); // Center title
-
+  
+        // Add the header again for the second page
+        doc.addImage(logoImgPath, 'PNG', 60, 20, logoWidth, logoHeight);
+        doc.setFontSize(22);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(33, 37, 41);
+        doc.text("Sales Trends", pageWidth / 2, 40, { align: "center" });
+  
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text("Report Category: Sales", 425, 30);
+        doc.text("Contact: +94 75 123 546", 425, 40);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 425, 50);
+  
+        doc.setDrawColor(100);
+        doc.line(40, 55, 570, 55);
+  
         // Adjust the image size for sales trends section
         const imgWidth2 = 520;
         const imgHeight2 = (canvas2.height * imgWidth2) / canvas2.width;
-        doc.addImage(imgData2, "PNG", 40, 60, imgWidth2, imgHeight2);
-
+        doc.addImage(imgData2, "PNG", 40, 70, imgWidth2, imgHeight2);
+  
         // Save the PDF file
         doc.save("Order_Summary_and_Sales_Trends.pdf");
+  
       });
     });
   };
+  
 
   return (
     <div className="flex h-screen ">

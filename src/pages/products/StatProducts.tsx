@@ -9,7 +9,7 @@ import "jspdf-autotable";
 
 import "../../dashboard/DashboardLayout.css";
 import SidebarComp from "../../dashboard/SidebarComp.tsx";
-import logoImgPath from '../../assets/finallogo.png'
+import logoImgPath from '../../assets/logospringbing.jpeg'
 
 const StatProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -206,7 +206,7 @@ const StatProducts: React.FC = () => {
         cellPadding: 3, // Adjust cell padding for better readability
       },
       headStyles: {
-        fillColor: [0, 150, 136], // Customize header background color
+        fillColor: [30, 58, 138], // Customize header background color
         textColor: [255, 255, 255], // Customize header text color
       },
     });
