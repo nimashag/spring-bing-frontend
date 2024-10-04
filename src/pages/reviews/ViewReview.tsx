@@ -1,6 +1,6 @@
 import { Card } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
-import { FaSearch, FaStar, FaRegStar } from 'react-icons/fa'; // Import star icons
+import { FaSearch, FaStar, FaRegStar } from 'react-icons/fa'; 
 import { Link } from 'react-router-dom';
 import reviewpic from '../../assets/reviewpic.jpg';
 import NewsLetter from '../../components/NewsLetter';
@@ -139,7 +139,9 @@ const ViewReview: React.FC = () => {
 
             <div className="mt-12">
                 <div className='flex justify-between items-start mb-8'>
-                    <h2 className='text-4xl font-bold'>Customer Reviews</h2>
+                    <div className='text-2xl py-4'>
+                        <Title text1={'CUSTOMER'} text2={' REVIEWS'}/>
+                    </div>
                         <div className='flex items-center gap-3'>
                             <div>
                                 <select

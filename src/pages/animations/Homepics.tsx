@@ -51,7 +51,7 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
@@ -63,8 +63,20 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
+                        </div>
+                    </div>
+                ))}
+                {items.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="item"
+                        style={{ '--position': index + 1 } as React.CSSProperties}
+                    >
+                        <img src={item.img} alt={item.label} />
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
+                            <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
                 ))}
@@ -75,8 +87,20 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
+                        </div>
+                    </div>
+                ))}
+                {items.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="item"
+                        style={{ '--position': index + 1 } as React.CSSProperties}
+                    >
+                        <img src={item.img} alt={item.label} />
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
+                            <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
                 ))}
@@ -87,8 +111,20 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
+                        </div>
+                    </div>
+                ))}
+                {items.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="item"
+                        style={{ '--position': index + 1 } as React.CSSProperties}
+                    >
+                        <img src={item.img} alt={item.label} />
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
+                            <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
                 ))}
@@ -99,8 +135,20 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
+                        </div>
+                    </div>
+                ))}
+                {items.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="item"
+                        style={{ '--position': index + 1 } as React.CSSProperties}
+                    >
+                        <img src={item.img} alt={item.label} />
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
+                            <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
                 ))}
@@ -111,8 +159,20 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
+                        </div>
+                    </div>
+                ))}
+                {items.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="item"
+                        style={{ '--position': index + 1 } as React.CSSProperties}
+                    >
+                        <img src={item.img} alt={item.label} />
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
+                            <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
                 ))}
@@ -123,8 +183,20 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
+                        </div>
+                    </div>
+                ))}
+                {items.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="item"
+                        style={{ '--position': index + 1 } as React.CSSProperties}
+                    >
+                        <img src={item.img} alt={item.label} />
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
+                            <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
                 ))}
@@ -135,8 +207,20 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
+                        </div>
+                    </div>
+                ))}
+                {items.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="item"
+                        style={{ '--position': index + 1 } as React.CSSProperties}
+                    >
+                        <img src={item.img} alt={item.label} />
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
+                            <p className="prata-regular">{item.label}</p>
                         </div>
                     </div>
                 ))}
@@ -147,67 +231,7 @@ const Homepics: React.FC = () => {
                         style={{ '--position': index + 1 } as React.CSSProperties}
                     >
                         <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
-                            <p className="prata-regular font-bold">{item.label}</p>
-                        </div>
-                    </div>
-                ))}
-                {items.map((item, index) => (
-                    <div
-                        key={`${item.id}-duplicate`}
-                        className="item"
-                        style={{ '--position': index + 1 } as React.CSSProperties}
-                    >
-                        <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
-                            <p className="prata-regular font-bold">{item.label}</p>
-                        </div>
-                    </div>
-                ))}
-                {items.map((item, index) => (
-                    <div
-                        key={`${item.id}-duplicate`}
-                        className="item"
-                        style={{ '--position': index + 1 } as React.CSSProperties}
-                    >
-                        <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
-                            <p className="prata-regular font-bold">{item.label}</p>
-                        </div>
-                    </div>
-                ))}
-                {items.map((item, index) => (
-                    <div
-                        key={`${item.id}-duplicate`}
-                        className="item"
-                        style={{ '--position': index + 1 } as React.CSSProperties}
-                    >
-                        <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
-                            <p className="prata-regular font-bold">{item.label}</p>
-                        </div>
-                    </div>
-                ))}
-                {items.map((item, index) => (
-                    <div
-                        key={`${item.id}-duplicate`}
-                        className="item"
-                        style={{ '--position': index + 1 } as React.CSSProperties}
-                    >
-                        <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
-                            <p className="prata-regular font-bold">{item.label}</p>
-                        </div>
-                    </div>
-                ))}
-                {items.map((item, index) => (
-                    <div
-                        key={`${item.id}-duplicate`}
-                        className="item"
-                        style={{ '--position': index + 1 } as React.CSSProperties}
-                    >
-                        <img src={item.img} alt={item.label} />
-                        <div style={{ marginTop: '10px', backgroundColor: 'white', padding: '10px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '10px', padding: '10px', textAlign: 'center' }}>
                             <p className="prata-regular font-bold">{item.label}</p>
                         </div>
                     </div>

@@ -6,4 +6,4 @@ const NewArrivals :React.FC = () => {
   )
 }
 
-export default NewArrivals
+export default NewArrivals;

@@ -14,7 +14,7 @@ const NewsLetter: React.FC = () => {
 
 
   return (
-    <div className='text-center'>
+    <div className='mt-4 text-center'>
         <p className='text-2xl font-medium text-gray-800'>Subscribe Now To Get Our Latest Arrivals</p>
         <p className='text-gray-400 mt-3'>Stay ahead of the fashion curve by subscribing to our newsletter.<br/>Be the first to know about our latest arrivals, 
             exclusive offers, and style tips tailored just for you.<br/> Join our community of trendsetters and never miss out on what's new at Spring Bing.

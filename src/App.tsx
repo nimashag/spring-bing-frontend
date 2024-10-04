@@ -42,7 +42,6 @@ import Orders from "./pages/orders/Orders.tsx";
 import SummaryReviews from "./pages/reviews/SummaryReviews.tsx";
 import OrderUpdateStatus from "./pages/orders/OrderUpdateStatus.tsx";
 
-//import { AnimatePresence } from "framer-motion";
 
 const App: React.FC = () => {
 
@@ -54,9 +53,9 @@ const App: React.FC = () => {
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
 
       {!isAdminRoute && <Navbar />}
-      {/* <AnimatePresence mode="wait"> */}
       
-        <Routes>
+      
+        <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contactus" element={<ContactUs />} />
@@ -114,8 +113,6 @@ const App: React.FC = () => {
           <Route path='/admin/dash' element={<DashboardLayout />} />
 
         </Routes>
-
-        {/* </AnimatePresence> */}
       
         {!isAdminRoute && <Footer />}
 

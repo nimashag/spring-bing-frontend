@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import { AiFillHome, AiOutlineUser, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart, AiOutlineForm, AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
-import { MdProductionQuantityLimits } from 'react-icons/md';
 
 import adminimg from '../assets/vihangaimg.jpg';
 import faqimg from '../assets/faqimg12.jpg'
