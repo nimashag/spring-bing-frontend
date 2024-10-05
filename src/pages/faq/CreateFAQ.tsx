@@ -81,16 +81,15 @@ const CreateFAQ: React.FC = () => {
 
   return (
     <div className="px-4 my-12">
-      <form onSubmit={handleFAQSubmit} className="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+      <form onSubmit={handleFAQSubmit} className="mt-8 p-6 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Ask Your Question
         </h2>
         <div className="mb-4">
           <Label htmlFor="full_name" value="Full Name" />
-          <TextInput
+          <Textarea className="h-8 pl-1 pr-10 rounded shadow-sm w-full border border-gray-300"
             id="full_name"
             name="full_name"
-            type="text"
             placeholder="Enter your full name"
             value={fullName}
             onChange={(e) => {
@@ -103,7 +102,7 @@ const CreateFAQ: React.FC = () => {
         </div>
         <div className="mb-4">
           <Label htmlFor="question" value="Question" />
-          <Textarea
+          <Textarea className="h-24 pl-1 pr-10 rounded shadow-sm w-full border border-gray-300"
             id="question"
             name="question"
             placeholder="Enter your question"
@@ -132,7 +131,7 @@ const CreateFAQ: React.FC = () => {
             ))}
           </Select>
         </div>
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-end gap-5 mt-6">
           <Button className='bg-red-500 text-white font-semibold px-5 py-2 rounded hover:bg-red-700 transition-all duration-300' type="button" onClick={handleCancel}>Cancel</Button>
           <Button className='bg-green-500 text-white font-semibold px-5 py-2 rounded hover:bg-green-800 transition-all duration-300' type="submit">Submit</Button>
         </div>

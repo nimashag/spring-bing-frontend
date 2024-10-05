@@ -96,7 +96,7 @@ const ViewFAQ: React.FC = () => {
                                 services, products, and policies. We're committed to providing you with all the information you need, so if you don't see your 
                                 question answered here, feel free to ask! Simply submit your question in this section, and our team will get back to you as soon as possible.
                             </p>
-                            <Link to="/create-faq" className='mt-5 block'>
+                            <Link to="/nof/create-faq" className='mt-5 block'>
                                 <button className='bg-black text-white font-semibold px-5 py-2 rounded hover:bg-white hover:text-black transition-all duration-300'>
                                     Ask Your Question
                                 </button>

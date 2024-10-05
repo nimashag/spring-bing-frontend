@@ -51,13 +51,13 @@ const App: React.FC = () => {
 
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isNoFooter = location.pathname.startsWith("/nof");
 
   return (
     <SnackbarProvider>
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
 
       {!isAdminRoute && <Navbar />}
-      
       
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
@@ -97,7 +97,7 @@ const App: React.FC = () => {
 
           {/* Routes for FAQ Module */}
           <Route path="/faqs" element={<ViewFAQ />} />
-          <Route path="/create-faq" element={<CreateFAQ />} />
+          <Route path="/nof/create-faq" element={<CreateFAQ />} />
           <Route path="/admin/manage-faq" element={<ManageFAQ />} />
           <Route path="/admin/answer-faq/:id" element={<AnswerFAQ />} />
 
@@ -122,7 +122,7 @@ const App: React.FC = () => {
 
         </Routes>
       
-        {!isAdminRoute && <Footer />}
+        {!isAdminRoute && !isNoFooter && <Footer />}
 
       </div>
     </SnackbarProvider>
