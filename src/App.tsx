@@ -41,6 +41,10 @@ import OrderHistory from "./pages/orders/OrderHistory.tsx";
 import Orders from "./pages/orders/Orders.tsx";
 import SummaryReviews from "./pages/reviews/SummaryReviews.tsx";
 import OrderUpdateStatus from "./pages/orders/OrderUpdateStatus.tsx";
+import TrendingAndTopSelling from "./fuck/TT.tsx";
+import UserDashboard from "./fuck/UD.tsx";
+import SalesForecasting from "./fuck/SF.tsx";
+import DynamicPricing from "./fuck/DP.tsx";
 
 
 const App: React.FC = () => {
@@ -57,6 +61,10 @@ const App: React.FC = () => {
       
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
+          <Route path="/TT" element={<TrendingAndTopSelling />} />
+          <Route path="/ud" element={<UserDashboard />} />
+          <Route path="/sf" element={<SalesForecasting />} />
+          <Route path="/dp" element={<DynamicPricing />} />
           <Route path="/about" element={<About />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/newarrivals" element={<NewArrivals />} />

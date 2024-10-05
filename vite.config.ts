@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // Change '/api' to the path you want to proxy
       '/api': {
-        target: 'http://localhost:5000/api', // Change this to your backend server's URL
+        target: 'http://localhost:3001/api', // Change this to your backend server's URL
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),

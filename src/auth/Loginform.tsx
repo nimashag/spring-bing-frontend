@@ -30,12 +30,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ close }) => {
           }}
           validationSchema={Yup.object({
             email: Yup.string().email('Invalid email address').required('Email is required'),
-            password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
-          })}
+            password: Yup.string()
+              .min(8, 'Password must be at least 8 characters')
+              .required('Password is required'),
+          })}          
           onSubmit={async (values, { setSubmitting }) => {
             setError(null); // Reset the error state before submitting
             try {
-              const response = await axios.post('/api/auth/login', values);
+              const response = await axios.post('http://localhost:3001/api/login', values);
               const { token, user } = response.data;
               console.log(user)
               localStorage.setItem('token', token);
