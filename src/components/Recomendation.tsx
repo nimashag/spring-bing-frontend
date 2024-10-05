@@ -1,72 +1,90 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  unit_price: number;
-  images_path: string;
-}
-
-interface Recommendation {
-  id: string;
-  user_id: string;
-  recommendations: string[];
-}
-
-const RecommendationsPage: React.FC = () => {
-  const [recommendations, setRecommendations] = useState<Product[]>([]);
+const RecommendedProducts: React.FC = () => {
+  const [recommendedProducts, setRecommendedProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRecommendations = async () => {
-      try {
-        const userId = JSON.parse(localStorage.getItem('profile') || '{}').id;
+    const fetchRecommendedProducts = async () => {
+      const token = localStorage.getItem('token');
+      const profile = localStorage.getItem('profile');
 
-        const response = await axios.get<Recommendation>(`/api/recommendations/${userId}`);
-        const productIds = response.data.recommendations;
+      if (token && profile) {
+        const user = JSON.parse(profile);
+        try {
+          const response = await axios.get(`http://localhost:3001/api/recommendations/${user._id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        if (productIds && productIds.length > 0) {
-          const productPromises = productIds.map((id) => axios.get<Product>(`/api/products/${id}`));
-          const productResponses = await Promise.all(productPromises);
-          const fetchedProducts = productResponses.map((res) => res.data);
+          const productIds = response.data.map((product: any) => product._id);
+          const productsResponse = await axios.post(`http://localhost:3001/api/products-by-ids`, {
+            productIds,
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-          setRecommendations(fetchedProducts);
-        } else {
-          setError('No recommendations found.');
+          setRecommendedProducts(productsResponse.data);
+          console.log("Fetched recommended products:", productsResponse.data); // Log fetched products
+
+        } catch (err) {
+          console.error('Error fetching recommendations:', err);
+          setError('Failed to load recommendations.');
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        setError('An error occurred while fetching recommendations.');
-        console.error(err);
-      } finally {
+      } else {
+        setError('User not authenticated.');
         setLoading(false);
       }
     };
 
-    fetchRecommendations();
+    fetchRecommendedProducts();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-600">{error}</div>;
+  }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4"> Recommendations </h1>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-      {recommendations.map((product) => (
-        <div key={product.id} className="bg-white shadow-lg rounded-lg p-4">
-          <img src={product.images_path[0]} alt={product.name} className="w-full h-48 object-cover rounded-t-lg" />
-          <h3 className="text-xl font-semibold mt-2">{product.name}</h3>
-          <p className="text-gray-700 mt-2">{product.description}</p>
-          <p className="text-lg font-bold mt-2">${product.unit_price.toFixed(2)}</p>
-        </div>
-      ))}
-    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+      {recommendedProducts.length > 0 ? (
+        recommendedProducts.map((product) => (
+          <div key={product._id} className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+            {/* Check if imageUrl exists in metadata */}
+            {product.images_path && product.images_path.length > 0 ? (
+              <img src={product.images_path[0]} alt={product.name} className="w-full h-48 object-cover" />
+            ) : (
+              <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+                <span className="text-gray-500">Image not available</span>
+              </div>
+            )}
+            <div className="p-4">
+              <h3 className="text-lg font-semibold">{product.name}</h3>
+              <p className="text-gray-600">{product.description}</p>
+              {/* Check if unit_price exists before formatting */}
+              <p className="mt-2 text-xl font-bold">
+                {product.unit_price !== undefined 
+                  ? `$${product.unit_price.toFixed(2)}`
+                  : 'Price not available'}
+              </p>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div>No recommended products available. make some purchases</div>
+      )}
     </div>
   );
 };
 
-export default RecommendationsPage;
+export default RecommendedProducts;

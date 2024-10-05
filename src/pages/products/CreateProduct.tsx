@@ -118,17 +118,14 @@ const CreateProduct: React.FC = () => {
       }
     });
 
-    // Regular expression to validate URL
-    const urlRegex =
-      /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}([\/\w .-]*)*\/?$/;
-
-    if (form.images_path.value.trim() === "") {
-      errors.imagesPath = "At least one image path is required.";
-      valid = false;
-    } else if (!urlRegex.test(form.images_path.value.trim())) {
-      errors.imagesPath = "Please enter a valid URL for the image path.";
-      valid = false;
-    }
+    const imagesPathArray = form.images_path.value.split(",").map((url) => url.trim());
+    const urlRegex = /^(https?:\/\/[^\s$.?#].[^\s]*)$/;
+    imagesPathArray.forEach((url, index) => {
+      if (!urlRegex.test(url)) {
+        errors["imagesPath"] = "Each URL must be a valid web address.";
+        valid = false;
+      }
+    });
 
     setValidationErrors(errors);
     return valid;
