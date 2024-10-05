@@ -30,4 +30,4 @@ const ContactUs : React.FC = () => {
   )
 }
 
-export default ContactUs
+export default ContactUs;

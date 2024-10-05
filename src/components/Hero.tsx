@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Hero : React.FC = () => {
   return (
-    <div className='flex flex-col sm:flex-row border border-gray-400'>
+    <div className='mt-12 flex flex-col sm:flex-row border border-gray-400'>
 
         {/* Hero Left Side */}
         <div className='w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0'>

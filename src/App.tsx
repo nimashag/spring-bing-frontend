@@ -46,7 +46,6 @@ import UserDashboard from "./fuck/UD.tsx";
 import SalesForecasting from "./fuck/SF.tsx";
 import DynamicPricing from "./fuck/DP.tsx";
 
-//import { AnimatePresence } from "framer-motion";
 
 const App: React.FC = () => {
 
@@ -58,9 +57,9 @@ const App: React.FC = () => {
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
 
       {!isAdminRoute && <Navbar />}
-      {/* <AnimatePresence mode="wait"> */}
       
-        <Routes>
+      
+        <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/TT" element={<TrendingAndTopSelling />} />
           <Route path="/ud" element={<UserDashboard />} />
@@ -122,8 +121,6 @@ const App: React.FC = () => {
           <Route path='/admin/dash' element={<DashboardLayout />} />
 
         </Routes>
-
-        {/* </AnimatePresence> */}
       
         {!isAdminRoute && <Footer />}
 

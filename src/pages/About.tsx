@@ -39,7 +39,7 @@ const About : React.FC = () => {
           
       </div>
 
-      <div className='text-4xl py-4'>
+      <div className='text-2xl py-4'>
             <Title text1={'WHY'} text2={' CHOOSE US'}/>
       </div>
 
@@ -74,4 +74,4 @@ const About : React.FC = () => {
   )
 }
 
-export default About
+export default About;

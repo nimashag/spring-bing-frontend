@@ -4,6 +4,8 @@ import { FaSearch } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import FAQpic from '../../assets/faqimg2.jpg';
 import NewsLetter from '../../components/NewsLetter';
+import Title from '../../components/Title'
+
 
 interface FAQ {
     _id: string;
@@ -74,34 +76,7 @@ const ViewFAQ: React.FC = () => {
     return (
         <div className='mt-18 px-4 lg:px-24 pt-10'>
             <div className='flex justify-between items-start mb-8'>
-                <h2 className='text-5xl font-bold'>Frequently Asked Questions</h2>
-                <div className='flex items-center space-x-4'>
-                    <Select
-                        id="category-filter"
-                        name="category-filter"
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                    >
-                        <option value="">All Categories</option>
-                        {categories.map((category, index) => (
-                            <option key={index} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </Select>
-
-                    <div className="relative w-96">
-                        <input
-                            type="text"
-                            placeholder="Search FAQs"
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className='h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300'
-                        />
-                        <div className="absolute top-0 left-0 mt-2.5 ml-4 text-gray-500">
-                            <FaSearch size="20px" />
-                        </div>
-                    </div>
-                </div>
+                <h2 className='text-4xl font-bold'>Frequently Asked Questions</h2>
             </div>
 
             <div className='w-full mt-16 py-12 bg-white px-4 lg:px-24 relative'>
@@ -127,6 +102,39 @@ const ViewFAQ: React.FC = () => {
                                     Ask Your Question
                                 </button>
                             </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className='mt-12 flex justify-between items-start '>
+                <div className='text-2xl py-4'>
+                    <Title text1={'QESTIONS'} text2={' USER ASKED'}/>
+                </div>
+                <div className='flex items-center space-x-4'>
+                    <select className='h-10 pl-4 pr-8 border border-gray-300 rounded-full'
+                        id="category-filter"
+                        name="category-filter"
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                        <option value="">All Categories</option>
+                        {categories.map((category, index) => (
+                            <option key={index} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+
+                    <div className="relative w-96">
+                        <input
+                            type="text"
+                            placeholder="Search FAQs"
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className='h-10 pl-10 pr-10 rounded-full shadow-sm w-full border border-gray-300'
+                        />
+                        <div className="absolute top-0 left-0 mt-2.5 ml-4 text-gray-500">
+                            <FaSearch size="20px" />
                         </div>
                     </div>
                 </div>

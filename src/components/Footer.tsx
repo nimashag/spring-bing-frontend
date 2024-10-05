@@ -1,5 +1,5 @@
 import React from 'react';
-import logoicon from '../assets/logospringbing.jpeg';
+import logoicon from '../assets/sblogobgremove.png';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
         </div>
         
          {/* Divider */}
-        <div className="mt-8 mb-4 border-t border-gray-200 pt-5 text-center">
+        <div className="mt-8 mb-4 border-t border-gray-200 pt-5 text-center font-semibold">
           <p>Copyright © 2024 springbing.com - All Rights Reserved.</p>
         </div>
     </footer>
