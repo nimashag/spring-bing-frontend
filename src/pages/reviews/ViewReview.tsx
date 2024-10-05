@@ -127,7 +127,7 @@ const ViewReview: React.FC = () => {
                                 we always deliver what you love. Share your review and help others in the Spring Bing community make informed choices. Thank you 
                                 for being a part of our journey!
                             </p>
-                            <Link to="/create-review" className='mt-5 block'>
+                            <Link to="/nof/create-review" className='mt-5 block'>
                                 <button className='bg-black text-white font-semibold px-5 py-2 rounded hover:bg-white hover:text-black transition-all duration-300'>
                                     Add Review
                                 </button>

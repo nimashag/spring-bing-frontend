@@ -1,5 +1,3 @@
-//this needs to be redo as not logged in from a user
-
 import React, { useState } from "react";
 import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
 import { PiCheckCircleBold } from "react-icons/pi";
@@ -7,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateReview: React.FC = () => {
   const navigate = useNavigate(); 
-  const [user_id, setUserId] = useState<string>('');
+  const [user_id, setUserId] = useState<string>(''); 
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [rating, setRating] = useState<number>(5); // Default - 5
@@ -15,9 +13,15 @@ const CreateReview: React.FC = () => {
   const [status] = useState<string>("Pending"); // Default - Pending
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const [backendErrorMessage, setBackendErrorMessage] = useState<string | null>(null);
+  const [titleError, setTitleError] = useState<string | null>(null); // For validation error
 
   const handleReviewSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (titleError) {
+      // If there's a validation error, prevent submission
+      return;
+    }
 
     const review = {
       title,
@@ -63,9 +67,25 @@ const CreateReview: React.FC = () => {
     navigate('/reviews'); 
   };
 
+  // Handle title change and validation
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    // Regular expression to allow only alphabets and spaces
+    const isValid = /^[a-zA-Z\s]*$/.test(value);
+
+    if (!isValid) {
+      setTitleError("Title can only contain letters and spaces.");
+    } else {
+      setTitleError(null);
+    }
+
+    setTitle(value);
+  };
+
   return (
     <div className="px-4 my-12">
-      <form onSubmit={handleReviewSubmit} className="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+      <form onSubmit={handleReviewSubmit} className="mt-8 p-6 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Write a Review
         </h2>
@@ -77,9 +97,14 @@ const CreateReview: React.FC = () => {
             type="text"
             placeholder="Enter review title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={handleTitleChange}
             required
           />
+          {titleError && (
+            <div className="text-red-600 text-sm mt-2">
+              {titleError}
+            </div>
+          )}
         </div>
         <div className="mb-4">
           <Label htmlFor="description" value="Description" />
@@ -120,9 +145,9 @@ const CreateReview: React.FC = () => {
             onChange={(e) => setImagesPath(e.target.value.split(", ").map(path => path.trim()))}
           />
         </div>
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-end gap-5 mt-6">
           <Button className='bg-red-500 text-white font-semibold px-5 py-2 rounded hover:bg-red-700 transition-all duration-300' type="button" onClick={handleCancel}>Cancel</Button>
-          <Button className='bg-green-500 text-white font-semibold px-5 py-2 rounded hover:bg-green-800 transition-all duration-300' type="submit">Submit</Button>
+          <Button className='bg-green-500 text-white font-semibold px-5 py-2 rounded hover:bg-green-800 transition-all duration-300' type="submit" disabled={!!titleError}>Submit</Button>
         </div>
 
         {showSuccessMessage && (

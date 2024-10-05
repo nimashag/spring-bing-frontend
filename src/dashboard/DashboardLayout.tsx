@@ -10,6 +10,8 @@ import manageproduct from '../assets/managedash3.png'
 import productreport from '../assets/proreportdash1.png'
 import SidebarComp from './SidebarComp';
 import productrend from '../assets/trendingimg1.png'
+import salesimg1 from '../assets/forecast.png'
+import salesimg2 from '../assets/dynamic.png'
 
 import { FaBell, FaHome, FaSearch } from 'react-icons/fa'; 
 
@@ -106,8 +108,35 @@ const DashboardLayout: React.FC = ({}) => {
                 </section>
           </div>
 
+          <h2 className='text-xl font-bold leading-snug text-black mt-5'>Sales Dashboard</h2>
+                <section className="dashboard-overview">
+                <div className="stat-card flex items-center">
+                  <img src={salesimg1} className="w-1/3" />
+                  <div className="ml-5">
+                    <h3 className='text-xl font-semibold text-black text-left'>Sales Forecasting</h3>
+                    <p className='mt-2 text-left'>Predict future sales based on historical data, trends, economic conditions, and market analysis.</p>
+                    <Link to="/admin/sf">
+                    <button className='bg-black font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-500 transition-all duration-300'>
+                      Check Reports
+                    </button>
+                    </Link>
+                  </div>
+                </div>
+                <div className="stat-card flex items-center">
+                  <img src={salesimg2} className="w-1/3" />
+                  <div className="ml-5">
+                    <h3 className='text-xl font-semibold text-black text-left'>Dynamic Pricing</h3>
+                    <p className='mt-2 text-left'>Adjust prices in real-time based on demand, competition, and other factors to optimize revenue.</p>
+                    <Link to="/admin/dp">  
+                    <button className='bg-black font-semibold text-white mt-5 px-10 py-2 rounded hover:bg-yellow-500 transition-all duration-300'>
+                      Check Reports
+                    </button>
+                    </Link>
+                  </div>
+                </div>
+                </section>
 
-          {/* thunweni KAAALLA */}
+          {/* 4weni KAAALLA */}
           <div className='flex w-full md:flex-row  items-center gap-5'>
               <div>
               <h2 className='text-xl font-bold leading-snug text-black mt-6'>Reviews & FAQs dashboard</h2>
@@ -148,7 +177,7 @@ const DashboardLayout: React.FC = ({}) => {
                 </section>
 
 
-                {/* 4weni KAAALLA */}
+                {/* 5weni KAAALLA */}
                 <h2 className='text-xl font-bold leading-snug text-black mt-5'>Order Status Dashboard</h2>
                 <section className="dashboard-overview">
                 <div className="stat-card flex items-center">

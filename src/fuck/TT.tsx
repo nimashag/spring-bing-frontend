@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaEye } from 'react-icons/fa'; // Icon for view action
+import SidebarComp from '../dashboard/SidebarComp';
 
 interface Product {
   _id: string;
@@ -81,6 +82,9 @@ const TrendingAndTopSelling: React.FC = () => {
   };
 
   return (
+    <div>
+      <SidebarComp />
+      <div className='main-content'>
     <div className="container mx-auto p-4">
       {/* Trending Products Table */}
       <h2 className="text-3xl font-bold mb-4 text-gray-800">Trending Products</h2>
@@ -180,6 +184,8 @@ const TrendingAndTopSelling: React.FC = () => {
           </div>
         </div>
       )}
+    </div>
+    </div>
     </div>
   );
 };

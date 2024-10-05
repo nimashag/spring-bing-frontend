@@ -61,10 +61,10 @@ const App: React.FC = () => {
       
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
-          <Route path="/TT" element={<TrendingAndTopSelling />} />
-          <Route path="/ud" element={<UserDashboard />} />
-          <Route path="/sf" element={<SalesForecasting />} />
-          <Route path="/dp" element={<DynamicPricing />} />
+          <Route path="admin/TT" element={<TrendingAndTopSelling />} />
+          <Route path="admin/ud" element={<UserDashboard />} />
+          <Route path="admin/sf" element={<SalesForecasting />} />
+          <Route path="admin/dp" element={<DynamicPricing />} />
           <Route path="/about" element={<About />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/newarrivals" element={<NewArrivals />} />
@@ -111,7 +111,7 @@ const App: React.FC = () => {
 
           {/* Routes for Reviews Module */}
           <Route path="/reviews" element={<ViewReview />} />
-          <Route path="/create-review" element={<CreateReview />} />
+          <Route path="/nof/create-review" element={<CreateReview />} />
           <Route path="/admin/manage-reviews" element={<ManageReviews />} />
           <Route path="/admin/edit-review/:id" element={<EditReview />} />
           <Route path="/admin/stat-review" element={<StatReviews />} />
