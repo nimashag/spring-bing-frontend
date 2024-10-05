@@ -103,7 +103,7 @@ const ViewReview: React.FC = () => {
     };
 
     return (
-        <div className='mt-18 px-4 lg:px-24 pt-10'>
+        <div className='mt-18 px-4 pt-10'>
             <div className='flex justify-between items-start mb-8'>
                 <h2 className='text-4xl font-bold'>What People Think About Us!</h2>
             </div>
@@ -219,7 +219,7 @@ const ViewReview: React.FC = () => {
                 </div>
                 
                 {/* Pagination Controls */}
-                <div className="flex justify-center items-center mt-6">
+                <div className="flex justify-center items-center mt-8">
                     <button
                         onClick={handlePreviousPage}
                         disabled={currentPage === 1}
@@ -238,7 +238,9 @@ const ViewReview: React.FC = () => {
                 </div>
             </div>
             <br/>
+            <div className='mt-4'>
             <NewsLetter />
+            </div>
         </div>
     );
 };

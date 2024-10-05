@@ -1,17 +1,9 @@
 .banner .swiper {
-    margin: 100px auto;
+    
     width: 600px;
     height: 450px;
   }
-  
-  .banner .swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fff;
-  }
+ 
   
   .banner .swiper-slide:nth-child(1n) {
     background-image: url('src/assets/banner/img2.jpg');
@@ -48,5 +40,7 @@
   .banner .swiper-slide:nth-child(9n) {
     background-image: url('src/assets/banner/img9.jpg');
   }
+
+
 
   

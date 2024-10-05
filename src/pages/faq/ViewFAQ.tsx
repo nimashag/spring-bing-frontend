@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Select } from 'flowbite-react';
+import { Card } from 'flowbite-react';
 import { FaSearch } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import FAQpic from '../../assets/faqimg2.jpg';
 import NewsLetter from '../../components/NewsLetter';
-import Title from '../../components/Title'
-
+import Title from '../../components/Title';
 
 interface FAQ {
     _id: string;
@@ -24,7 +23,7 @@ const ViewFAQ: React.FC = () => {
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const faqsPerPage = 10; 
+    const faqsPerPage = 10;
 
     useEffect(() => {
         // Fetch FAQs from the backend
@@ -32,8 +31,8 @@ const ViewFAQ: React.FC = () => {
             .then(res => res.json())
             .then(data => {
                 setFaqs(data.data);
-                // Extract unique categories
-                const uniqueCategories = Array.from(new Set(data.data.map((faq: FAQ) => faq.category)));
+                // Extract unique categories and cast them as string[]
+                const uniqueCategories: string[] = Array.from(new Set(data.data.map((faq: FAQ) => faq.category)));
                 setCategories(uniqueCategories);
             })
             .catch(error => console.error('Error fetching FAQs:', error));
@@ -41,8 +40,8 @@ const ViewFAQ: React.FC = () => {
 
     const filteredFaqs = faqs.filter(faq =>
         (faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         faq.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         faq.category.toLowerCase().includes(searchQuery.toLowerCase())) &&
+            faq.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            faq.category.toLowerCase().includes(searchQuery.toLowerCase())) &&
         (selectedCategory === "" || faq.category === selectedCategory)
     );
 
@@ -50,7 +49,7 @@ const ViewFAQ: React.FC = () => {
     const indexOfLastFAQ = currentPage * faqsPerPage;
     const indexOfFirstFAQ = indexOfLastFAQ - faqsPerPage;
     const currentFaqs = filteredFaqs.slice(indexOfFirstFAQ, indexOfLastFAQ);
-    
+
     // Calculate total pages
     const totalPages = Math.ceil(filteredFaqs.length / faqsPerPage);
 
@@ -74,7 +73,7 @@ const ViewFAQ: React.FC = () => {
     };
 
     return (
-        <div className='mt-18 px-4 lg:px-24 pt-10'>
+        <div className='mt-18 px-4 pt-10'>
             <div className='flex justify-between items-start mb-8'>
                 <h2 className='text-4xl font-bold'>Frequently Asked Questions</h2>
             </div>
@@ -86,7 +85,7 @@ const ViewFAQ: React.FC = () => {
                 </div>
 
                 {/* Overlay */}
-                <div className='relative z-10 bg-black bg-opacity-50 p-8 md:p-12 lg:p-16 text-white'>
+                <div className='relative z-10 bg-black bg-opacity-70 p-8 md:p-12 lg:p-16 text-white'>
                     <div className='flex flex-col md:flex-row justify-between items-center gap-12'>
                         <div>
                             <h2 className='text-4xl font-bold mb-6 leading-snug'>

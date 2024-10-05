@@ -90,7 +90,7 @@ const NewArrivalList: React.FC = () => {
   };
 
   return (
-    <div className="mt-10 px-4 lg:px-24">
+    <div className="mt-10 px-4">
       <div className="flex justify-between items-start mb-8">
         <h2 className="text-4xl font-bold">New Arrivals</h2>
         <div className="flex justify-between mb-4">
@@ -126,7 +126,7 @@ const NewArrivalList: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid gap-5 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
+      <div className="grid gap-5 my-12 lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
         {currentProducts.map((product) => (
           <Card
             key={product._id}
