@@ -8,6 +8,7 @@ import Banner from './banner/Banner'
 import Trending from '../components/CurrentTrending'
 import SocialMedia from '../components/SocialMedia'
 import ShopBy from '../components/ShopBy'
+import TopSellingItems from '../components/TopSelling'
 
 
 const Home : React.FC = () => {
@@ -16,8 +17,12 @@ const Home : React.FC = () => {
     <div>
       <Hero />
       <Trending />
+      <TopSellingItems />
       { token && (
-        <Recomendation />
+        <div>
+          <h1>Recommendations</h1>
+          <Recomendation />
+        </div>
       )}
       <ShopBy />
       <Banner />

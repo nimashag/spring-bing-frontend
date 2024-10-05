@@ -1,143 +1,193 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import RecommendedProducts from '../components/Recomendation';
 
-const ProfilePage: React.FC = () => {
-  const [profile, setProfile] = useState<any>(null);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [formData, setFormData] = useState<any>({});
-  const navigate = useNavigate();
-
-  const storedProfile = JSON.parse(localStorage.getItem('profile') || '{}');
-  const userEmail = storedProfile.email;
-  const userId = storedProfile.id;
+const Profile: React.FC = () => {
+  const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [formValues, setFormValues] = useState<any>({
+    fname: '',
+    lname: '',
+    email: '',
+    phoneNumber: [],
+    address: [{ province: '', state: '', district: '', postal_code: '' }],
+  });
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchUserData = async () => {
+      const id = JSON.parse(localStorage.getItem('profile') || '')._id;
       try {
-        const response = await axios.get('/api/profile', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-          params: { email: userEmail }
-        });
-        setProfile(response.data);
-        setFormData(response.data);
-      } catch (error) {
-        console.error(error);
+        const response = await axios.get(`http://localhost:3001/api/profile/${id}`);
+        setUserData(response.data);
+        console.log(response.data);
+
+        // If address is not an array, ensure it becomes one
+        const address = Array.isArray(response.data.address) ? response.data.address : [{ province: '', state: '', district: '', postal_code: '' }];
+        
+        setFormValues({ ...response.data, address });
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+        setError('Failed to load profile.');
+      } finally {
+        setLoading(false);
       }
     };
-    fetchProfile();
-  }, [userEmail]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    fetchUserData();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleUpdate = async () => {
-    try {
-      await axios.put('/api/profile', { ...formData, email: userEmail }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        params: { email: userEmail },
-      });
-      setProfile(formData);
-      setEditMode(false);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleAddressChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const updatedAddress = formValues.address.map((addr: any, i: number) =>
+      i === index ? { ...addr, [name]: value } : addr
+    );
+    setFormValues({ ...formValues, address: updatedAddress });
   };
-  
 
-  const handleDelete = async () => {
+  const handleUpdateProfile = async () => {
+    const id = JSON.parse(localStorage.getItem('profile') || '')._id;
     try {
-      await axios.delete('/api/profile', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        params: { email: userEmail, id: userId }
-      });
-      localStorage.removeItem('token');
-      localStorage.removeItem('profile');
-      navigate('/');
-    } catch (error) {
-      console.error(error);
+      await axios.put(`http://localhost:3001/api/profile`, { id, ...formValues });
+      alert('Profile updated successfully!');
+      setUserData(formValues);
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      setError('Failed to update profile.');
     }
   };
 
-  if (!profile) return <div className="text-center text-gray-500">Loading...</div>;
+  const handleDeleteAccount = async () => {
+    const id = JSON.parse(localStorage.getItem('profile') || '')._id;
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      try {
+        await axios.delete(`http://localhost:3001/api/profile`, { data: { id } });
+        alert('Account deleted successfully.');
+        // Optionally redirect to login page or clear user data
+      } catch (err) {
+        console.error('Error deleting account:', err);
+        setError('Failed to delete account.');
+      }
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-600">{error}</div>;
+  }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-semibold mb-4">Profile</h1>
-      {editMode ? (
-        <div>
-          <div className="mb-4">
-            <label className="block text-gray-700">First Name</label>
-            <input
-              type="text"
-              name="fname"
-              value={formData.fname}
-              onChange={handleInputChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Last Name</label>
-            <input
-              type="text"
-              name="lname"
-              value={formData.lname}
-              onChange={handleInputChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              readOnly
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full bg-gray-100"
-            />
-          </div>
-          {/* Add more fields as needed */}
-          <div className="flex gap-4">
-            <button
-              onClick={handleUpdate}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            >
-              Update Profile
-            </button>
-            <button
-              onClick={() => setEditMode(false)}
-              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
-            >
-              Cancel
-            </button>
-          </div>
+    <div>
+          <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-xl font-semibold mb-4">User Profile</h2>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">First Name</label>
+        <input
+          type="text"
+          name="fname"
+          value={formValues.fname}
+          onChange={handleChange}
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Last Name</label>
+        <input
+          type="text"
+          name="lname"
+          value={formValues.lname}
+          onChange={handleChange}
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formValues.email}
+          onChange={handleChange}
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Phone Numbers</label>
+        <textarea
+          name="phoneNumber"
+          value={formValues.phoneNumber.join(', ')}
+          onChange={(e) => setFormValues({ ...formValues, phoneNumber: e.target.value.split(', ') })}
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+          rows={3}
+        />
+      </div>
+
+      {/* Display address fields */}
+      {formValues.address.map((addr: any, index: number) => (
+        <div key={index} className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Address {index + 1}</label>
+          <input
+            type="text"
+            name="province"
+            value={addr.province}
+            onChange={(e) => handleAddressChange(index, e)}
+            placeholder="Province"
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 mb-2"
+          />
+          <input
+            type="text"
+            name="state"
+            value={addr.state}
+            onChange={(e) => handleAddressChange(index, e)}
+            placeholder="State"
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 mb-2"
+          />
+          <input
+            type="text"
+            name="district"
+            value={addr.district}
+            onChange={(e) => handleAddressChange(index, e)}
+            placeholder="District"
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 mb-2"
+          />
+          <input
+            type="text"
+            name="postal_code"
+            value={addr.postal_code}
+            onChange={(e) => handleAddressChange(index, e)}
+            placeholder="Postal Code"
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+          />
         </div>
-      ) : (
-        <div>
-          <p className="text-gray-700 mb-2"><strong>First Name:</strong> {profile.fname}</p>
-          <p className="text-gray-700 mb-2"><strong>Last Name:</strong> {profile.lname}</p>
-          <p className="text-gray-700 mb-4"><strong>Email:</strong> {profile.email}</p>
-          {/* Add more fields as needed */}
-          <div className="flex gap-4">
-            <button
-              onClick={() => setEditMode(true)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            >
-              Edit Profile
-            </button>
-            <button
-              onClick={handleDelete}
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-            >
-              Delete Account
-            </button>
-          </div>
-        </div>
-      )}
+      ))}
+
+      <div className="flex space-x-4">
+        <button
+          onClick={handleUpdateProfile}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200"
+        >
+          Update Profile
+        </button>
+        <button
+          onClick={handleDeleteAccount}
+          className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200"
+        >
+          Delete Account
+        </button>
+      </div>
+      
     </div>
+    <RecommendedProducts />
+    </div>
+
   );
 };
 
-export default ProfilePage;
+export default Profile;
