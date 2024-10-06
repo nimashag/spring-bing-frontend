@@ -39,6 +39,12 @@ const Navbar: React.FC = () => {
     setMobileMenuOpen((prev) => !prev); 
   };
 
+const logout = () => {
+  localStorage.removeItem("token");
+  setIsLogged(false);
+  location.reload();
+};
+
   return (
     <div className="flex items-center justify-between sm:px-10 font-medium bg-white">
       {/* Logo */}
@@ -142,7 +148,7 @@ const Navbar: React.FC = () => {
                     <Link to="/order/pendingOrder">
                       <p className="cursor-pointer hover:text-black">My Orders</p>
                     </Link>
-                    <p className="cursor-pointer hover:text-black">Logout</p>
+                    <p className="cursor-pointer hover:text-black" onClick={logout}>Logout</p>
                   </div>
                 )}
               </div>
