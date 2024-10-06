@@ -20,7 +20,7 @@ const Home : React.FC = () => {
       <TopSellingItems />
       { token && (
         <div>
-          <h1>Recommendations</h1>
+          <h1 className="text-3xl font-bold text-center mb-8">Recommendations</h1>
           <Recomendation />
         </div>
       )}
