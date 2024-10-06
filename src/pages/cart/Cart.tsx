@@ -218,7 +218,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
                   </button>
                   <button
                     onClick={() => add(item)}
-                    className="bg-green-300 text-white rounded-md px-3 py-1 hover:bg-green-500 transition-colors"
+                    className="px-4 py-2 border border-black text-black font-semibold hover:bg-black hover:text-white transition-colors"
                   >
                     Add
                   </button>

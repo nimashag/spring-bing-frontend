@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { FaEdit, FaTrash, FaChartBar } from 'react-icons/fa';
 import { Bar } from 'react-chartjs-2'; // For graph charts
 import 'chart.js/auto';
 import SidebarComp from '../dashboard/SidebarComp';
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 interface User {
   _id: string;
@@ -25,6 +27,8 @@ interface User {
 const UserDashboard: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+  const printRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -63,10 +67,43 @@ const UserDashboard: React.FC = () => {
     return acc;
   }, {});
 
+  //PDF download function
+  const handlePrintPDF = async () => {
+    const element = printRef.current;
+
+    if (element) {
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      let position = 0;
+
+      // Add the image to the PDF and handle multiple pages
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save("report.pdf");
+    }
+  };
+
+
   return (
     <div>
       <SidebarComp />
       <div className='main-content'>
+      <div ref={printRef}>  
     <div className="container mx-auto p-4">
       {/* User Data Table */}
       <h2 className="text-3xl font-bold mb-4 text-gray-800">User Dashboard</h2>
@@ -137,6 +174,7 @@ const UserDashboard: React.FC = () => {
           />
         </div>
       </div>
+    </div>
     </div>
     </div>
     </div>
