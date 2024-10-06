@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
-
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import '../../dashboard/DashboardLayout.css';
 import SidebarComp from '../../dashboard/SidebarComp';
@@ -11,9 +10,6 @@ interface Review {
   title: string;
   description: string;
   rating: number;
-  user?: {
-    fname: string;
-  };
   date: string;
   status: string;
   images_path?: string[];
@@ -24,6 +20,7 @@ const ManageReviews: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [deleteMessage, setDeleteMessage] = useState(''); // Message state for deleted review
   const reviewsPerPage = 10;
 
   useEffect(() => {
@@ -62,6 +59,12 @@ const ManageReviews: React.FC = () => {
       const data = await response.json();
       if (data.message === "Review Deleted") {
         setReviews(prevReviews => prevReviews.filter(review => review._id !== _id));
+        setDeleteMessage("Review deleted successfully!"); // Set delete message
+
+        // Remove message after 3 seconds
+        setTimeout(() => {
+          setDeleteMessage('');
+        }, 3000);
       } else {
         console.error("Unexpected delete response:", data);
       }
@@ -73,8 +76,7 @@ const ManageReviews: React.FC = () => {
   // Filter and paginate reviews
   const filteredReviews = reviews.filter(review =>
     (review.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      review.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (review.user?.fname || '').toLowerCase().includes(searchQuery.toLowerCase())) &&
+      review.description.toLowerCase().includes(searchQuery.toLowerCase())) &&
     (statusFilter === '' || review.status === statusFilter)
   );
 
@@ -143,13 +145,19 @@ const ManageReviews: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex justify-center items-center ">
+            {/* Display delete message */}
+            {deleteMessage && (
+              <div className="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+                {deleteMessage}
+              </div>
+            )}
+
+            <div className="flex justify-center items-center">
               <table className="w-full table-auto bg-white shadow-lg rounded-lg overflow-hidden">
                 <thead className="bg-sky-700 text-white">
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Number</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold">User Name</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold">Title</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold">Title</th> {/* Removed User Name */}
                     <th className="px-6 py-4 text-left text-sm font-semibold">Rating</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Status</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Action</th>
@@ -162,9 +170,6 @@ const ManageReviews: React.FC = () => {
                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                           {indexOfFirstReview + index + 1}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                          {review.user?.fname || 'SpringBing User'}
-                        </td>
                         <td className="px-6 py-4 text-gray-700">
                           {review.title}
                         </td>
@@ -176,7 +181,7 @@ const ManageReviews: React.FC = () => {
                         </td>
                         <td className="px-6 py-4 flex gap-4">
                           <Link to={`/admin/edit-review/${review._id}`}>
-                            <button 
+                            <button
                               className="bg-green-700 hover:bg-green-800 text-white font-semibold px-4 py-1 rounded transition duration-300"
                             >
                               <AiOutlineEdit />
@@ -193,7 +198,7 @@ const ManageReviews: React.FC = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={6} className="px-6 py-4 text-center">
+                      <td colSpan={5} className="px-6 py-4 text-center"> {/* Adjusted colSpan to 5 */}
                         No reviews found
                       </td>
                     </tr>
@@ -208,15 +213,15 @@ const ManageReviews: React.FC = () => {
                 Page {currentPage} of {totalPages}
               </div>
               <div className="flex gap-4">
-                <button 
-                  onClick={handlePrevious} 
+                <button
+                  onClick={handlePrevious}
                   disabled={currentPage === 1}
                   className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300' : 'bg-sky-700 text-white'}`}
                 >
                   Previous
                 </button>
-                <button 
-                  onClick={handleNext} 
+                <button
+                  onClick={handleNext}
                   disabled={currentPage === totalPages}
                   className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300' : 'bg-sky-700 text-white'}`}
                 >

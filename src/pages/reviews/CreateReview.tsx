@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const CreateReview: React.FC = () => {
   const navigate = useNavigate(); 
-  const [user_id, setUserId] = useState<string>(''); 
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [rating, setRating] = useState<number>(5); // Default - 5
@@ -29,9 +28,6 @@ const CreateReview: React.FC = () => {
       rating,
       images_path: imagesPath, 
       status,
-      user: {
-        fname: "Change Type", // change this - after creating users
-      },
       date: new Date().toISOString(),
     };
 
