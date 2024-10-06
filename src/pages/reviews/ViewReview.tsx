@@ -103,7 +103,7 @@ const ViewReview: React.FC = () => {
     };
 
     return (
-        <div className='mt-18 px-4 lg:px-24 pt-10'>
+        <div className='mt-18 px-4 pt-10'>
             <div className='flex justify-between items-start mb-8'>
                 <h2 className='text-4xl font-bold'>What People Think About Us!</h2>
             </div>
@@ -127,7 +127,7 @@ const ViewReview: React.FC = () => {
                                 we always deliver what you love. Share your review and help others in the Spring Bing community make informed choices. Thank you 
                                 for being a part of our journey!
                             </p>
-                            <Link to="/create-review" className='mt-5 block'>
+                            <Link to="/nof/create-review" className='mt-5 block'>
                                 <button className='bg-black text-white font-semibold px-5 py-2 rounded hover:bg-white hover:text-black transition-all duration-300'>
                                     Add Review
                                 </button>
@@ -219,7 +219,7 @@ const ViewReview: React.FC = () => {
                 </div>
                 
                 {/* Pagination Controls */}
-                <div className="flex justify-center items-center mt-6">
+                <div className="flex justify-center items-center mt-8">
                     <button
                         onClick={handlePreviousPage}
                         disabled={currentPage === 1}
@@ -238,7 +238,9 @@ const ViewReview: React.FC = () => {
                 </div>
             </div>
             <br/>
+            <div className='mt-4'>
             <NewsLetter />
+            </div>
         </div>
     );
 };

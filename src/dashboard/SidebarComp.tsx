@@ -1,5 +1,5 @@
 import React from 'react'
-import { AiOutlineBank, AiFillHome, AiOutlineUser, AiOutlineIdcard, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart,  AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
+import { AiOutlineBank, AiFillHome,AiOutlineFileSearch,  AiOutlineLineChart, AiOutlineDollar, AiOutlineUser, AiOutlineIdcard, AiOutlineRise, AiOutlineFileDone, AiOutlineTeam, AiOutlineUserSwitch, AiTwotoneFund, AiTwotoneHeart,  AiOutlineQuestion, AiOutlineShopping } from 'react-icons/ai';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import '../dashboard/DashboardLayout.css';
@@ -32,13 +32,24 @@ const SidebarComp :React.FC= () => {
               </Link>
             </li>
             <li>
-              <Link to="">
+              <Link to="/admin/TT">
                 <AiOutlineRise /> Trending Products
               </Link>
             </li>
             <li>
               <Link to="/admin/stat-products">
-                <AiTwotoneFund /> Product Statistics
+              <AiOutlineLineChart /> Product Statistics
+              </Link>
+            </li>
+            <hr />
+            <li>
+              <Link to="/admin/sf">
+              <AiOutlineFileSearch /> Sales Forecasting
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/dp">
+              <AiOutlineDollar /> Dynamic Pricing
               </Link>
             </li>
             <hr />
@@ -76,13 +87,13 @@ const SidebarComp :React.FC= () => {
             </li>
             <hr />
             <li>
-              <Link to="">
+              <Link to="/admin/ud">
                 <AiOutlineTeam /> Manage User Profiles
               </Link>
             </li>
             <li>
               <Link to="">
-                <AiOutlineUserSwitch /> Manage Admin Profiles
+                <AiOutlineUserSwitch /> Admin Profiles
               </Link>
             </li>
             <hr />

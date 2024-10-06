@@ -1,6 +1,6 @@
 import React from 'react'
 import Title from '../components/Title'
-import aboutusimg from '../assets/womenase1.jpg'
+import aboutusimg from '../assets/aboutusimg5.jpg'
 import NewsLetter from '../components/NewsLetter'
 
 const About : React.FC = () => {
@@ -11,7 +11,7 @@ const About : React.FC = () => {
       </div>
 
       <div className='my-10 flex flex-col md:flex-row gap-16'>
-      <img className='w-[700px] md:max-w-[700px]' src={aboutusimg} alt="" />
+      <img className='w-[600px]' src={aboutusimg} alt="" />
           <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-600'>
               <p>Welcome to Spring Bing, where fashion meets innovation and style knows no bounds. 
                 Founded with a passion for providing high-quality, trendy clothing, we are committed to offering our 

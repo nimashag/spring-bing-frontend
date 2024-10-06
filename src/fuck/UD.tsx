@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaEdit, FaTrash, FaChartBar } from 'react-icons/fa';
 import { Bar } from 'react-chartjs-2'; // For graph charts
 import 'chart.js/auto';
+import SidebarComp from '../dashboard/SidebarComp';
 
 interface User {
   _id: string;
@@ -63,6 +64,9 @@ const UserDashboard: React.FC = () => {
   }, {});
 
   return (
+    <div>
+      <SidebarComp />
+      <div className='main-content'>
     <div className="container mx-auto p-4">
       {/* User Data Table */}
       <h2 className="text-3xl font-bold mb-4 text-gray-800">User Dashboard</h2>
@@ -133,6 +137,8 @@ const UserDashboard: React.FC = () => {
           />
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const Banner :React.FC= () => {
   return (
-    <div className='px-4 lg:px-24 flex items-center'>
+    <div>
         <div className='flex w-full flex-col md:flex-row justify-between items-center gap-12 '>
 
             {/* left side */}

@@ -54,7 +54,7 @@ const AnswerFAQ: React.FC = () => {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
-          navigate('/manage-faq');  // Redirect after update
+          navigate('/admin/manage-faq');  // Redirect after update
         }, 5000);
       })
       .catch((error) => {
@@ -64,7 +64,7 @@ const AnswerFAQ: React.FC = () => {
   }
 
   const handleCancel = () => {
-    navigate('/manage-faq'); // Redirect to manage-faq on cancel
+    navigate('/admin/manage-faq'); // Redirect to manage-faq on cancel
   };
 
   if (!faq) return <div>Loading...</div>;
@@ -73,7 +73,7 @@ const AnswerFAQ: React.FC = () => {
     <div className="px-4 my-12">
       <form
         onSubmit={handleUpdate}
-        className="flex flex-col gap-6 p-8 bg-white shadow-md rounded-lg max-w-3xl mx-auto"
+        className="flex flex-col gap-6 p-8 bg-white shadow-md rounded-lg"
       >
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Answer/Update FAQ
@@ -93,7 +93,7 @@ const AnswerFAQ: React.FC = () => {
             value={faq.full_name}
             onChange={(e) => setFaq({ ...faq, full_name: e.target.value })}
             placeholder="Enter full name"
-            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            className="mt-1 block w-fullborder-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
             required
           />
         </div>
@@ -112,7 +112,7 @@ const AnswerFAQ: React.FC = () => {
             value={faq.question}
             onChange={(e) => setFaq({ ...faq, question: e.target.value })}
             placeholder="Enter the question"
-            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
             required
           />
         </div>
@@ -131,7 +131,7 @@ const AnswerFAQ: React.FC = () => {
             value={faq.category}
             onChange={(e) => setFaq({ ...faq, category: e.target.value })}
             placeholder="Enter category"
-            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
             required
           />
         </div>
@@ -150,7 +150,7 @@ const AnswerFAQ: React.FC = () => {
             value={faq.answer || ''}
             onChange={(e) => setFaq({ ...faq, answer: e.target.value })}
             placeholder="Enter the answer"
-            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
           />
         </div>
 
@@ -166,7 +166,7 @@ const AnswerFAQ: React.FC = () => {
             name="status"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 "
             required
           >
             <option value="Pending">Pending</option>
@@ -188,7 +188,7 @@ const AnswerFAQ: React.FC = () => {
             value={answeredBy}
             onChange={(e) => setAnsweredBy(e.target.value)}
             placeholder="Enter your name"
-            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 px-3 py-2"
+            className="mt-1 block w-full border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
           />
         </div>
 

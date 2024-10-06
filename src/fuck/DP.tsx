@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaEye } from 'react-icons/fa'; // Import eye icon
 import { Bar } from 'react-chartjs-2'; // Import the Bar chart from react-chartjs-2
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import SidebarComp from '../dashboard/SidebarComp';
 
 // Register Chart.js components
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -80,6 +81,10 @@ const PriceSuggestions: React.FC = () => {
   };
 
   return (
+    <div>
+      <SidebarComp />
+
+    <div className='main-content'>
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Price Suggestions</h2>
 
@@ -166,6 +171,8 @@ const PriceSuggestions: React.FC = () => {
           </div>
         </div>
       )}
+      </div>
+    </div>
     </div>
   );
 };

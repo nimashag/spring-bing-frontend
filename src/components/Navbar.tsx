@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
       />
 
       {/* Navbar Links */}
-      <ul className="hidden sm:flex gap-10 md:gap-20 text-sm text-gray-700">
+      <ul className="hidden sm:flex gap-10 md:gap-10 text-sm text-gray-700">
         {[
           { to: "/", text: "Home" },
           { to: "/newarrivals", text: "New Arrivals" },

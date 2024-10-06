@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar, Line, Pie, Radar } from 'react-chartjs-2';
 import 'chart.js/auto';  // Required for chart rendering
+import SidebarComp from '../dashboard/SidebarComp';
 
 interface SalesForecast {
   product_id: string;
@@ -40,6 +41,10 @@ const SalesForecasting: React.FC = () => {
   const totalSalesSum = totalSales.reduce((acc, val) => acc + val, 0);
 
   return (
+    <div>
+      <SidebarComp />
+
+    <div className='main-content'>
     <div className="container mx-auto p-4">
       <h2 className="text-3xl font-bold mb-4 text-gray-800">Sales Forecasting Dashboard</h2>
       
@@ -218,6 +223,8 @@ const SalesForecasting: React.FC = () => {
           }}
         />
       </div>
+    </div>
+    </div>
     </div>
   );
 };
