@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion"; 
-import logoicon2 from '../assets/logospringbing.jpeg';
+import logoicon1 from '../assets/logo.png';
 import searchicon from "../assets/search_icon.png";
 import usericon from "../assets/user_icon.png";
 import carticon from "../assets/carticon.png";
@@ -46,10 +46,10 @@ const logout = () => {
 };
 
   return (
-    <div className="flex items-center justify-between sm:px-10 font-medium bg-white">
+    <div className="flex items-center justify-between sm:px-10 font-medium">
       {/* Logo */}
       <motion.img
-        src={logoicon2}
+        src={logoicon1}
         className="mt-2 w-28 cursor-pointer"
         alt="Logo"
         whileHover={{ scale: 1.1 }}
