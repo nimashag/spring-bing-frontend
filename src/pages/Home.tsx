@@ -16,14 +16,6 @@ const Home : React.FC = () => {
   return (
     <div>
       <Hero />
-      <Trending />
-      <TopSellingItems />
-      { token && (
-        <div>
-          <h1>Recommendations</h1>
-          <Recomendation />
-        </div>
-      )}
       <ShopBy />
       <Banner />
       <Complaints />

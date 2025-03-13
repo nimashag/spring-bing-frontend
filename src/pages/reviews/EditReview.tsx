@@ -7,10 +7,10 @@ const EditReview: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [review, setReview] = useState<any>(null);
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [rating, setRating] = useState<number | string>('');
-  const [status, setStatus] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [rating, setRating] = useState<number | string>("");
+  const [status, setStatus] = useState<string>("");
   const [imagesPath, setImagesPath] = useState<string[]>([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
@@ -26,7 +26,7 @@ const EditReview: React.FC = () => {
         setStatus(data.status);
         setImagesPath(data.images_path || []);
       })
-      .catch((error) => console.error('Error fetching review:', error));
+      .catch((error) => console.error("Error fetching review:", error));
   }, [id]);
 
   const handleUpdate = (event: React.FormEvent) => {
@@ -37,15 +37,15 @@ const EditReview: React.FC = () => {
       description: description,
       rating: rating,
       status: status,
-      images_path: imagesPath
+      images_path: imagesPath,
     };
 
     fetch(`http://localhost:3000/reviews/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedReview)
+      body: JSON.stringify(updatedReview),
     })
       .then((res) => {
         if (!res.ok) {
@@ -59,17 +59,17 @@ const EditReview: React.FC = () => {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
-          navigate('/manage-reviews');  // Redirect after update
+          navigate("/admin/manage-reviews"); // Redirect after update
         }, 5000);
       })
       .catch((error) => {
-        console.error('Error updating review:', error);
+        console.error("Error updating review:", error);
         alert(error.message); // Display a more detailed error message
       });
-  }
+  };
 
   const handleCancel = () => {
-    navigate('/admin/manage-reviews'); // Redirect to manage-reviews on cancel
+    navigate("/admin/manage-reviews"); // Redirect to manage-reviews on cancel
   };
 
   if (!review) return <div>Loading...</div>;
@@ -80,9 +80,7 @@ const EditReview: React.FC = () => {
         onSubmit={handleUpdate}
         className="flex flex-col gap-8 p-8 bg-white shadow-lg rounded-lg max-w-4xl mx-auto border border-gray-200"
       >
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">
-          Edit Review
-        </h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Edit Review</h2>
 
         {/* Title */}
         <div className="w-full">
@@ -178,8 +176,10 @@ const EditReview: React.FC = () => {
             id="images_path"
             name="images_path"
             rows={6}
-            value={imagesPath.join(', ')}
-            onChange={(e) => setImagesPath(e.target.value.split(',').map(img => img.trim()))}
+            value={imagesPath.join(", ")}
+            onChange={(e) =>
+              setImagesPath(e.target.value.split(",").map((img) => img.trim()))
+            }
             placeholder="Enter image URLs, comma-separated"
             className="mt-1 block w-full border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2"
           />
