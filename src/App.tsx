@@ -41,10 +41,10 @@ import OrderHistory from "./pages/orders/OrderHistory.tsx";
 import Orders from "./pages/orders/Orders.tsx";
 import SummaryReviews from "./pages/reviews/SummaryReviews.tsx";
 import OrderUpdateStatus from "./pages/orders/OrderUpdateStatus.tsx";
-import TrendingAndTopSelling from "./fuck/TT.tsx";
-import UserDashboard from "./fuck/UD.tsx";
-import SalesForecasting from "./fuck/SF.tsx";
-import DynamicPricing from "./fuck/DP.tsx";
+import TrendingAndTopSelling from "./chart_component/TT.tsx";
+import UserDashboard from "./chart_component/UD.tsx";
+import SalesForecasting from "./chart_component/SF.tsx";
+import DynamicPricing from "./chart_component/DP.tsx";
 
 
 const App: React.FC = () => {
