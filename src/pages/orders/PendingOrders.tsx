@@ -19,20 +19,17 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
   const { user_id } = useCartStore((state) => ({
     user_id: state.user_id,
   }));
-<<<<<<< HEAD
   const id = JSON.parse(localStorage.getItem('profile') || '')._id;
   const { setUserId } = useCartStore();
 
   useEffect(() => {
     setUserId(id) //'66d196a444e126395cbed7d9'
-=======
 
   const id = JSON.parse(localStorage.getItem("profile") || "")._id;
   const { setUserId } = useCartStore();
 
   useEffect(() => {
     setUserId(id); //'66d196a444e126395cbed7d9'
->>>>>>> 049968836be291782578493bbe1c53b2adc86d1d
     const getPendingOrders = async () => {
       try {
         setLoading(true);

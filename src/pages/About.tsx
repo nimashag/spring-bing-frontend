@@ -7,32 +7,39 @@ const About : React.FC = () => {
   return (
     <div>
       <div className='text-2xl pt-8'>
-        <h2 className='text-4xl font-bold'>About Us</h2>
+        <h2 className='text-4xl font-bold'>Welcome to Renora – Where Science Meets Beauty</h2>
       </div>
 
       <div className='my-10 flex flex-col md:flex-row gap-16'>
       <img className='w-[600px]' src={aboutusimg} alt="" />
           <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-600'>
-              <p>Welcome to Spring Bing, where fashion meets innovation and style knows no bounds. 
-                Founded with a passion for providing high-quality, trendy clothing, we are committed to offering our 
-                customers a curated selection of apparel that embodies both elegance and comfort. Located in the vibrant heart of
-                 Nugegoda, Spring Bing has quickly become a go-to destination for fashion enthusiasts seeking the latest styles and 
-                 timeless classics. Our team is dedicated to bringing you a shopping experience that is not only enjoyable but also memorable, 
-                 with collections that cater to every occasion and personality.
+              <p>Welcome to Renora, your destination for premium skincare that blends 
+                science, nature, and innovation. We are committed to offering high-quality
+                 skincare solutions designed to nourish, protect, and enhance your natural 
+                 beauty. Rooted in the heart of Nugegoda, Renora has quickly become a trusted
+                  name for those seeking effective, dermatologist-approved products that cater 
+                  to every skin type and concern.
               </p>
 
-              <p>At Spring Bing, we believe in more than just selling clothes; we believe in creating a community. Our mission is to inspire confidence through fashion,
-                 helping our customers express their unique style with every piece they wear. We take pride in our carefully selected collections, our attention to detail, 
-                 and our commitment to sustainability. As we continue to grow, our focus remains on you—our valued customer. Join us on this journey, and discover why Spring 
-                 Bing is more than just a clothing store; it’s a place where your style story begins.
+              <p>At Renora, we believe that skincare is more than just a routine—it’s a 
+                commitment to self-care and confidence. Our carefully crafted formulas 
+                harness the power of natural extracts, clinically proven ingredients, and 
+                cutting-edge skincare technology to deliver visible results. Whether you're 
+                looking for deep hydration, anti-aging solutions, or daily protection, our 
+                products are designed to bring out the best in your skin.
               </p>
 
               <b className='text-gray-800'>Our Mission</b>
 
-              <p>Our mission at Spring Bing is to empower individuals through fashion by offering high-quality, stylish clothing that inspires confidence and self-expression.
-                 We are dedicated to creating a shopping experience that is inclusive, enjoyable, and accessible to all. With a focus on sustainability, exceptional customer service,
-                  and innovative designs, we strive to set new standards in the fashion industry. Our goal is to not only meet but exceed our customers' expectations, ensuring that every
-                   piece we offer is a reflection of our commitment to excellence.
+              <p>At Renora, our mission is to empower individuals through skincare by offering 
+                safe, effective, and innovative products that promote radiant and healthy skin. 
+                We are dedicated to transparency, sustainability, and customer satisfaction, ensuring 
+                that every product we create is backed by science and nature.
+              </p>
+
+              <p>Our goal is not just to meet expectations but to exceed them, providing skincare solutions 
+                that are dermatologist-tested, cruelty-free, and free from harsh chemicals. Whether you're new 
+                to skincare or a beauty enthusiast, Renora is here to help you achieve your glow with confidence.
               </p>
           </div>
 
@@ -67,7 +74,7 @@ const About : React.FC = () => {
                    team is here to assist you every step of the way. Your satisfaction is our success.
                 </p>
               </div>
-          </div>
+        </div>
 
       <NewsLetter />
     </div>

@@ -22,7 +22,7 @@ import AnswerFAQ from "./pages/faq/AnswerFAQ";
 import NewArrivals from "./pages/NewArrivals";
 import Collections from "./pages/Collections";
 import Cart from "./pages/cart/Cart";
-import PendingOrders from "./pages/orders/PendingOrders";
+//import PendingOrders from "./pages/orders/PendingOrders";
 import ViewOrder from "./pages/orders/ViewOrder";
 import ProfilePage from "./auth/ProfilePage";
 import AdminCreateAccount from "./auth/AdminCreateAccount";
@@ -88,7 +88,6 @@ const App: React.FC = () => {
 
           {/* pagination included here */}
           <Route path="/admin/orders" element={<Orders />} />
-          <Route path="/order/pendingOrder" element={<PendingOrders />} />
           <Route path="/order/orderHistory" element={<OrderHistory />} />
           <Route path="/order/viewOrder/:id" element={<ViewOrder />} />
           <Route path="/order/updateOrder/:id" element={<UpdateOrder />} />
