@@ -23,12 +23,6 @@ const PendingOrders: React.FunctionComponent<IPendingOrdersProps> = (props) => {
   const { setUserId } = useCartStore();
 
   useEffect(() => {
-    setUserId(id) //'66d196a444e126395cbed7d9'
-
-  const id = JSON.parse(localStorage.getItem("profile") || "")._id;
-  const { setUserId } = useCartStore();
-
-  useEffect(() => {
     setUserId(id); //'66d196a444e126395cbed7d9'
     const getPendingOrders = async () => {
       try {
