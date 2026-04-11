@@ -78,7 +78,7 @@ const OrderUpdateStatus: React.FunctionComponent = () => {
                           <div className="flex items-center space-x-4">
                             <div className="relative overflow-visible w-12 h-12">
                               <img
-                                src={item.product_id.images_path}
+                                src={item.product_id.images_path?.[0] || "https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&w=1200"}
                                 alt={item.product_id.name}
                                 className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-125 hover:translate-x-1 hover:translate-y-1"
                               />

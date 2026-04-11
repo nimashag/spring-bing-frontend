@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import Product from "../../interfaces/Product.tsx";
+import Category from "../../interfaces/Category.tsx";
 import "../../index.css";
 import { Link } from "react-router-dom";
 import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 
 import "../../dashboard/DashboardLayout.css";
 import SidebarComp from "../../dashboard/SidebarComp.tsx";
@@ -141,8 +141,8 @@ const StatProducts: React.FC = () => {
 
     //header
     const logoWidth = 20;
-    const logoHeight = 20; 
-    pdf.addImage(logoImgPath, 'PNG', 5, 5, logoWidth, logoHeight); 
+    const logoHeight = 20;
+    pdf.addImage(logoImgPath, 'PNG', 5, 5, logoWidth, logoHeight);
 
     // Set font for the title
     pdf.setFontSize(22);
@@ -196,7 +196,7 @@ const StatProducts: React.FC = () => {
     });
 
     // Automatically generate table with headers and rows
-    pdf.autoTable({
+    autoTable(pdf, {
       head: [tableColumn],
       body: tableRows,
       startY: 40, // Initial vertical position on the page

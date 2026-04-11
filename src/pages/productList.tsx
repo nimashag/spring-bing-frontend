@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { useCartStore } from '../store/cart-store';
+import Product from '../interfaces/Product';
+import { cartItem } from '../interfaces/Product';
 
 interface IProductListProps {
 }
 
 const ProductList: React.FunctionComponent<IProductListProps> = () => {
+
+    const dummyProducts: Product[] = [];
 
     const {cart,itemCount, addProductToCart, clearCart, removeProductFromCart} = useCartStore((state) => ({
         cart : state.cart,
@@ -19,16 +23,16 @@ const ProductList: React.FunctionComponent<IProductListProps> = () => {
         <h1 className='font-bold'>Product List</h1>
         <div className='flex gap-6 flex-col sm:flex-row'>
         {dummyProducts.map((product) => (
-                <div className="h-66 w-66 bg-slate-500 gap-4 p-4" key={product.id}>
+                <div className="h-66 w-66 bg-slate-500 gap-4 p-4" key={product._id}>
                 <h3 className='font-extrabold pb-5'>{product.name}</h3>
                 <div className='text-center'>
                     <p  >{product.description}</p>
-                    <button className='bg-teal-500 p-2 mt-5 hover:bg-teal-600' 
-                    onClick={() => addProductToCart(product)}
+                    <button className='bg-teal-500 p-2 mt-5 hover:bg-teal-600'
+                    onClick={() => addProductToCart({ product, quantity: 1, color: '', size: '' } as cartItem)}
                     >Add to cart</button>
                 </div>
             </div>
-            
+
         ))}
         </div>
         <div>
@@ -36,10 +40,10 @@ const ProductList: React.FunctionComponent<IProductListProps> = () => {
 
             <div>
                 {cart.map((item) => (
-                    <div key={item.product.id}>
+                    <div key={item.product._id}>
                         <p>{item.product.name}</p>
                         <p>{item.quantity}</p>
-                        <button className='bg-red-500 p-2 mt-5 hover:bg-red-600' onClick={() => removeProductFromCart(item.product.id)}> remove items</button>
+                        <button className='bg-red-500 p-2 mt-5 hover:bg-red-600' onClick={() => removeProductFromCart(item.product._id)}> remove items</button>
                     </div>
                 ))}
             </div>

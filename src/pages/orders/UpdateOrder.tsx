@@ -10,7 +10,7 @@ import {enqueueSnackbar} from 'notistack';
 interface IUpdateProps {
 }
 
-const UpdateOrder: React.FunctionComponent<IUpdateOrderProps> = (props) => {
+const UpdateOrder: React.FunctionComponent<IUpdateProps> = (props) => {
 
   const [order, setOrder] = useState<Order>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,12 +44,12 @@ const UpdateOrder: React.FunctionComponent<IUpdateOrderProps> = (props) => {
       console.error('Order ID is missing.');
       return;
     }
-  
+
     if (!billing_address) {
       console.error('Billing address is missing.');
       return;
     }
-  
+
     try {
       await axios.put(`http://localhost:3000/order/updateOrder/${id}`, { billing_address });
 
@@ -59,7 +59,7 @@ const UpdateOrder: React.FunctionComponent<IUpdateOrderProps> = (props) => {
       console.log(error);
     }
   };
-  
+
 
 return (
   <div className='w-full p-4 bg-white rounded-lg shadow-lg'>
@@ -82,7 +82,7 @@ return (
                           <div className='flex items-center space-x-4'>
                               <div className='relative overflow-visible w-12 h-12'>
                                   <img
-                                      src={item.product_id.images_path}
+                                      src={item.product_id.images_path?.[0] || "https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&w=1200"}
                                       alt={item.product_id.name}
                                       className='w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-125 hover:translate-x-1 hover:translate-y-1'
                                   />
@@ -127,7 +127,7 @@ return (
                 Update Order
             </button>
           </div>
-      </div>        
+      </div>
 
   </div>
 </div>

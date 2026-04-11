@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt, FaTimes } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import autoTable from 'jspdf-autotable';
 
 import '../../dashboard/DashboardLayout.css';
 import SidebarComp from '../../dashboard/SidebarComp';
@@ -23,9 +24,9 @@ const StatReviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [statusFilter, setStatusFilter] = useState('');
   const [ratingFilter, setRatingFilter] = useState<number | ''>('');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null); 
-  const [currentPage, setCurrentPage] = useState(1); 
-  const reviewsPerPage = 10; 
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 10;
 
   useEffect(() => {
     fetch("http://localhost:3000/reviews")
@@ -36,7 +37,7 @@ const StatReviews: React.FC = () => {
         return res.json();
       })
       .then((data) => {
-        setReviews(data || []); 
+        setReviews(data || []);
       })
       .catch((error) => {
         console.error('Error fetching reviews:', error);
@@ -45,11 +46,11 @@ const StatReviews: React.FC = () => {
 
   // Filter by rating, status, and date
   const filteredReviews = reviews
-    .filter(review => 
+    .filter(review =>
       (statusFilter === '' || review.status === statusFilter) &&
       (ratingFilter === '' || review.rating === ratingFilter) &&
-      (selectedDate === null || 
-        new Date(review.date).getMonth() === selectedDate.getMonth() && 
+      (selectedDate === null ||
+        new Date(review.date).getMonth() === selectedDate.getMonth() &&
         new Date(review.date).getFullYear() === selectedDate.getFullYear())
     );
 
@@ -62,7 +63,7 @@ const StatReviews: React.FC = () => {
 
   // Function to reset the calendar filter
   const resetCalendarFilter = () => {
-    setSelectedDate(null); 
+    setSelectedDate(null);
   };
 
 
@@ -75,26 +76,26 @@ const StatReviews: React.FC = () => {
 
      //header
      const logoWidth = 20;
-     const logoHeight = 20; 
-     pdf.addImage(logoImgPath, 'PNG', 5, 5, logoWidth, logoHeight); 
+     const logoHeight = 20;
+     pdf.addImage(logoImgPath, 'PNG', 5, 5, logoWidth, logoHeight);
 
      // Set font for the title
      pdf.setFontSize(22);
      pdf.setFont('helvetica', 'bold');
-     pdf.setTextColor(33, 37, 41); 
-     pdf.text('All Reviews Report', 60, 15); 
+     pdf.setTextColor(33, 37, 41);
+     pdf.text('All Reviews Report', 60, 15);
 
      // Report type and date
      pdf.setFontSize(10);
-     pdf.setTextColor(100); 
+     pdf.setTextColor(100);
      pdf.text('Report Category: User Reviews', 150, 10);
-     pdf.text('Contact: +94 75 123 546', 165, 16); 
-     pdf.text(`Date: ${new Date().toLocaleDateString()}`, 177, 22); 
+     pdf.text('Contact: +94 75 123 546', 165, 16);
+     pdf.text(`Date: ${new Date().toLocaleDateString()}`, 177, 22);
 
      // Draw a line under the header
      pdf.setDrawColor(100);
      pdf.line(10, 25, 200, 25);
-    
+
     // Center the title and date in PDF
     pdf.setFontSize(18);
     const titleWidth = pdf.getTextWidth(title);
@@ -121,18 +122,18 @@ const StatReviews: React.FC = () => {
     });
 
     // Automatically generate table with headers and rows
-    pdf.autoTable({
+    autoTable(pdf, {
       head: [tableColumn],
       body: tableRows,
-      startY: 40, 
-      theme: 'grid', 
+      startY: 40,
+      theme: 'grid',
       styles: {
-        fontSize: 10, 
+        fontSize: 10,
         cellPadding: 3,
       },
       headStyles: {
-        fillColor: [30, 58, 138], 
-        textColor: [255, 255, 255], 
+        fillColor: [30, 58, 138],
+        textColor: [255, 255, 255],
       },
     });
 
@@ -146,7 +147,7 @@ const StatReviews: React.FC = () => {
       (buttonsToHide[i] as HTMLElement).style.display = 'none';
     }
 
-    const content = document.getElementById('main-content'); 
+    const content = document.getElementById('main-content');
 
     html2canvas(content, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -154,31 +155,31 @@ const StatReviews: React.FC = () => {
 
       //header
       const logoWidth = 25;
-      const logoHeight = 25; 
-      pdf.addImage(logoImgPath, 'PNG', 0, 0, logoWidth, logoHeight); 
+      const logoHeight = 25;
+      pdf.addImage(logoImgPath, 'PNG', 0, 0, logoWidth, logoHeight);
 
       // Set font for the title
       pdf.setFontSize(22);
       pdf.setFont('helvetica', 'bold');
-      pdf.setTextColor(33, 37, 41); 
-      pdf.text('Reviews Report', 60, 15); 
+      pdf.setTextColor(33, 37, 41);
+      pdf.text('Reviews Report', 60, 15);
 
       // Report type and date
       pdf.setFontSize(10);
-      pdf.setTextColor(100); 
+      pdf.setTextColor(100);
       pdf.text('Report Category: User Reviews', 150, 10);
-      pdf.text('Contact: +94 75 123 546', 165, 16); 
-      pdf.text(`Date: ${new Date().toLocaleDateString()}`, 177, 22); 
+      pdf.text('Contact: +94 75 123 546', 165, 16);
+      pdf.text(`Date: ${new Date().toLocaleDateString()}`, 177, 22);
 
       // Draw a line under the header
       pdf.setDrawColor(100);
-      pdf.line(10, 25, 200, 25); 
+      pdf.line(10, 25, 200, 25);
 
       const imgHeight = (canvas.height * 210) / canvas.width;
       pdf.addImage(imgData, 'PNG', 0, 35, 210, imgHeight);
 
       // Add table borders in the PDF
-      const pageHeight = pdf.internal.pageSize.height; 
+      const pageHeight = pdf.internal.pageSize.height;
 
       pdf.save('review_statistics.pdf');
 
@@ -192,7 +193,7 @@ const StatReviews: React.FC = () => {
     <div className="px-4 my-6">
       {/* Sidebar */}
       <SidebarComp />
-       
+
       <div className='main-content' id='main-content'>
         {/* Filters */}
         <div className="flex flex-col gap-4">

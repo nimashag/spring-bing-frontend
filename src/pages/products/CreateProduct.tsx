@@ -47,7 +47,7 @@ const CreateProduct: React.FC = () => {
   }, []);
 
   const handleAddMetadata = () => {
-    setMetadata([...metadata, { color: "", size: "", quantity: 0 }]);
+    setMetadata([...metadata, { color: "", size: "", quantity: "" }]);
     setValidationErrors({
       ...validationErrors,
       metadata: [
@@ -112,7 +112,8 @@ const CreateProduct: React.FC = () => {
         errors.metadata[index].size = "Size is required.";
         valid = false;
       }
-      if (isNaN(item.quantity) || item.quantity <= 0) {
+      const qty = Number(item.quantity);
+      if (isNaN(qty) || qty <= 0) {
         errors.metadata[index].quantity = "Quantity must be a positive number.";
         valid = false;
       }
@@ -162,7 +163,7 @@ const CreateProduct: React.FC = () => {
         setShowSuccessMessage(true);
         setErrorMessage(""); // Clear any previous error message
         form.reset();
-        setMetadata([{ color: "", size: "", quantity: 0 }]); // Reset metadata to one set
+        setMetadata([{ color: "", size: "", quantity: "" }]); // Reset metadata to one set
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 5000);

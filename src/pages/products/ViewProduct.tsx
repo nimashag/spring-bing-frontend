@@ -36,8 +36,8 @@ const ViewProduct = () => {
                 const data = await response.json();
                 setProduct(data.data);
 
-                const colors = Array.from(new Set(data.data.metadata.map((item: any) => item.color)));
-                const sizes = Array.from(new Set(data.data.metadata.map((item: any) => item.size)));
+                const colors = Array.from(new Set(data.data.metadata.map((item: any) => item.color))) as string[];
+                const sizes = Array.from(new Set(data.data.metadata.map((item: any) => item.size))) as string[];
                 setColorOptions(colors);
                 setSizeOptions(sizes);
             } catch (error) {
@@ -77,8 +77,9 @@ const ViewProduct = () => {
     }, [id]);
 
 
-    // add to cart method 
+    // add to cart method
     const addToCart = () => {
+        if (!product) return;
         const cart_item: cartItem = {
             product : product,
             quantity : 1,
@@ -160,7 +161,7 @@ const ViewProduct = () => {
         updateQuantity(selectedColor, selectedSize);
     };
 
-    
+
     const isAddToCartDisabled = !selectedSize || !selectedColor || quantity === 0;
 
     if (!product) return <div>Loading...</div>;
@@ -229,7 +230,7 @@ const ViewProduct = () => {
                             ))}
                         </select>
                     </div>
-                    
+
                     {quantity !== null && (
                         <>
                             <hr />
@@ -246,7 +247,7 @@ const ViewProduct = () => {
                         </button> */}
                         <button
                             className={`font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 w-full ${isAddToCartDisabled ? 'bg-green-200 text-gray-600 cursor-not-allowed' : 'bg-green-700 text-white hover:bg-green-800 hover:shadow-lg'}`}
-                            onClick={() => addToCart(product)}
+                            onClick={addToCart}
                             disabled={isAddToCartDisabled}>Add to Cart
                         </button>
                     </div>

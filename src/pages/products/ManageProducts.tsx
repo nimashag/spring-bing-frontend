@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import Product from "../../interfaces/Product.tsx";
+import Category from "../../interfaces/Category.tsx";
 import { Link } from "react-router-dom";
 
 import '../../dashboard/DashboardLayout.css'
@@ -92,13 +93,13 @@ const ManageProducts: React.FC = () => {
   ];
 
   // Function to get unique colors from metadata
-  const getUniqueColors = (metadata) => {
+  const getUniqueColors = (metadata: Product["metadata"]) => {
     const colors = metadata.map((meta) => meta.color);
     return getUniqueValues(colors);
   };
 
   // Function to get unique sizes from metadata
-  const getUniqueSizes = (metadata) => {
+  const getUniqueSizes = (metadata: Product["metadata"]) => {
     const sizes = metadata.map((meta) => meta.size);
     return getUniqueValues(sizes);
   };
@@ -270,7 +271,7 @@ const ManageProducts: React.FC = () => {
       {/* Pagination Controls */}
       <div className="flex justify-end mt-4 pb-24">
         <button
-          
+
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
           className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
@@ -283,7 +284,7 @@ const ManageProducts: React.FC = () => {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          
+
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
           className={`px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 ${
@@ -295,7 +296,7 @@ const ManageProducts: React.FC = () => {
       </div>
     </div>
     </main>
-    
+
     </div>
 
   );

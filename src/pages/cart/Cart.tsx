@@ -128,7 +128,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
       if(added.length == 0) {
 
         enqueueSnackbar('Select the product you want to buy', { variant:'error' });
-         
+
       } else if(address == "") {
 
         enqueueSnackbar('Enter your address', { variant:'error' });
@@ -155,7 +155,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
 
 
   const add = (item: cartItem) => {
-   
+
     addFromCart(item)
     calculateTotal()
   }
@@ -184,7 +184,7 @@ const Cart: React.FunctionComponent<ICartProps> = (props) => {
               </td>
               <td className="p-5">
                 <img
-                  src={item.product.images_path}
+                  src={item.product.images_path?.[0] || "https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&w=1200"}
                   alt={item.product.name}
                   className="w-full h-40 object-cover rounded-md transition-transform duration-300 hover:scale-105"
                 />

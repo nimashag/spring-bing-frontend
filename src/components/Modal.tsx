@@ -33,8 +33,14 @@ const Modal: React.FunctionComponent<IModalProps> = ({
     }
   };
 
-  const updateOrderStatus = async (order_status: string) => {
+  const updateOrderStatus = async (order_status?: string) => {
     try {
+      if (!order_status) {
+        enqueueSnackbar("Select an order status before updating", {
+          variant: "warning",
+        });
+        return;
+      }
       const id = order._id;
       console.log(order_status);
       await axios.put(`http://localhost:3000/order/updateOrderStatus/${id}`, {

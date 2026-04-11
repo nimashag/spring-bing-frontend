@@ -11,6 +11,7 @@ interface CartStore {
   selectedCartItem : cartItem[];
   itemCount: number;
   totalPrice: number;
+  setUserId: (newUserId: string) => void;
   addProductToCart: (cart_item: cartItem) => void;
   removeProductFromCart: (productId: string) => void;
   increaseProductQuantity: (cart_item: cartItem) => void;
@@ -63,7 +64,7 @@ export const useCartStore = create<CartStore>()(
             state.itemCount += 1;
           })
         ),
-      
+
       addFromCart: (cart_item: cartItem) =>
         set(
           produce((state: CartStore) => {
@@ -74,24 +75,24 @@ export const useCartStore = create<CartStore>()(
 
             // Add the item to the selectedCartItem array
             state.selectedCartItem.push(cart_item);
-      
+
             // Update the cart state by filtering out the item
             state.cart = state.cart.filter(
               (item) => item.product._id !== cart_item.product._id || item.color !== cart_item.color || item.size !== cart_item.size
             );
-            
+
             //console.log(state.selectedCartItem); // For debugging
 
           })
         ),
 
-      cancelPay: () => 
+      cancelPay: () =>
         set(
           produce((state: CartStore) => {
             state.cart.push(...state.selectedCartItem);
             state.selectedCartItem = [];
           })
-      ),  
+      ),
 
       removeProductFromCart: (productId) =>
         set(
